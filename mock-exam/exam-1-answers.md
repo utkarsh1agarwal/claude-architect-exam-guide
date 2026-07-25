@@ -1,4 +1,4 @@
-# Mock Exam A — Answer Key
+# Mock Exam 1 — Answer Key
 
 Domain tags: **D1** Agentic Architecture · **D2** Tool Design & MCP · **D3** Claude Code Workflows · **D4** Prompt Engineering · **D5** Context & Reliability
 
@@ -138,5 +138,5 @@ Domain tags: **D1** Agentic Architecture · **D2** Tool Design & MCP · **D3** C
 
 ## Score yourself
 
-Count your correct answers out of 60, and check per-scenario breakdowns to see if a specific area needs more review — see the [scoring guide](exam-a-questions.md#scoring-guide) and go back to the relevant [domain page](../study-guide/) for anything you missed.
+Count your correct answers out of 60, and check per-scenario breakdowns to see if a specific area needs more review — see the [scoring guide](exam-1-questions.md#scoring-guide) and go back to the relevant [domain page](../study-guide/) for anything you missed.
 

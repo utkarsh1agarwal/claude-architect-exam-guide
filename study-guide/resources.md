@@ -44,5 +44,5 @@ The exam's questions are shaped like "here's what production logs show, what's t
 - [Scenarios](scenarios.md) — how the 6 official scenarios map to domains
 - [Study Plan](study-plan.md) — 30-day, 9-day, and crunch tracks
 - [Cheat Sheet](cheat-sheet.md) — one-page final skim
-- [Mock Exams](../mock-exam/exam-a-questions.md) — three 60-question sets (A, [B](../mock-exam/exam-b-questions.md), [C](../mock-exam/exam-c-questions.md)), timed, full answer keys
+- [Mock Exams](../mock-exam/exam-1-questions.md) — six 60-question sets ([1](../mock-exam/exam-1-questions.md), [2](../mock-exam/exam-2-questions.md), [3](../mock-exam/exam-3-questions.md), and hard-mode [4](../mock-exam/exam-4-questions.md), [5](../mock-exam/exam-5-questions.md), [6](../mock-exam/exam-6-questions.md)), timed, full answer keys
 

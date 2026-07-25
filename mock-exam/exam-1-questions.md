@@ -1,14 +1,14 @@
-# Mock Exam A — Questions
+# Mock Exam 1 — Questions
 
 > Every question here is original material written against the public CCAR-F blueprint — none of it is drawn from or paraphrased from real exam content. See [CONTRIBUTING.md](../CONTRIBUTING.md#the-one-hard-rule) for why that boundary matters and how to add more questions the right way.
 
 ## How to take it
 
-- **Mirrors the real format:** 60 questions, organized around all 6 official scenarios (10 questions each), so you get full coverage regardless of which 4 the real exam draws for you. For a closer simulation of an actual sitting — a random 4-of-6 draw instead of full coverage — take [Exam B](exam-b-questions.md) and [Exam C](exam-c-questions.md) too.
+- **Mirrors the real format:** 60 questions, organized around all 6 official scenarios (10 questions each), so you get full coverage regardless of which 4 the real exam draws for you. For a closer simulation of an actual sitting — a random 4-of-6 draw instead of full coverage — take [Exam 2](exam-2-questions.md) and [Exam 3](exam-3-questions.md) too.
 - **Set a timer for 120 minutes.** That's ~2 minutes per item — tight enough that you need to move on from anything you're stuck on, just like the real thing.
 - **No notes, no search, no assistant.** Simulate real conditions as closely as you can.
 - Some items are multiple-response ("select two"). Most items are single-select, but read the stem carefully.
-- Score yourself against [exam-a-answers.md](exam-a-answers.md) afterward. Anything you missed, go re-read that section in the [study guide](../study-guide/) — don't just read the rationale and call it learned.
+- Score yourself against [exam-1-answers.md](exam-1-answers.md) afterward. Anything you missed, go re-read that section in the [study guide](../study-guide/) — don't just read the rationale and call it learned.
 
 ## Scoring guide
 
@@ -22,7 +22,7 @@ Rough gut-check only — not the real exam's scaled scoring.
 
 The real exam's cut score is a scaled 720/1000, set through a formal standard-setting study — this table is just a rough gut-check for a practice set.
 
-**More exams welcome:** three 60-question sets still get stale after enough run-throughs. If you'd like to contribute an Exam D, see [CONTRIBUTING.md](../CONTRIBUTING.md#adding-a-practice-question) — use [template.md](template.md) for the format.
+**More exams welcome:** even six 60-question sets get stale after enough run-throughs. If you'd like to contribute another one, see [CONTRIBUTING.md](../CONTRIBUTING.md#adding-a-practice-question) — use [template.md](template.md) for the format.
 
 ---
 
@@ -470,5 +470,5 @@ The real exam's cut score is a scaled 720/1000, set through a formal standard-se
 
 ---
 
-*End of Exam A. Check your answers against the [Answer Key](exam-a-answers.md).*
+*End of Exam 1. Check your answers against the [Answer Key](exam-1-answers.md).*
 

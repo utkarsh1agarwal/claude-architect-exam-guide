@@ -4,7 +4,12 @@ All notable changes to this repo are documented here. Format follows [Keep a Cha
 
 ## [Unreleased]
 
-- Nothing yet — open a PR!
+### Added
+- Exam 4: a fourth 60-question mock exam covering all 6 scenarios, calibrated to a harder difficulty than Exams 1–3 (finer mechanism-level distractors, SLA/timing calculations, four select-two items) — complete answer key with domain tagging
+- Exam 5 and Exam 6: two more 60-question mock exams at the same hard-mode calibration as Exam 4, each independently verified against every other exam in the set (and against the community-provided reference question banks used to calibrate difficulty) to ensure no duplicate or near-duplicate questions
+
+### Changed
+- Renamed the existing mock exams from letters to numbers (Exam A → 1, B → 2, C → 3) to accommodate Exams 4–6 and give the set a consistent, open-ended numbering scheme; all internal cross-links and references across the repo updated accordingly
 
 ## [1.0.0] — 2026-07-24
 
@@ -14,7 +19,7 @@ All notable changes to this repo are documented here. Format follows [Keep a Cha
 - Scenario overview mapping all 6 official exam scenarios to domains
 - Study plan tracks (30-day, 9-day, crunch)
 - One-page cheat sheet organized around the "structural fix vs. prompt fix" heuristic
-- Three 60-question mock exams: Exam A (full 6-scenario coverage) and Exams B & C (realistic 4-of-6 scenario draws, leaning D1/D5 and D3/D4 respectively) — each with a complete answer key and domain tagging
+- Three 60-question mock exams: Exam 1 (full 6-scenario coverage) and Exams 2 & 3 (realistic 4-of-6 scenario draws, leaning D1/D5 and D3/D4 respectively) — each with a complete answer key and domain tagging
 - Resources page (official docs + community guides)
 - FAQ page
 - Built and cross-checked against Exam Guide v1.0 (effective July 2026, exam code CCAR-F)
