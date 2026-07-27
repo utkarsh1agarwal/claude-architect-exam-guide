@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCAF Mock Exam Player</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="topbar" id="examTopbar" hidden>
+    <span id="progressDisplay" class="topbar-progress"></span>
+    <span id="timerDisplay" class="topbar-timer">--:--</span>
+    <button type="button" id="submitBtn" class="btn btn-primary">Submit exam</button>
+  </header>
+
+  <main id="app">
+
+    <section id="view-start" class="view">
+      <h1>CCAF Mock Exam Player</h1>
+      <p class="subtitle">
+        Pick a practice exam below. This runs entirely in your browser and reads the
+        existing <code>mock-exam/exam-*.md</code> files directly — nothing is uploaded anywhere.
+      </p>
+
+      <div id="examGrid" class="exam-grid"></div>
+
+      <p id="loadStatus" class="load-status" hidden></p>
+
+      <div id="filePickerPanel" class="file-picker" hidden>
+        <p id="filePickerLabel"></p>
+        <p id="filePickerFilenames" class="file-picker-filenames"></p>
+        <label class="file-picker-row">
+          Questions file
+          <input type="file" id="questionsFileInput" accept=".md,text/markdown">
+        </label>
+        <label class="file-picker-row">
+          Answer key file
+          <input type="file" id="answersFileInput" accept=".md,text/markdown">
+        </label>
+        <button type="button" id="loadFilesBtn" class="btn btn-primary" disabled>Load selected files</button>
+      </div>
+    </section>
+
+    <section id="view-ready" class="view" hidden>
+      <h1 id="readyTitle"></h1>
+      <p id="readyMeta" class="subtitle"></p>
+
+      <div id="resumeBox" class="resume-box" hidden>
+        <p id="resumeInfo"></p>
+        <div class="resume-actions">
+          <button type="button" id="resumeBtn" class="btn btn-primary">Resume attempt</button>
+          <button type="button" id="discardResumeBtn" class="btn btn-ghost">Discard &amp; start fresh</button>
+        </div>
+      </div>
+
+      <label class="duration-row">
+        Timer (minutes)
+        <input type="number" id="durationInput" min="1" value="120">
+      </label>
+
+      <div class="ready-actions">
+        <button type="button" id="startFreshBtn" class="btn btn-primary">Start exam</button>
+        <button type="button" id="backToGridBtn" class="btn btn-ghost">Choose another exam</button>
+      </div>
+    </section>
+
+    <section id="view-exam" class="view" hidden>
+      <div class="exam-layout">
+        <div class="exam-main">
+          <div class="question-panel">
+            <div class="scenario-row">
+              <span id="scenarioTag" class="scenario-tag"></span>
+              <span id="selectHint" class="select-hint" hidden></span>
+            </div>
+            <p id="questionStem" class="question-stem"></p>
+            <div id="choicesList" class="choices-list"></div>
+          </div>
+          <div class="exam-nav">
+            <button type="button" id="prevBtn" class="btn btn-ghost">&larr; Previous</button>
+            <button type="button" id="nextBtn" class="btn btn-ghost">Next &rarr;</button>
+          </div>
+        </div>
+
+        <aside class="exam-sidebar">
+          <div class="palette-panel">
+            <div class="palette-header">
+              <span>Question map</span>
+            </div>
+            <div id="paletteGrid" class="palette-grid"></div>
+            <div class="palette-legend">
+              <span><i class="legend-swatch legend-answered"></i> Answered</span>
+              <span><i class="legend-swatch legend-current"></i> Current</span>
+              <span><i class="legend-swatch"></i> Unanswered</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="view-results" class="view" hidden>
+      <h1>Results</h1>
+      <div id="scoreSummary" class="score-summary"></div>
+      <p id="warningBanner" class="warning-banner" hidden></p>
+
+      <div class="results-tables">
+        <table id="scenarioTable" class="stat-table"></table>
+        <table id="domainTable" class="stat-table"></table>
+      </div>
+
+      <div class="results-actions">
+        <button type="button" id="retakeBtn" class="btn btn-primary">Retake this exam</button>
+        <button type="button" id="chooseAnotherBtn" class="btn btn-ghost">Choose another exam</button>
+      </div>
+
+      <h2>Review</h2>
+      <div id="reviewList" class="review-list"></div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
