@@ -1,6 +1,9 @@
 # Claude Certified Architect – Foundations (CCAF) Exam Guide
 
-Free learning material and mock exams to help you prepare for Anthropic's **Claude Certified Architect – Foundations** certification (exam code **CCAR-F**, also called **CCAF**).
+![CCAF Certified](https://img.shields.io/badge/CCAF-Certified-6E44FF?style=flat-square)
+
+
+I'm certified as a **Claude Certified Architect – Foundations** (exam code **CCAR-F**, also called **CCAF**), and I'm sharing the free learning material and mock exams I built while preparing for it.
 
 This repo has two things:
 
@@ -18,7 +21,7 @@ This repo has two things:
 
 Everything is plain markdown. Open any file directly on GitHub — no sign-up, no build step, no app to install.
 
-> **Unofficial and independent.** Not affiliated with, endorsed by, or reviewed by Anthropic. Built from Anthropic's [official CCAR-F Exam Guide](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542750%2FClaude+Certified+Architect+%E2%80%93+Foundations+Exam+Guide.pdf) — read that in full before scheduling your exam; it's the only authoritative source on policy, scoring, and blueprint changes. This repo contains no leaked or reproduced exam questions — see [CONTRIBUTING.md](CONTRIBUTING.md#the-one-hard-rule) for the rule that keeps it that way.
+> Built from Anthropic's [official CCAR-F Exam Guide](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542750%2FClaude+Certified+Architect+%E2%80%93+Foundations+Exam+Guide.pdf) — read that in full before scheduling your exam; it's the only authoritative source on policy, scoring, and blueprint changes. This repo contains no leaked or reproduced exam questions — see [CONTRIBUTING.md](CONTRIBUTING.md#the-one-hard-rule) for the rule that keeps it that way.
 
 ---
 
@@ -108,7 +111,14 @@ claude-architect-exam-guide/
 
 Corrections, new practice questions, better explanations, and translations are welcome. One hard rule: **no real or leaked exam content, ever.** See [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## About the author
+
+I wrote this guide while studying for and passing the CCAF exam myself. Everything here is built from Anthropic's public Exam Guide and my own notes.
+
 ## Disclaimer
+
+
+Unofficial — I'm certified, this guide isn't. Not affiliated with or reviewed by Anthropic.
 
 "Claude," "Claude Code," and "Claude Certified Architect" are trademarks of Anthropic, PBC. This is an independent, community-maintained study aid — not a substitute for Anthropic's official Exam Guide, which you should read in full before scheduling your exam. Passing these mock exams does not guarantee passing the real one.
 
