@@ -55,6 +55,16 @@ h1 { font-size: 1.6rem; margin-bottom: 0.25rem; }
 h2 { font-size: 1.2rem; margin-top: 2rem; }
 .subtitle { color: var(--text-muted); margin-top: 0; }
 
+.resource-links {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  margin: 0 0 1.5rem;
+}
+.resource-links a { color: var(--accent); text-decoration: none; }
+.resource-links a:hover { text-decoration: underline; }
+.resource-links span { color: var(--text-muted); }
+
 .btn {
   font: inherit;
   border-radius: 8px;

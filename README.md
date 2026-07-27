@@ -10,16 +10,7 @@ This repo has two things:
 1. **A study guide** — plain-English explanations of everything on the exam blueprint, with worked examples and practice questions
 2. **Mock exams** — 6 full-length, timed practice exams (360 questions total) with complete answer keys
 
-| Mock Exam | Difficulty | Coverage | Answer Key |
-|---|---|---|---|
-| [Exam 1](mock-exam/exam-1-questions.md) | Medium | All 6 scenarios | [Answers](mock-exam/exam-1-answers.md) |
-| [Exam 2](mock-exam/exam-2-questions.md) | Medium | 4-of-6 draw (leans D1/D5) | [Answers](mock-exam/exam-2-answers.md) |
-| [Exam 3](mock-exam/exam-3-questions.md) | Medium | 4-of-6 draw (leans D3/D4) | [Answers](mock-exam/exam-3-answers.md) |
-| [Exam 4](mock-exam/exam-4-questions.md) | Hard | All 6 scenarios | [Answers](mock-exam/exam-4-answers.md) |
-| [Exam 5](mock-exam/exam-5-questions.md) | Hard | All 6 scenarios | [Answers](mock-exam/exam-5-answers.md) |
-| [Exam 6](mock-exam/exam-6-questions.md) | Hard | All 6 scenarios | [Answers](mock-exam/exam-6-answers.md) |
-
-Everything is plain markdown. Open any file directly on GitHub — no sign-up, no build step, no app to install.
+Take the mock exams interactively: **[Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)** — all 6 exams, with a countdown timer, a question map, and instant scoring (per-scenario and per-domain breakdown, plus rationale review).
 
 > Built from Anthropic's [official CCAR-F Exam Guide](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542750%2FClaude+Certified+Architect+%E2%80%93+Foundations+Exam+Guide.pdf) — read that in full before scheduling your exam; it's the only authoritative source on policy, scoring, and blueprint changes. This repo contains no leaked or reproduced exam questions — see [CONTRIBUTING.md](CONTRIBUTING.md#the-one-hard-rule) for the rule that keeps it that way.
 
@@ -34,7 +25,7 @@ Everything is plain markdown. Open any file directly on GitHub — no sign-up, n
 | The learning material, one file per domain | [domain-1](study-guide/domain-1-agentic-architecture.md) · [domain-2](study-guide/domain-2-tool-design-mcp.md) · [domain-3](study-guide/domain-3-claude-code-workflows.md) · [domain-4](study-guide/domain-4-prompt-engineering.md) · [domain-5](study-guide/domain-5-context-reliability.md) |
 | How the 6 exam scenarios map to domains | [study-guide/scenarios.md](study-guide/scenarios.md) |
 | A one-page skim before exam day | [study-guide/cheat-sheet.md](study-guide/cheat-sheet.md) |
-| Timed practice questions with an answer key | [Exam 1](mock-exam/exam-1-questions.md) (all 6 scenarios) · [Exam 2](mock-exam/exam-2-questions.md) & [Exam 3](mock-exam/exam-3-questions.md) (realistic 4-of-6 draws) · [Exams 4](mock-exam/exam-4-questions.md), [5](mock-exam/exam-5-questions.md) & [6](mock-exam/exam-6-questions.md) (all 6 scenarios each, calibrated **hard mode**) |
+| Timed practice questions with an answer key | **[Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)** (timer, question map, auto-scoring) — or the raw markdown: [Exam 1](mock-exam/exam-1-questions.md) (all 6 scenarios) · [Exam 2](mock-exam/exam-2-questions.md) & [Exam 3](mock-exam/exam-3-questions.md) (realistic 4-of-6 draws) · [Exams 4](mock-exam/exam-4-questions.md), [5](mock-exam/exam-5-questions.md) & [6](mock-exam/exam-6-questions.md) (all 6 scenarios each, calibrated **hard mode**) |
 | The official Anthropic Exam Guide (source of truth) | [Claude Certified Architect – Foundations Exam Guide (PDF)](https://everpath-course-content.s3-accelerate.amazonaws.com/instructor%2F6nizmqk8tpzpfjvt6qmmav7rh%2Fpublic%2F1783542750%2FClaude+Certified+Architect+%E2%80%93+Foundations+Exam+Guide.pdf) |
 | Official docs and other resources | [study-guide/resources.md](study-guide/resources.md) |
 | Quick answers to common questions | [study-guide/faq.md](study-guide/faq.md) |
@@ -92,6 +83,7 @@ claude-architect-exam-guide/
 │   ├── resources.md
 │   └── faq.md
 └── mock-exam/            ← the practice exams
+    ├── interactive/      ← browser-based exam player (reads the .md files below)
     ├── exam-1-questions.md
     ├── exam-1-answers.md
     ├── exam-2-questions.md
