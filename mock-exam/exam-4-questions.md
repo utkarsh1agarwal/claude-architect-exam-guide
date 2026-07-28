@@ -39,7 +39,7 @@ Rough gut-check only — and *don't* benchmark it against Exam 1/2/3's bands or 
 - C) The agent should use `tool_choice: "any"` to force it to select one of the two tools
 - D) The MCP server is responding too quickly; add artificial delays so the model sees a timeout signal
 
-**Q3.** A customer named "James Taylor" matches 5 accounts in the system: four inactive, one active from last month. The agent selects the active account without asking for clarification. That account belongs to a different customer with the same name — the agent processes a $340 refund for the wrong person. What's the correct behavior when a lookup returns multiple matches?
+**Q3.** A customer named "Utkarsh Agarwal" matches 5 accounts in the system: four inactive, one active from last month. The agent selects the active account without asking for clarification. That account belongs to a different customer with the same name — the agent processes a $340 refund for the wrong person. What's the correct behavior when a lookup returns multiple matches?
 
 - A) Pick the most recently active account, since it's the most likely match
 - B) Ask the customer for an additional identifier before proceeding

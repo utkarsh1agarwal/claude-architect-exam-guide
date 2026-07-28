@@ -42,7 +42,7 @@ The real exam's cut score is a scaled 720/1000, set through a formal standard-se
 - C) Add a keyword pre-router in front of the agent
 - D) Force `tool_choice` to a single named tool
 
-**Q3.** A lookup for "John Smith" returns three matching customer records. What should the agent do?
+**Q3.** A lookup for "Utkarsh Agarwal" returns three matching customer records. What should the agent do?
 
 - A) Pick the most recently active account
 - B) Pick the account with the most orders
