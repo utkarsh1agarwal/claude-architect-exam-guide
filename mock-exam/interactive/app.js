@@ -151,6 +151,7 @@ const state = {
   flatQuestions: [], // [{number, scenarioTitle, stem, choices, selectCount}]
   answerKey: new Map(),
   answers: {}, // questionNumber -> string[] of selected letters
+  flagged: {}, // questionNumber -> true
   currentIndex: 0,
   timerSecondsRemaining: 0,
   timerHandle: null,
@@ -166,6 +167,7 @@ function saveProgress() {
   if (state.examId == null) return;
   const payload = {
     answers: state.answers,
+    flagged: state.flagged,
     currentIndex: state.currentIndex,
     timerSecondsRemaining: state.timerSecondsRemaining,
     durationMinutes: state.durationMinutes,
@@ -344,6 +346,7 @@ function enterReady(examId, scenarios) {
 
 function startFresh() {
   state.answers = {};
+  state.flagged = {};
   state.currentIndex = 0;
   const minutes = Math.max(1, Number(qs('durationInput').value) || DEFAULT_DURATION_MIN);
   state.durationMinutes = minutes;
@@ -357,6 +360,7 @@ function resumeSaved() {
   if (!raw) return startFresh();
   const saved = JSON.parse(raw);
   state.answers = saved.answers || {};
+  state.flagged = saved.flagged || {};
   state.currentIndex = saved.currentIndex || 0;
   state.durationMinutes = saved.durationMinutes || DEFAULT_DURATION_MIN;
   state.timerSecondsRemaining = saved.timerSecondsRemaining;
@@ -412,6 +416,12 @@ function renderQuestion() {
   qs('selectHint').textContent = q.selectCount > 1 ? `Select exactly ${q.selectCount}` : '';
   qs('selectHint').hidden = q.selectCount <= 1;
 
+  const flagButton = qs('flagQuestionBtn');
+  const isFlagged = Boolean(state.flagged[q.number]);
+  flagButton.textContent = isFlagged ? 'Unflag question' : 'Flag question';
+  flagButton.classList.toggle('is-flagged', isFlagged);
+  flagButton.setAttribute('aria-pressed', String(isFlagged));
+
   const list = qs('choicesList');
   list.innerHTML = '';
   const selected = new Set(state.answers[q.number] || []);
@@ -463,6 +473,19 @@ function onChoiceChange(q, letter, isMulti) {
   renderQuestion();
 }
 
+function toggleQuestionFlag() {
+  const q = state.flatQuestions[state.currentIndex];
+  if (!q) return;
+
+  if (state.flagged[q.number]) {
+    delete state.flagged[q.number];
+  } else {
+    state.flagged[q.number] = true;
+  }
+  saveProgress();
+  renderQuestion();
+}
+
 function goPrev() {
   if (state.currentIndex > 0) {
     state.currentIndex -= 1;
@@ -499,6 +522,7 @@ function renderPaletteGrid() {
     btn.className = 'palette-btn';
     if (i === state.currentIndex) btn.classList.add('palette-current');
     if ((state.answers[q.number] || []).length > 0) btn.classList.add('palette-answered');
+    if (state.flagged[q.number]) btn.classList.add('palette-flagged');
     btn.addEventListener('click', () => jumpTo(i));
     grid.appendChild(btn);
   });
@@ -597,11 +621,23 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
     domainTable.appendChild(row);
   }
 
-  const reviewList = qs('reviewList');
+  const flaggedItems = reviewItems.filter((item) => state.flagged[item.q.number]);
+  const flaggedSection = qs('flaggedQuestionsSection');
+  flaggedSection.hidden = flaggedItems.length === 0;
+  if (flaggedItems.length > 0) {
+    qs('flaggedQuestionsSummary').textContent =
+      `${flaggedItems.length} question${flaggedItems.length === 1 ? '' : 's'} flagged for review during the exam.`;
+    renderReviewItems(qs('flaggedReviewList'), flaggedItems, false);
+  }
+
+  renderReviewItems(qs('reviewList'), reviewItems, true);
+}
+
+function renderReviewItems(reviewList, reviewItems, includeScenarioHeadings) {
   reviewList.innerHTML = '';
   let lastScenario = null;
   for (const item of reviewItems) {
-    if (item.q.scenarioTitle !== lastScenario) {
+    if (includeScenarioHeadings && item.q.scenarioTitle !== lastScenario) {
       lastScenario = item.q.scenarioTitle;
       const heading = document.createElement('h3');
       heading.className = 'review-scenario-heading';
@@ -612,6 +648,8 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
     const card = document.createElement('div');
     card.className = 'review-item';
     card.classList.add(item.isCorrect === null ? 'review-ungraded' : item.isCorrect ? 'review-correct' : 'review-incorrect');
+    card.tabIndex = 0;
+    card.title = 'Double-click to view the full question and all answer options';
 
     const userText = item.userLetters.length ? item.userLetters.join(', ') : '(no answer)';
     const correctText = item.key ? item.key.letters.join(', ') : 'n/a';
@@ -624,6 +662,7 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
       <div class="review-item-head">
         <span class="review-q-number">Q${item.q.number}</span>
         <span class="review-badge">${item.isCorrect === null ? 'UNGRADED' : item.isCorrect ? 'Correct' : 'Incorrect'}</span>
+        ${state.flagged[item.q.number] ? '<span class="review-flagged-badge">Flagged</span>' : ''}
         ${domainBadge ? `<span class="review-domain">${domainBadge}</span>` : ''}
       </div>
       <div class="review-stem">${renderInline(item.q.stem)}</div>
@@ -632,9 +671,54 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
         <span>Correct answer: <strong>${escapeHtml(correctText)}</strong></span>
       </div>
       <div class="review-rationale">${rationale}</div>
+      <button type="button" class="review-expand-btn">View full question</button>
     `;
+    card.addEventListener('dblclick', () => openQuestionDetail(item));
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openQuestionDetail(item);
+      }
+    });
+    const expandButton = card.querySelector('.review-expand-btn');
+    expandButton.addEventListener('click', () => openQuestionDetail(item));
     reviewList.appendChild(card);
   }
+}
+
+function openQuestionDetail(item) {
+  const dialog = qs('questionDetailDialog');
+  qs('questionDetailScenario').textContent = `Question ${item.q.number} · ${item.q.scenarioTitle}`;
+  qs('questionDetailTitle').textContent = `Question ${item.q.number}`;
+  qs('questionDetailStem').innerHTML = renderInline(item.q.stem);
+
+  const choices = qs('questionDetailChoices');
+  choices.innerHTML = '';
+  const userLetters = new Set(item.userLetters);
+  const correctLetters = new Set(item.key ? item.key.letters : []);
+  for (const letter of ['A', 'B', 'C', 'D']) {
+    const choice = document.createElement('div');
+    choice.className = 'question-detail-choice';
+    if (userLetters.has(letter)) choice.classList.add('is-user-answer');
+    if (correctLetters.has(letter)) choice.classList.add('is-correct-answer');
+
+    const labels = [];
+    if (userLetters.has(letter)) labels.push('Your answer');
+    if (correctLetters.has(letter)) labels.push('Correct answer');
+    choice.innerHTML = `
+      <span class="question-detail-letter">${letter}</span>
+      <span class="question-detail-choice-text">${renderInline(item.q.choices[letter])}</span>
+      ${labels.length ? `<span class="question-detail-choice-label">${labels.join(' · ')}</span>` : ''}
+    `;
+    choices.appendChild(choice);
+  }
+
+  if (!dialog.open) dialog.showModal();
+}
+
+function closeQuestionDetail() {
+  const dialog = qs('questionDetailDialog');
+  if (dialog.open) dialog.close();
 }
 
 function retakeExam() {
@@ -667,10 +751,12 @@ function init() {
 
   qs('prevBtn').addEventListener('click', goPrev);
   qs('nextBtn').addEventListener('click', goNext);
+  qs('flagQuestionBtn').addEventListener('click', toggleQuestionFlag);
   qs('submitBtn').addEventListener('click', () => submitExam(false));
 
   qs('retakeBtn').addEventListener('click', retakeExam);
   qs('chooseAnotherBtn').addEventListener('click', chooseAnotherExam);
+  qs('closeQuestionDetailBtn').addEventListener('click', closeQuestionDetail);
 
   window.addEventListener('beforeunload', saveProgress);
 

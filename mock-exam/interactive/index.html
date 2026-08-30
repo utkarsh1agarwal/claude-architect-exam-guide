@@ -80,7 +80,10 @@
           <div class="question-panel">
             <div class="scenario-row">
               <span id="scenarioTag" class="scenario-tag"></span>
-              <span id="selectHint" class="select-hint" hidden></span>
+              <div class="question-actions">
+                <span id="selectHint" class="select-hint" hidden></span>
+                <button type="button" id="flagQuestionBtn" class="flag-question-btn" aria-pressed="false">Flag question</button>
+              </div>
             </div>
             <p id="questionStem" class="question-stem"></p>
             <div id="choicesList" class="choices-list"></div>
@@ -99,6 +102,7 @@
             <div id="paletteGrid" class="palette-grid"></div>
             <div class="palette-legend">
               <span><i class="legend-swatch legend-answered"></i> Answered</span>
+              <span><i class="legend-swatch legend-flagged"></i> Flagged</span>
               <span><i class="legend-swatch legend-current"></i> Current</span>
               <span><i class="legend-swatch"></i> Unanswered</span>
             </div>
@@ -122,11 +126,30 @@
         <button type="button" id="chooseAnotherBtn" class="btn btn-ghost">Choose another exam</button>
       </div>
 
-      <h2>Review</h2>
+      <section id="flaggedQuestionsSection" class="flagged-questions" hidden>
+        <h2>Flagged questions</h2>
+        <p id="flaggedQuestionsSummary" class="subtitle"></p>
+        <div id="flaggedReviewList" class="review-list"></div>
+      </section>
+
+      <h2>Review all questions</h2>
+      <p class="subtitle">Double-click a question to view it in full.</p>
       <div id="reviewList" class="review-list"></div>
     </section>
 
   </main>
+
+  <dialog id="questionDetailDialog" class="question-detail-dialog" aria-labelledby="questionDetailTitle">
+    <div class="question-detail-header">
+      <div>
+        <p id="questionDetailScenario" class="question-detail-scenario"></p>
+        <h2 id="questionDetailTitle">Question details</h2>
+      </div>
+      <button type="button" id="closeQuestionDetailBtn" class="btn btn-ghost">Close</button>
+    </div>
+    <p id="questionDetailStem" class="question-detail-stem"></p>
+    <div id="questionDetailChoices" class="question-detail-choices"></div>
+  </dialog>
 
   <footer class="site-footer">
     These mock exams are part of the open-source
