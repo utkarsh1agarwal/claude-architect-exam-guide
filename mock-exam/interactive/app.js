@@ -648,6 +648,8 @@ function renderReviewItems(reviewList, reviewItems, includeScenarioHeadings) {
     const card = document.createElement('div');
     card.className = 'review-item';
     card.classList.add(item.isCorrect === null ? 'review-ungraded' : item.isCorrect ? 'review-correct' : 'review-incorrect');
+    card.tabIndex = 0;
+    card.title = 'Double-click to view the full question and all answer options';
 
     const userText = item.userLetters.length ? item.userLetters.join(', ') : '(no answer)';
     const correctText = item.key ? item.key.letters.join(', ') : 'n/a';
@@ -669,9 +671,54 @@ function renderReviewItems(reviewList, reviewItems, includeScenarioHeadings) {
         <span>Correct answer: <strong>${escapeHtml(correctText)}</strong></span>
       </div>
       <div class="review-rationale">${rationale}</div>
+      <button type="button" class="review-expand-btn">View full question</button>
     `;
+    card.addEventListener('dblclick', () => openQuestionDetail(item));
+    card.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openQuestionDetail(item);
+      }
+    });
+    const expandButton = card.querySelector('.review-expand-btn');
+    expandButton.addEventListener('click', () => openQuestionDetail(item));
     reviewList.appendChild(card);
   }
+}
+
+function openQuestionDetail(item) {
+  const dialog = qs('questionDetailDialog');
+  qs('questionDetailScenario').textContent = `Question ${item.q.number} · ${item.q.scenarioTitle}`;
+  qs('questionDetailTitle').textContent = `Question ${item.q.number}`;
+  qs('questionDetailStem').innerHTML = renderInline(item.q.stem);
+
+  const choices = qs('questionDetailChoices');
+  choices.innerHTML = '';
+  const userLetters = new Set(item.userLetters);
+  const correctLetters = new Set(item.key ? item.key.letters : []);
+  for (const letter of ['A', 'B', 'C', 'D']) {
+    const choice = document.createElement('div');
+    choice.className = 'question-detail-choice';
+    if (userLetters.has(letter)) choice.classList.add('is-user-answer');
+    if (correctLetters.has(letter)) choice.classList.add('is-correct-answer');
+
+    const labels = [];
+    if (userLetters.has(letter)) labels.push('Your answer');
+    if (correctLetters.has(letter)) labels.push('Correct answer');
+    choice.innerHTML = `
+      <span class="question-detail-letter">${letter}</span>
+      <span class="question-detail-choice-text">${renderInline(item.q.choices[letter])}</span>
+      ${labels.length ? `<span class="question-detail-choice-label">${labels.join(' · ')}</span>` : ''}
+    `;
+    choices.appendChild(choice);
+  }
+
+  if (!dialog.open) dialog.showModal();
+}
+
+function closeQuestionDetail() {
+  const dialog = qs('questionDetailDialog');
+  if (dialog.open) dialog.close();
 }
 
 function retakeExam() {
@@ -709,6 +756,7 @@ function init() {
 
   qs('retakeBtn').addEventListener('click', retakeExam);
   qs('chooseAnotherBtn').addEventListener('click', chooseAnotherExam);
+  qs('closeQuestionDetailBtn').addEventListener('click', closeQuestionDetail);
 
   window.addEventListener('beforeunload', saveProgress);
 

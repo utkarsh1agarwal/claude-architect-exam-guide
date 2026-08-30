@@ -133,10 +133,23 @@
       </section>
 
       <h2>Review all questions</h2>
+      <p class="subtitle">Double-click a question to view it in full.</p>
       <div id="reviewList" class="review-list"></div>
     </section>
 
   </main>
+
+  <dialog id="questionDetailDialog" class="question-detail-dialog" aria-labelledby="questionDetailTitle">
+    <div class="question-detail-header">
+      <div>
+        <p id="questionDetailScenario" class="question-detail-scenario"></p>
+        <h2 id="questionDetailTitle">Question details</h2>
+      </div>
+      <button type="button" id="closeQuestionDetailBtn" class="btn btn-ghost">Close</button>
+    </div>
+    <p id="questionDetailStem" class="question-detail-stem"></p>
+    <div id="questionDetailChoices" class="question-detail-choices"></div>
+  </dialog>
 
   <footer class="site-footer">
     These mock exams are part of the open-source
