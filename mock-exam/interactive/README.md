@@ -26,7 +26,8 @@ manually (it tells you which filenames to pick) and it works the same way from t
 
 ## Notes
 
-- Progress autosaves to `localStorage` per exam, so a reload mid-attempt offers to resume.
+- Progress and flagged questions autosave to `localStorage` per exam, so a reload mid-attempt offers to resume.
+- Flag any question while taking the exam. Flagged questions are marked in the question map and collected in their own section at the top of the results review.
 - Exams 2 & 3 don't have written rationale in their answer keys (they use a compact
   table format instead of prose) — the review screen shows the domain tag only for those.
 - To add a 7th exam later, add one line to the `EXAMS` array at the top of `app.js`.
