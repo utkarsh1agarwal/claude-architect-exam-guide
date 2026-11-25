@@ -1037,62 +1037,116 @@ function drawScoreCard() {
   const ctx = canvas.getContext('2d');
   const font = (w, s) => `${w} ${s}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`;
 
-  const bg = ctx.createLinearGradient(0, 0, W, H);
-  bg.addColorStop(0, '#1b1034');
-  bg.addColorStop(1, '#3b1fa8');
-  ctx.fillStyle = bg;
+  const serif = (w, sz) => `${w} ${sz}px "Iowan Old Style", "New York", Palatino, Georgia, serif`;
+  const CREAM = '#f5efe4';
+  const CLAY = '#d97757';
+  const CLAY_DK = '#b85c3e';
+  const INK = '#1f1e1c';
+  const MUTED = '#6b665d';
+
+  // Cream "exam paper" with dots and a warm glow (matches the social preview)
+  ctx.fillStyle = CREAM;
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = 'rgba(31,30,28,0.10)';
+  for (let x = 13; x < W; x += 26) for (let y = 13; y < H; y += 26) ctx.fillRect(x, y, 2, 2);
+  const glow = ctx.createRadialGradient(W - 140, 40, 10, W - 140, 40, 460);
+  glow.addColorStop(0, 'rgba(217,119,87,0.28)');
+  glow.addColorStop(1, 'rgba(217,119,87,0)');
+  ctx.fillStyle = glow;
   ctx.fillRect(0, 0, W, H);
 
-  ctx.fillStyle = 'rgba(255,255,255,0.10)';
-  ctx.beginPath();
-  ctx.arc(W - 90, 70, 220, 0, Math.PI * 2);
+  // Kicker pill
+  const kicker = `CLAUDE CERTIFIED ARCHITECT · ${t.label.toUpperCase()} (${t.code})`;
+  ctx.font = font('700', 20);
+  const kw = ctx.measureText(kicker).width + 44;
+  roundRect(ctx, 60, 52, kw, 40, 20);
+  ctx.fillStyle = 'rgba(217,119,87,0.13)';
   ctx.fill();
+  ctx.strokeStyle = 'rgba(217,119,87,0.40)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.fillStyle = CLAY;
+  ctx.beginPath();
+  ctx.arc(80, 72, 5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = CLAY_DK;
+  ctx.fillText(kicker, 94, 79);
 
-  ctx.fillStyle = '#c9b8ff';
-  ctx.font = font('600', 26);
-  ctx.fillText(`CLAUDE CERTIFIED ARCHITECT · ${t.label.toUpperCase()} (${t.code})`, 64, 80);
+  // Title: shrink to fit the left column (domain panel starts at x=620), then ellipsize
+  let subtitle = r.title.replace(`${t.code} `, '');
+  subtitle = subtitle.charAt(0).toUpperCase() + subtitle.slice(1);
+  const maxW = 530;
+  let size = 44;
+  ctx.font = serif('700', size);
+  while (ctx.measureText(subtitle).width > maxW && size > 30) {
+    size -= 2;
+    ctx.font = serif('700', size);
+  }
+  while (ctx.measureText(subtitle).width > maxW && subtitle.length > 4) {
+    subtitle = `${subtitle.slice(0, -2).trimEnd()}…`;
+  }
+  ctx.fillStyle = INK;
+  ctx.fillText(subtitle, 60, 152);
 
-  ctx.fillStyle = '#ffffff';
-  ctx.font = font('700', 40);
-  const subtitle = r.title.replace(`${t.code} `, '');
-  ctx.fillText(subtitle.charAt(0).toUpperCase() + subtitle.slice(1), 64, 136);
+  // Big score
+  ctx.fillStyle = CLAY_DK;
+  ctx.font = serif('700', 150);
+  ctx.fillText(`${r.pct}%`, 54, 320);
+  ctx.fillStyle = MUTED;
+  ctx.font = font('600', 32);
+  ctx.fillText(`${r.correctCount} of ${r.gradedCount} correct`, 62, 372);
 
-  ctx.font = font('800', 150);
-  ctx.fillText(`${r.pct}%`, 58, 310);
-  ctx.fillStyle = '#d9d0ff';
-  ctx.font = font('500', 34);
-  ctx.fillText(`${r.correctCount} of ${r.gradedCount} correct`, 64, 362);
-
-  // Per-domain bars (right column)
+  // Domain panel (right) — a white "exam card"
   const domains = r.domains.slice(0, 7);
-  const x0 = 640;
-  const barW = 440;
-  const rowH = domains.length > 5 ? 46 : 56;
-  let y = 196 - Math.max(0, domains.length - 5) * 12;
-  ctx.font = font('600', 22);
+  const px = 620;
+  const py = 120;
+  const pw = 520;
+  const rowH = domains.length > 5 ? 44 : 54;
+  const ph = Math.max(150, 70 + domains.length * rowH);
+  ctx.save();
+  ctx.shadowColor = 'rgba(60,40,20,0.16)';
+  ctx.shadowBlur = 30;
+  ctx.shadowOffsetY = 14;
+  roundRect(ctx, px, py, pw, ph, 20);
+  ctx.fillStyle = '#fffdf9';
+  ctx.fill();
+  ctx.restore();
+  ctx.strokeStyle = '#e3d8c5';
+  ctx.lineWidth = 1.5;
+  roundRect(ctx, px, py, pw, ph, 20);
+  ctx.stroke();
+  ctx.fillStyle = CLAY_DK;
+  ctx.font = font('700', 17);
+  ctx.fillText('SCORE BY DOMAIN', px + 28, py + 40);
+
+  let y = py + 66;
+  ctx.font = font('700', 21);
   for (const [tag, stat] of domains) {
     const p = stat.total ? stat.correct / stat.total : 0;
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(tag, x0, y + 18);
-    roundRect(ctx, x0 + 60, y, barW - 120, 22, 11);
-    ctx.fillStyle = 'rgba(255,255,255,0.18)';
+    ctx.fillStyle = INK;
+    ctx.fillText(tag, px + 28, y + 17);
+    const bx = px + 88;
+    const bw = pw - 88 - 96;
+    roundRect(ctx, bx, y, bw, 20, 10);
+    ctx.fillStyle = '#ece3d3';
     ctx.fill();
-    roundRect(ctx, x0 + 60, y, Math.max(22, (barW - 120) * p), 22, 11);
-    ctx.fillStyle = p >= 0.75 ? '#3fdc8a' : p >= 0.6 ? '#ffc857' : '#ff7b72';
+    roundRect(ctx, bx, y, Math.max(20, bw * p), 20, 10);
+    ctx.fillStyle = p >= 0.75 ? '#4f8a5b' : p >= 0.6 ? '#d9a441' : CLAY;
     ctx.fill();
-    ctx.fillStyle = '#ffffff';
-    ctx.fillText(`${Math.round(p * 100)}%`, x0 + barW - 48, y + 18);
+    ctx.fillStyle = INK;
+    ctx.fillText(`${Math.round(p * 100)}%`, px + pw - 78, y + 17);
     y += rowH;
   }
 
-  ctx.fillStyle = 'rgba(255,255,255,0.12)';
-  ctx.fillRect(0, H - 110, W, 110);
-  ctx.fillStyle = '#ffffff';
-  ctx.font = font('700', 30);
-  ctx.fillText('Free CCAR-F & CCAR-P practice exams', 64, H - 62);
-  ctx.fillStyle = '#d9d0ff';
-  ctx.font = font('500', 24);
-  ctx.fillText('utkarsh1agarwal.github.io/claude-architect-exam-guide', 64, H - 28);
+  // Footer band
+  ctx.fillStyle = 'rgba(31,30,28,0.06)';
+  ctx.fillRect(0, H - 104, W, 104);
+  ctx.fillStyle = INK;
+  ctx.font = serif('700', 32);
+  ctx.fillText('Free CCAR-F & CCAR-P practice exams', 60, H - 58);
+  ctx.fillStyle = MUTED;
+  ctx.font = font('600', 23);
+  ctx.fillText('utkarsh1agarwal.github.io/claude-architect-exam-guide', 60, H - 24);
 
   return canvas;
 }

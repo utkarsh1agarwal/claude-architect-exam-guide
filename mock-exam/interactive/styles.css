@@ -1,30 +1,38 @@
 :root {
-  --bg: #f7f7f8;
-  --surface: #ffffff;
-  --border: #dcdde1;
-  --text: #1c1e21;
-  --text-muted: #5b5f66;
-  --accent: #6e44ff;
+  /* Warm "exam paper" theme — matches assets/social-preview.png */
+  --bg: #f5efe4;
+  --surface: #fffdf9;
+  --border: #e3d8c5;
+  --text: #1f1e1c;
+  --text-muted: #6b665d;
+  --accent: #b85c3e;          /* clay, darkened for AA contrast on cream */
+  --accent-soft: #d97757;     /* decorative clay */
   --accent-contrast: #ffffff;
-  --correct: #1a7f37;
-  --incorrect: #cf222e;
-  --warning-bg: #fff4e5;
-  --warning-border: #f2a950;
+  --correct: #3f7a4c;
+  --incorrect: #b4372b;
+  --warning-bg: #fbecd9;
+  --warning-border: #d9955a;
+  --dot: rgba(31, 30, 28, 0.08);
+  --shadow: 0 10px 30px rgba(60, 40, 20, 0.08);
+  --serif: "Iowan Old Style", "New York", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #16171a;
-    --surface: #1f2023;
-    --border: #34363b;
-    --text: #eaeaea;
-    --text-muted: #a3a7ad;
-    --accent: #9b7bff;
-    --accent-contrast: #14141a;
-    --correct: #3fb950;
-    --incorrect: #ff7b72;
-    --warning-bg: #3a2e12;
-    --warning-border: #8a6a1e;
+    --bg: #1c1b19;
+    --surface: #262421;
+    --border: #3b3833;
+    --text: #efe9df;
+    --text-muted: #a8a196;
+    --accent: #e08a6a;
+    --accent-soft: #e08a6a;
+    --accent-contrast: #1c1b19;
+    --correct: #6cc08a;
+    --incorrect: #f08a7a;
+    --warning-bg: #3a2c1c;
+    --warning-border: #8c6239;
+    --dot: rgba(239, 233, 223, 0.06);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   }
 }
 
@@ -33,7 +41,9 @@
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--dot) 1.2px, transparent 1.3px);
+  background-size: 24px 24px;
   color: var(--text);
   line-height: 1.5;
 }
@@ -64,7 +74,8 @@ a:hover { text-decoration: underline; }
   text-align: center;
 }
 
-h1 { font-size: 1.6rem; margin-bottom: 0.25rem; }
+h1 { font-family: var(--serif); font-size: 2rem; line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 0.4rem; }
+h2, .section-heading, .exam-card-title, .score-big { font-family: var(--serif); }
 h2 { font-size: 1.2rem; margin-top: 2rem; }
 .subtitle { color: var(--text-muted); margin-top: 0; }
 
@@ -180,11 +191,11 @@ h2 { font-size: 1.2rem; margin-top: 2rem; }
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
 }
-.badge-medium { background: #fff4e5; color: #9a6700; }
-.badge-hard { background: #ffe3e3; color: #a40e26; }
+.badge-medium { background: #f6e6c8; color: #8a5a12; }
+.badge-hard { background: #f6d9cf; color: #9a3a22; }
 @media (prefers-color-scheme: dark) {
-  .badge-medium { background: #3a2e12; color: #e2b04a; }
-  .badge-hard { background: #3a1418; color: #ff9c9c; }
+  .badge-medium { background: #3a2e1a; color: #e6b866; }
+  .badge-hard { background: #3d231c; color: #f0a08a; }
 }
 .exam-card-coverage { color: var(--text-muted); font-size: 0.85rem; }
 
@@ -546,8 +557,8 @@ h2 { font-size: 1.2rem; margin-top: 2rem; }
 }
 
 /* Flag for review (idea from community PR #2) */
-:root { --flag: #9a6700; }
-@media (prefers-color-scheme: dark) { :root { --flag: #e2b04a; } }
+:root { --flag: #a0660f; }
+@media (prefers-color-scheme: dark) { :root { --flag: #e6b866; } }
 .question-actions { display: flex; align-items: center; gap: 0.75rem; }
 .flag-btn {
   font: inherit;
@@ -613,3 +624,13 @@ h2 { font-size: 1.2rem; margin-top: 2rem; }
   .scenario-row { align-items: flex-start; gap: 0.5rem; }
   .question-actions { flex-direction: column; align-items: flex-end; gap: 0.35rem; }
 }
+
+/* Warm theme polish */
+.question-panel, .palette-panel, .exam-card, .practice-panel, .share-panel, .review-item, .track-tabs { box-shadow: var(--shadow); }
+.exam-card { border-radius: 14px; transition: transform 0.12s ease, border-color 0.12s ease; }
+.exam-card:hover { transform: translateY(-2px); }
+.exam-card-title { font-size: 1.2rem; }
+.topbar { background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(6px); }
+.btn-primary:hover:not(:disabled) { filter: brightness(1.06); }
+.scenario-tag { color: var(--accent); }
+.choice-row:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
