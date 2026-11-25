@@ -1,6 +1,7 @@
 # Interactive Mock Exam Player
 
-A static HTML/CSS/JS player that reads the existing `exam-*-questions.md` /
+A static HTML/CSS/JS player for **both** certifications — Foundations (CCAR-F, `mock-exam/`)
+and Professional (CCAR-P v1.1, `professional/mock-exam/`). It reads the `exam-*-questions.md` /
 `exam-*-answers.md` files directly and turns them into a timed, one-question-at-a-time
 practice test — one question at a time, timer, question map, and a results screen
 with a per-scenario/per-domain breakdown and rationale. It's read-only: nothing here
@@ -15,8 +16,8 @@ modifies the `.md` files.
 python3 -m http.server 8000
 ```
 
-Then open `http://localhost:8000/mock-exam/interactive/`. The page fetches the
-matching `../exam-N-questions.md` and `../exam-N-answers.md` files automatically.
+Then open `http://localhost:8000/mock-exam/interactive/` (or `…/interactive/#professional`
+for CCAR-P). The page fetches the matching questions and answer files automatically.
 
 **Option B — just double-click `index.html`:**
 
@@ -27,6 +28,10 @@ manually (it tells you which filenames to pick) and it works the same way from t
 ## Notes
 
 - Progress autosaves to `localStorage` per exam, so a reload mid-attempt offers to resume.
-- Exams 2 & 3 don't have written rationale in their answer keys (they use a compact
-  table format instead of prose) — the review screen shows the domain tag only for those.
-- To add a 7th exam later, add one line to the `EXAMS` array at the top of `app.js`.
+- Every answer key uses the prose format (`**Q<n>. Answer: X** *(Dn)* — rationale`), so the
+  review screen shows the full rationale for every question. The parser still accepts the
+  older compact table format.
+- Foundations question files group items under `## Scenario N: …` headings; Professional
+  files use `## Part N: …` (the real CCAR-P exam isn't grouped by scenario), and results are
+  broken down by domain.
+- To add an exam later, add one line to that track's `exams` array in `TRACKS` at the top of `app.js`.

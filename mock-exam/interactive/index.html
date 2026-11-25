@@ -3,7 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Claude Certified Architect – Foundations (CCAF) Mock Exam Player</title>
+  <title>Claude Certified Architect Mock Exams – Foundations (CCAR-F) &amp; Professional (CCAR-P)</title>
+  <meta name="description" content="Free timed practice exams for the Claude Certified Architect – Foundations (CCAR-F) and Professional (CCAR-P, exam guide v1.1) certifications. 570 original questions with explanations and per-domain scoring, in your browser.">
+  <link rel="canonical" href="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Claude Certified Architect Mock Exams – CCAR-F &amp; CCAR-P">
+  <meta property="og:description" content="Free timed practice exams for both Claude Certified Architect certifications, written by an architect certified in both. Original questions, full explanations, per-domain scoring.">
+  <meta property="og:url" content="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -17,9 +24,11 @@
   <main id="app">
 
     <section id="view-start" class="view">
-      <h1>Claude Certified Architect – Foundations (CCAF) Mock Exam Player</h1>
+      <h1>Claude Certified Architect Mock Exam Player</h1>
       <p class="subtitle">
-        Pick a practice exam below. Each is the complete, timed 60-question exam — at the end
+        Free practice exams for <strong>both</strong> Claude Certified Architect certifications —
+        Foundations (CCAR-F) and Professional (CCAR-P, exam guide v1.1) — written by an author
+        certified in both. Pick a certification, then an exam. Each one is timed — at the end
         you'll get your score along with the correct answer and explanation for every question.
         Runs entirely in your browser; nothing is uploaded anywhere. No sign-up required,
         completely free — if you find it useful, consider giving the
@@ -29,8 +38,16 @@
       <p class="resource-links">
         <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide/blob/main/README.md" target="_blank" rel="noopener">GitHub Repo &amp; README</a>
         <span aria-hidden="true">·</span>
-        <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide/blob/main/study-guide/study-plan.md" target="_blank" rel="noopener">Study guide</a>
+        <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide/tree/main/study-guide" target="_blank" rel="noopener">Foundations study guide</a>
+        <span aria-hidden="true">·</span>
+        <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide/tree/main/professional" target="_blank" rel="noopener">Professional study guide</a>
       </p>
+
+      <div class="track-tabs" role="tablist" aria-label="Certification">
+        <button type="button" class="track-tab" role="tab" data-track="foundations">Foundations <span class="track-code">CCAR-F</span></button>
+        <button type="button" class="track-tab" role="tab" data-track="professional">Professional <span class="track-code">CCAR-P v1.1</span></button>
+      </div>
+      <p id="trackBlurb" class="track-blurb"></p>
 
       <div id="examGrid" class="exam-grid"></div>
 
@@ -112,7 +129,7 @@
       <div id="scoreSummary" class="score-summary"></div>
       <p id="warningBanner" class="warning-banner" hidden></p>
 
-      <div class="results-tables">
+      <div id="resultsTables" class="results-tables">
         <table id="scenarioTable" class="stat-table"></table>
         <table id="domainTable" class="stat-table"></table>
       </div>

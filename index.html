@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Claude Certified Architect Exam Guide &amp; Free Mock Exams – CCAR-F and CCAR-P (v1.1)</title>
+  <meta name="description" content="Free study guide and timed practice exams for the Claude Certified Architect – Foundations (CCAR-F) and Professional (CCAR-P, exam guide v1.1) certifications. 570 original questions with explanations, written by an architect certified in both.">
+  <link rel="canonical" href="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Claude Certified Architect Exam Guide – CCAR-F & CCAR-P">
+  <meta property="og:description" content="Free notes and 570 original mock-exam questions for both Claude Certified Architect exams, updated for CCAR-P v1.1. Written by an architect certified in both.">
+  <meta property="og:url" content="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="mock-exam/interactive/styles.css">
+  <style>
+    .hero { padding: 1rem 0 0.5rem; }
+    .hero h1 { font-size: 1.9rem; line-height: 1.25; }
+    .badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0 1.25rem; }
+    .badge { font-size: 0.8rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
+    .card h2 { margin: 0; font-size: 1.2rem; }
+    .card ul { margin: 0.25rem 0 0.75rem; padding-left: 1.1rem; color: var(--text-muted); font-size: 0.95rem; }
+    .card .actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .card .btn { text-decoration: none; display: inline-block; }
+    .muted { color: var(--text-muted); }
+    table.compare { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 0.5rem 0 1.5rem; }
+    table.compare th, table.compare td { text-align: left; padding: 0.45rem 0.5rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    table.compare th { color: var(--text-muted); font-weight: 600; }
+    .table-wrap { overflow-x: auto; }
+    details { border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem 0.9rem; margin: 0.5rem 0; background: var(--surface); }
+    summary { cursor: pointer; font-weight: 600; }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "name": "Claude Certified Architect Exam Guide",
+        "url": "https://utkarsh1agarwal.github.io/claude-architect-exam-guide/"
+      },
+      {
+        "@type": "Person",
+        "@id": "#author",
+        "name": "Utkarsh Agarwal",
+        "url": "https://github.com/utkarsh1agarwal",
+        "sameAs": ["https://github.com/utkarsh1agarwal", "https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url", "https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url"],
+        "hasCredential": [
+          { "@type": "EducationalOccupationalCredential", "url": "https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url", "name": "Claude Certified Architect – Foundations (CCAR-F)", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Anthropic" } },
+          { "@type": "EducationalOccupationalCredential", "url": "https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url", "name": "Claude Certified Architect – Professional (CCAR-P)", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Anthropic" } }
+        ]
+      },
+      {
+        "@type": "Course",
+        "name": "Claude Certified Architect – Professional (CCAR-P) Study Guide and Mock Exams (v1.1)",
+        "description": "Free notes covering all 39 skills of the CCAR-P exam guide v1.1 across 7 domains, plus three 70-question timed mock exams with explanations.",
+        "url": "https://github.com/utkarsh1agarwal/claude-architect-exam-guide/tree/main/professional",
+        "author": { "@id": "#author" },
+        "provider": { "@type": "Person", "name": "Utkarsh Agarwal" },
+        "isAccessibleForFree": true,
+        "educationalCredentialAwarded": "Claude Certified Architect – Professional (CCAR-P)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "category": "Free" },
+        "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT20H" }
+      },
+      {
+        "@type": "Course",
+        "name": "Claude Certified Architect – Foundations (CCAR-F) Study Guide and Mock Exams",
+        "description": "Free notes covering the five CCAR-F domains plus six 60-question timed mock exams with explanations.",
+        "url": "https://github.com/utkarsh1agarwal/claude-architect-exam-guide",
+        "author": { "@id": "#author" },
+        "provider": { "@type": "Person", "name": "Utkarsh Agarwal" },
+        "isAccessibleForFree": true,
+        "educationalCredentialAwarded": "Claude Certified Architect – Foundations (CCAR-F)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "category": "Free" },
+        "hasCourseInstance": { "@type": "CourseInstance", "courseMode": "online", "courseWorkload": "PT15H" }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "What is the difference between CCAR-F and CCAR-P?", "acceptedAnswer": { "@type": "Answer", "text": "CCAR-F (Foundations) tests building with Claude: the agentic loop, tools and MCP, Claude Code, prompting and context management, in 60 items. CCAR-P (Professional) tests designing, deploying and governing production Claude systems for enterprises across 7 domains, in 70 items under exam guide v1.1." } },
+          { "@type": "Question", "name": "What changed in the CCAR-P exam guide v1.1?", "acceptedAnswer": { "@type": "Answer", "text": "From December 7, 2026 CCAR-P has 70 items (60 scored, 10 unscored), new domain weights (Integration 21%, Stakeholder Communication down to 7%), 39 named skills, no named regulations such as GDPR, HIPAA or FedRAMP, and new topics including Claude Managed Agents, deployment surfaces, reasoning effort, context lifecycle, reliability controls, LLM-as-judge bias, model migration, plugins and permission modes." } },
+          { "@type": "Question", "name": "Is there an official CCAR-P practice exam?", "acceptedAnswer": { "@type": "Answer", "text": "No. The official practice exam was retired in the move to Pearson; the exam guide's sample questions are the only official items. This guide provides three free 70-question CCAR-P mock exams and six 60-question CCAR-F mock exams." } },
+          { "@type": "Question", "name": "Do these mock exams contain real exam questions?", "acceptedAnswer": { "@type": "Answer", "text": "No. Every question is original material written against the public exam blueprint. Sharing or studying from real exam content violates the exam NDA." } }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <main id="app">
+    <section class="hero">
+      <h1>Claude Certified Architect Exam Guide<br>Foundations (CCAR-F) &amp; Professional (CCAR-P)</h1>
+      <p class="subtitle">
+        Free study notes and timed mock exams for <strong>both</strong> Anthropic architect certifications,
+        written by an architect who passed both. <strong>Updated for the CCAR-P exam guide v1.1</strong> (effective December 7, 2026).
+      </p>
+      <div class="badges">
+        <a class="badge" href="https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url" rel="noopener">Author: CCAR-F certified ✓ (Credly)</a>
+        <a class="badge" href="https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url" rel="noopener">Author: CCAR-P certified ✓ (Credly)</a>
+        <span class="badge">570 original questions</span>
+        <span class="badge">Free · no sign-up · open source</span>
+      </div>
+    </section>
+
+    <div class="cards">
+      <article class="card">
+        <h2>Professional — CCAR-P (v1.1)</h2>
+        <p class="muted">Design, deploy and govern production Claude systems.</p>
+        <ul>
+          <li>7 domain guides covering all 39 v1.1 skills</li>
+          <li>3 mock exams × 70 questions, weighted like the real blueprint</li>
+          <li>What changed from v1.0 → v1.1, study plan, cheat sheet</li>
+        </ul>
+        <div class="actions">
+          <a class="btn btn-primary" href="mock-exam/interactive/#professional">Start a CCAR-P mock exam</a>
+          <a class="btn" href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide/tree/main/professional">Read the notes</a>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Foundations — CCAR-F</h2>
+        <p class="muted">Build with Claude: agents, tools, MCP, Claude Code, prompting, context.</p>
+        <ul>
+          <li>5 domain guides with worked examples and anti-pattern tables</li>
+          <li>6 mock exams × 60 questions (medium and hard)</li>
+          <li>Scenario map, study plan, one-page cheat sheet</li>
+        </ul>
+        <div class="actions">
+          <a class="btn btn-primary" href="mock-exam/interactive/">Start a CCAR-F mock exam</a>
+          <a class="btn" href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide#claude-certified-architect--foundations-ccar-f">Read the notes</a>
+        </div>
+      </article>
+    </div>
+
+    <h2>Which exam should I take?</h2>
+    <div class="table-wrap">
+      <table class="compare">
+        <tr><th></th><th>Foundations (CCAR-F)</th><th>Professional (CCAR-P)</th></tr>
+        <tr><td>Focus</td><td>Building with Claude</td><td>Production architecture for enterprises</td></tr>
+        <tr><td>Items / time</td><td>60 / 120 min</td><td>70 (60 scored) / 120 min</td></tr>
+        <tr><td>Passing score</td><td>720 / 1000</td><td>720 / 1000</td></tr>
+        <tr><td>Fee</td><td>$125</td><td>$175</td></tr>
+        <tr><td>Prerequisite</td><td>None</td><td>None formally; Foundations is assumed knowledge</td></tr>
+      </table>
+    </div>
+
+    <h2>FAQ</h2>
+    <details>
+      <summary>What changed in the CCAR-P exam guide v1.1?</summary>
+      <p>From December 7, 2026: 70 items (60 scored + 10 unscored), new weights (Integration 21%, Stakeholder Communication down to 7%), 39 named skills, named regulations removed in favour of architectural controls, and new topics — Claude Managed Agents, deployment surfaces, reasoning effort, context lifecycle, reliability controls, LLM-as-judge bias, model migration, plugins and permission modes. <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide/blob/main/professional/study-guide/about-the-exam.md#what-changed-from-v10-to-v11">Full comparison</a>.</p>
+    </details>
+    <details>
+      <summary>Is there an official CCAR-P practice exam?</summary>
+      <p>No — it was retired in the move to Pearson. The exam guide's sample questions are the only official items, which is why these free mock exams exist.</p>
+    </details>
+    <details>
+      <summary>Are these real exam questions?</summary>
+      <p>No. Every question is original and written against the public blueprint. Real exam content is covered by an NDA and has no place in a legitimate study resource.</p>
+    </details>
+    <details>
+      <summary>Is this official?</summary>
+      <p>No. It's an independent, open-source study aid, not affiliated with or reviewed by Anthropic. Always read the official exam guide before booking.</p>
+    </details>
+  </main>
+
+  <footer class="site-footer">
+    Open source on GitHub:
+    <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide">utkarsh1agarwal/claude-architect-exam-guide</a>
+    — if it helps you prepare, a ⭐ helps others find it.<br>
+    "Claude" and "Claude Certified Architect" are trademarks of Anthropic, PBC. Unofficial study material.
+  </footer>
+</body>
+</html>
