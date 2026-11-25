@@ -291,6 +291,7 @@ function showView(id) {
     el.hidden = el.id !== id;
   }
   qs('examTopbar').hidden = id !== 'view-exam';
+  document.body.classList.toggle('in-session', id === 'view-exam');
   window.scrollTo(0, 0);
 }
 
@@ -1229,8 +1230,16 @@ function init() {
   for (const btn of document.querySelectorAll('.track-tab')) {
     btn.addEventListener('click', () => selectTrack(btn.dataset.track));
   }
-  const hashTrack = location.hash.replace('#', '');
+  // Deep links: #professional, #foundations, or #<track>/practice/<D#> (from the study guide)
+  const [hashTrack, hashAction, hashDomain] = location.hash.replace('#', '').split('/');
   selectTrack(TRACKS[hashTrack] ? hashTrack : 'foundations', { updateHash: false });
+  if (hashAction === 'practice' && DOMAIN_NAMES[state.track][hashDomain]) {
+    const chip = document.querySelector(`.domain-chip[data-domain="${hashDomain}"]`);
+    if (chip) {
+      chip.click();
+      startPractice();
+    }
+  }
 
   qs('questionsFileInput').addEventListener('change', checkFilePickerReady);
   qs('answersFileInput').addEventListener('change', checkFilePickerReady);

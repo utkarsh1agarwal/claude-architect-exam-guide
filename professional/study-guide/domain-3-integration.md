@@ -133,19 +133,19 @@ Fixed version:
 
 **Q3.1-a.** Marlowe Logistics runs a nightly unattended agent that reconciles shipment exceptions. It uses Claude Code with a project-level MCP server `wms` (warehouse management) that exposes 46 tools, including `cancel_shipment` and `adjust_inventory`. Only the `exceptions-triage` subagent reads from `wms`, using 4 read tools. A review finds two issues: (1) the main session's context carries about 18,000 tokens of `wms` tool definitions on every turn; (2) last week the main agent called `adjust_inventory` while "tidying up" a record. **Select TWO** changes that most directly fix both findings.
 
-A) Add a line to CLAUDE.md: "Never call `adjust_inventory` or `cancel_shipment`."
-B) Remove `wms` from the project config and define it inline in the `exceptions-triage` subagent's `mcpServers`.
-C) Within the subagent's `wms` connection, allow only the 4 read tools it uses and deny the rest.
-D) Add a PostToolUse hook that logs every `wms` call to the audit table for weekly review.
+- A) Add a line to CLAUDE.md: "Never call `adjust_inventory` or `cancel_shipment`."
+- B) Remove `wms` from the project config and define it inline in the `exceptions-triage` subagent's `mcpServers`.
+- C) Within the subagent's `wms` connection, allow only the 4 read tools it uses and deny the rest.
+- D) Add a PostToolUse hook that logs every `wms` call to the audit table for weekly review.
 
 **Answer: B and C.** B removes the server from the main session, which removes both the 18K tokens of definitions and the main agent's ability to call `adjust_inventory`. C applies least privilege inside the subagent so it can't write either. A is an instruction, not a control, and D detects a bad write after it has happened instead of preventing it. In an unattended run, prevention matters even more.
 
 **Q3.1-b.** A support agent for Pellham Bank needs to answer "how many of this customer's cards were reissued last year?" Today it calls `search_card_events`, which returns up to 5,000 raw events with full card numbers. Responses are slow and the security team objects to card numbers entering the model's context. ZDR is a contractual requirement. What is the best change?
 
-A) Add context editing so old card-event results are cleared after each turn.
-B) Use programmatic tool calling so a script filters the events in a sandbox and returns only the count.
-C) Add a backend tool `count_reissued_cards(customer_id, year)` that runs the query in your service and returns a number.
-D) Move `search_card_events` to a subagent that summarizes the events for the main agent.
+- A) Add context editing so old card-event results are cleared after each turn.
+- B) Use programmatic tool calling so a script filters the events in a sandbox and returns only the count.
+- C) Add a backend tool `count_reissued_cards(customer_id, year)` that runs the query in your service and returns a number.
+- D) Move `search_card_events` to a subagent that summarizes the events for the main agent.
 
 **Answer: C.** The model only needs the count, so the work belongs in code that returns a number. Card numbers never reach any model, and the setup stays ZDR-eligible. B also keeps data out of Claude's context, but code execution containers are not ZDR-eligible, which breaks the stated constraint. A clears results only after the model has read them, and D just moves the card numbers into a different model's context.
 
@@ -234,19 +234,19 @@ Sandbox env: ANTHROPIC_API_KEY=sk-...    # for "helper scripts"
 
 **Q3.2-a.** Tarnwick Legal deploys a matter-search agent. All users' requests reach the document system through one MCP server that authenticates with a service account able to read every matter. A junior associate asked the agent about a sealed matter and got a summary. Matter-level permissions already exist in the document system. Which change most directly fixes this?
 
-A) Add to the system prompt: "Refuse questions about matters the user isn't staffed on."
-B) Have users sign in with OAuth and pass each user's delegated token to the MCP server, so the document system enforces their own matter permissions.
-C) Log every document the agent reads and have a partner review the log weekly.
-D) Add an output classifier that blocks responses mentioning sealed matters.
+- A) Add to the system prompt: "Refuse questions about matters the user isn't staffed on."
+- B) Have users sign in with OAuth and pass each user's delegated token to the MCP server, so the document system enforces their own matter permissions.
+- C) Log every document the agent reads and have a partner review the log weekly.
+- D) Add an output classifier that blocks responses mentioning sealed matters.
 
 **Answer: B.** This is a confused deputy: the backend sees only the all-powerful service account, so its existing permissions can't apply. Passing the user's delegated token lets the real access control do its job. A is an instruction, C detects the leak after it happens, and D is a partial filter that will miss leaks that don't use the word "sealed".
 
 **Q3.2-b.** A team gives a Managed Agents session a cloud sandbox and puts an `ANTHROPIC_API_KEY` environment variable in it so "helper scripts can call Claude for summarization". The session has permission policies and a budget. What is the main risk, and the fix?
 
-A) The key may appear in logs; mask environment variables in log output.
-B) Costs may spike; move the key to a separate workspace with a low spend limit.
-C) The key may expire mid-session and break the helper scripts; switch to a key with no expiration date.
-D) Sandbox code can call the API directly, bypassing session policies and budget; remove the key and expose summarization as a tool.
+- A) The key may appear in logs; mask environment variables in log output.
+- B) Costs may spike; move the key to a separate workspace with a low spend limit.
+- C) The key may expire mid-session and break the helper scripts; switch to a key with no expiration date.
+- D) Sandbox code can call the API directly, bypassing session policies and budget; remove the key and expose summarization as a tool.
 
 **Answer: D.** Session controls apply to the session's tool calls, not to arbitrary HTTP calls made by code that holds a real key. Removing the key closes the bypass, and a tool on your service keeps the capability under your controls. B is tempting because it limits the damage, but it only caps cost. The policy and approval bypass is still there.
 
@@ -342,19 +342,19 @@ Parallel calls plus caching is the cheapest combination, but it only just reache
 
 **Q3.3-a.** Brindle Insurance's underwriting assistant meets its 4-second latency budget with 1.6 s to spare (p95 2.4 s). The accuracy eval shows 12% of wrong answers come from cases where the correct clause ranked between 11th and 25th, while the pipeline passes the top 10 chunks. A reranker adds about 250 ms. What should the architect do?
 
-A) Retrieve 50 candidates, rerank them, and pass the top 25, using part of the latency headroom.
-B) Move to the most capable tier to reason better over the 10 chunks.
-C) Enable prompt caching on the retrieved chunks to reduce latency further.
-D) Add streaming so users see answers sooner while accuracy is investigated.
+- A) Retrieve 50 candidates, rerank them, and pass the top 25, using part of the latency headroom.
+- B) Move to the most capable tier to reason better over the 10 chunks.
+- C) Enable prompt caching on the retrieved chunks to reduce latency further.
+- D) Add streaming so users see answers sooner while accuracy is investigated.
 
 **Answer: A.** Accuracy is the binding constraint, and the evidence points at retrieval depth: the right clause exists but falls just outside the top 10. Reranking and passing more chunks uses headroom the system already has. B is the scale-up reflex: a better model can't use a clause it never sees. C and D improve latency, which isn't the problem.
 
 **Q3.3-b.** A code-review bot posts one complete review comment per pull request. Its p95 is 41 s against a 25 s target. The trace shows TTFT of 3 s and generation of 36 s for about 3,000 output tokens. Smaller tiers fail the review-quality eval. Which change best meets the target?
 
-A) Enable streaming so the review starts appearing after 3 s.
-B) Cache the repository's style guide in the system prompt.
-C) Enable fast mode on the current model, accepting a higher per-token price.
-D) Run two reviews in parallel and post whichever finishes first.
+- A) Enable streaming so the review starts appearing after 3 s.
+- B) Cache the repository's style guide in the system prompt.
+- C) Enable fast mode on the current model, accepting a higher per-token price.
+- D) Run two reviews in parallel and post whichever finishes first.
 
 **Answer: C.** Generation is 36 of 41 seconds, and the model tier is locked by quality, so speeding up output generation on the same model is the lever. At up to 2.5× output speed, 36 s drops to roughly 15 s. A doesn't help because the bot posts one complete comment, so streaming changes nothing the user sees. B reduces TTFT, which is only 3 s, and D doubles cost without changing generation speed.
 
@@ -437,19 +437,19 @@ Signals that would have caught it:
 
 **Q3.4-a.** Harbor Freight Analytics runs 2,000 document-processing agents a day. A finance review finds that about 0.5% of sessions each made 250+ tool calls in a retry loop, and these account for 30% of monthly spend. Dashboards show average tool calls per session (14, steady) and workspace cost per day. **Select TWO** changes that would have surfaced the problem early and limited the damage.
 
-A) Alert on the p99 and max of per-session tool-call count and cost.
-B) Set the daily workspace cost alert threshold 10% lower.
-C) Enforce a per-session turn cap and budget cap so runaway sessions stop.
-D) Add an LLM judge to score the quality of each final summary.
+- A) Alert on the p99 and max of per-session tool-call count and cost.
+- B) Set the daily workspace cost alert threshold 10% lower.
+- C) Enforce a per-session turn cap and budget cap so runaway sessions stop.
+- D) Add an LLM judge to score the quality of each final summary.
 
 **Answer: A and C.** The loops hide inside an average, so A watches the distribution tail per session, and C bounds each runaway session. B still watches an aggregate: 0.5% of sessions growing slowly may never cross a daily threshold, and it says nothing about which sessions are at fault. D measures output quality, but these sessions may still produce acceptable summaries.
 
 **Q3.4-b.** An agent's custom `lookup_price` tool, run by the application, began returning empty lists when its upstream database timed out. For two days the agent told customers items were "not currently priced". OpenTelemetry API tracing was on, and all model request spans showed success. What monitoring would have caught this?
 
-A) Alert on model-request error rate in the API trace.
-B) Use the Usage and Cost Analytics API to spot token anomalies.
-C) Run an LLM judge to check that answers are consistent with tool results.
-D) Instrument `lookup_price` with error and empty-result-rate metrics, and return an explicit error on timeout.
+- A) Alert on model-request error rate in the API trace.
+- B) Use the Usage and Cost Analytics API to spot token anomalies.
+- C) Run an LLM judge to check that answers are consistent with tool results.
+- D) Instrument `lookup_price` with error and empty-result-rate metrics, and return an explicit error on timeout.
 
 **Answer: D.** The failure was inside an application-run custom tool, which API-side tracing doesn't cover, and model calls really were succeeding. C fails because the answers were consistent with the tool's (empty) results. B sees aggregate usage, which barely changes when a tool returns `[]`.
 
@@ -535,19 +535,19 @@ Reading it:
 
 **Q3.5-a.** Orchard Health's prior-authorization assistant answers from a 260-page coverage policy (about 150,000 tokens). It is updated quarterly. The current RAG pipeline sometimes applies a coverage rule but misses its exception, which sits 90 pages later. Queries arrive all day. Which architecture fits best?
 
-A) Increase chunk size to 4,000 tokens so rules and exceptions land in the same chunk.
-B) Switch to agentic search so Claude can grep for exceptions.
-C) Add a reranker and pass the top 30 chunks.
-D) Put the full policy in the prompt and cache it as a stable prefix, refreshing the cache when the policy changes.
+- A) Increase chunk size to 4,000 tokens so rules and exceptions land in the same chunk.
+- B) Switch to agentic search so Claude can grep for exceptions.
+- C) Add a reranker and pass the top 30 chunks.
+- D) Put the full policy in the prompt and cache it as a stable prefix, refreshing the cache when the policy changes.
 
 **Answer: D.** At about 150K tokens the policy fits comfortably in context, so the model sees each rule together with its distant exception. Caching keeps the repeated prefix cheap and fast for all-day traffic. A only helps when the exception happens to fall in the same chunk, and 90 pages apart it won't. B and C add complexity and latency for a corpus that doesn't need retrieval at all.
 
 **Q3.5-b.** Ferrous Parts indexes 2 million product-manual chunks with embeddings only. Questions mentioning part numbers (for example `FP-22817-B`) fail often. The same pipeline also returns superseded torque specs from old manual revisions. **Select TWO** changes that most directly address these findings.
 
-A) Add BM25 lexical search alongside embeddings and merge the results (hybrid search).
-B) Filter candidates by the product's current manual revision before similarity ranking.
-C) Upgrade to the most capable model tier for answer generation.
-D) Ask the model in the system prompt to prefer the newest revision it sees.
+- A) Add BM25 lexical search alongside embeddings and merge the results (hybrid search).
+- B) Filter candidates by the product's current manual revision before similarity ranking.
+- C) Upgrade to the most capable model tier for answer generation.
+- D) Ask the model in the system prompt to prefer the newest revision it sees.
 
 **Answer: A and B.** Exact identifiers are what lexical search is good at and embeddings are bad at, so A fixes the part-number misses. B prevents superseded revisions from being candidates at all. D is an instruction that depends on the model noticing revision metadata, and it may never see the current chunk. C is the scale-up reflex aimed at the wrong stage.
 
@@ -631,19 +631,19 @@ Three integrations for Larchmont Energy:
 
 **Q3.6-a.** Vantor Bank must let a Claude-based assistant query a core-banking ledger service. Security policy forbids any inbound connection from the internet to the ledger network. Outbound HTTPS to approved SaaS APIs is allowed. Which design fits, and what does it give up?
 
-A) Expose the ledger through an MCP server and use the API's MCP connector with per-user OAuth tokens; gives up nothing.
-B) Use the MCP connector through a reverse proxy placed in the DMZ in front of the ledger; adds one extra network hop.
-C) Hand ledger questions to a separate agent hosted in the vendor's cloud; gives up some latency.
-D) Define a client tool that the app runs inside the network, calling the Claude API outbound only; the team maintains the tool code.
+- A) Expose the ledger through an MCP server and use the API's MCP connector with per-user OAuth tokens; gives up nothing.
+- B) Use the MCP connector through a reverse proxy placed in the DMZ in front of the ledger; adds one extra network hop.
+- C) Hand ledger questions to a separate agent hosted in the vendor's cloud; gives up some latency.
+- D) Define a client tool that the app runs inside the network, calling the Claude API outbound only; the team maintains the tool code.
 
 **Answer: D.** Client tools run where your app runs, so only outbound traffic is needed, and the option honestly states the cost. A and B both need the MCP server to be reachable from Anthropic's side, which means inbound traffic. OAuth and proxies don't change that, and "gives up nothing" is a red flag. C moves banking data and reasoning outside the bank's boundary for no reason.
 
 **Q3.6-b.** A procurement team wants their agent to place orders with a supplier. The supplier runs its own ordering agent that checks stock, negotiates partial fills over several hours, and applies its own credit policy. Which mechanism fits best?
 
-A) An MCP server the procurement team builds against the supplier's database.
-B) A subagent in the procurement agent that reproduces the supplier's credit policy.
-C) An agent-to-agent handoff with a defined task request and result contract.
-D) Direct API calls from the procurement agent to the supplier's internal stock tables.
+- A) An MCP server the procurement team builds against the supplier's database.
+- B) A subagent in the procurement agent that reproduces the supplier's credit policy.
+- C) An agent-to-agent handoff with a defined task request and result contract.
+- D) Direct API calls from the procurement agent to the supplier's internal stock tables.
 
 **Answer: C.** The supplier owns the reasoning, state and policy, and the work is long-running and stateful across a trust boundary. That is the case agent-to-agent handoff exists for. A and D need access to the supplier's internal systems that they won't (and shouldn't) grant. B duplicates a policy you don't own and will drift from it.
 
@@ -738,19 +738,19 @@ That is a good trade: a large context and accuracy win for a small latency cost 
 
 **Q3.7-a.** A sales-ops agent has 7 tools, all used in most conversations. Its definitions total 4,500 tokens. A teammate proposes adding tool search with all 7 deferred to "save context". The SLA is tight on per-turn latency. What should the architect decide?
 
-A) Keep all 7 tools loaded and cache the stable tool-and-system prefix.
-B) Adopt tool search; any context savings are worth it.
-C) Defer 5 tools and keep 2 loaded to balance the trade-off.
-D) Merge all 7 tools into one `do_sales_op(action, args)` tool.
+- A) Keep all 7 tools loaded and cache the stable tool-and-system prefix.
+- B) Adopt tool search; any context savings are worth it.
+- C) Defer 5 tools and keep 2 loaded to balance the trade-off.
+- D) Merge all 7 tools into one `do_sales_op(action, args)` tool.
 
 **Answer: A.** With a few frequently used tools, deferral adds a search turn to most requests and saves very little, which is the wrong trade under a tight latency SLA. Caching handles the fixed cost. C still adds search turns to the common path. D hurts tool selection and makes least-privilege scoping harder.
 
 **Q3.7-b.** A platform agent integrates 600 tools. Tool search is enabled, but users report it often fails to find `fin_close_period_reopen` when they ask to "reopen last month's books". The tool's description is "Reverses FP lock state." Which change most directly helps?
 
-A) Raise the tool search result limit from 5 to 50.
-B) Add a system prompt line: "If search fails, try different keywords."
-C) Make `fin_close_period_reopen` non-deferred along with all other finance tools.
-D) Rewrite the description and parameter descriptions in users' terms ("reopen a closed accounting month/period, unlock the books") and keep the `fin_` prefix.
+- A) Raise the tool search result limit from 5 to 50.
+- B) Add a system prompt line: "If search fails, try different keywords."
+- C) Make `fin_close_period_reopen` non-deferred along with all other finance tools.
+- D) Rewrite the description and parameter descriptions in users' terms ("reopen a closed accounting month/period, unlock the books") and keep the `fin_` prefix.
 
 **Answer: D.** Tool search matches on names, descriptions and argument names and descriptions, so jargon like "FP lock state" never matches the user's words. A returns more weak matches without fixing the vocabulary gap. C works around the issue but loads a whole category up front, which defeats the purpose. B is an instruction that doesn't change what can be matched.
 
@@ -847,19 +847,19 @@ A nightly summarization job processes 24,000 documents. Each produces about 2,50
 
 **Q3.8-a.** Stellan Clinics' scheduling agent books appointments through `create_booking`. After a network blip, logs show the same patient booked twice in 23 cases. In each case the booking succeeded downstream but the response was lost, and the agent's tool call was retried. **Select TWO** changes that prevent duplicates without losing legitimate bookings.
 
-A) Pass an idempotency key, generated once per logical booking, to the booking API so repeats return the original booking.
-B) Disable all retries on `create_booking` calls.
-C) Add a system prompt rule: "Before booking, check whether you already booked this slot."
-D) Checkpoint each completed tool step so a retried or resumed run continues after the last recorded step.
+- A) Pass an idempotency key, generated once per logical booking, to the booking API so repeats return the original booking.
+- B) Disable all retries on `create_booking` calls.
+- C) Add a system prompt rule: "Before booking, check whether you already booked this slot."
+- D) Checkpoint each completed tool step so a retried or resumed run continues after the last recorded step.
 
 **Answer: A and D.** A makes a repeated call harmless even when the first success went unrecorded. D keeps resumed runs from replaying steps that are already done. B drops real bookings whenever a transient error happens before the booking is made. C relies on the model knowing about a booking whose response it never received.
 
 **Q3.8-b.** Error logs show bursts of 529 `overloaded_error`. Each job's API attempts average 27 during an incident, and the backlog keeps growing for 20 minutes after the API recovers. The app uses the SDK default retries, a wrapper retrying 3 times, and a queue redelivering 3 times. What is the best fix?
 
-A) Keep a single retry layer with exponential backoff, jitter and a cap, and send exhausted jobs to a dead-letter queue.
-B) Add idempotency keys to every Claude API call.
-C) Enable server-side `fallbacks` so overloaded requests move to another model.
-D) Request a higher rate limit from Anthropic.
+- A) Keep a single retry layer with exponential backoff, jitter and a cap, and send exhausted jobs to a dead-letter queue.
+- B) Add idempotency keys to every Claude API call.
+- C) Enable server-side `fallbacks` so overloaded requests move to another model.
+- D) Request a higher rate limit from Anthropic.
 
 **Answer: A.** Three layers multiply attempts (3 × 3 × 3 = 27), so the storm outlives the overload. Collapsing to one capped, jittered layer fixes the pattern. C fails because server-side fallback triggers only on safety refusals, and overloads are returned as-is. B is a real practice for side-effecting tools, but these failures happen before any side effect, and D doesn't address an overload or a self-inflicted storm.
 
@@ -908,4 +908,5 @@ D) Request a higher rate limit from Anthropic.
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)

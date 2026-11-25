@@ -4,6 +4,8 @@
 
 Free notes and three full-length mock exams for Anthropic's **Claude Certified Architect – Professional** exam, written by an architect who holds both the [Foundations](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url) and the [Professional](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url) certification (verifiable on Credly). Every question is original — no real or leaked exam content.
 
+**📖 [Read this study guide online](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/professional/about-the-exam.html)** — with hidden-answer practice questions and one-click domain practice.
+
 **▶ [Take a CCAR-P mock exam in your browser](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/#professional)** — 70-question timed exams with a question map, instant scoring by domain, and a full explanation for every answer.
 
 ---
@@ -57,4 +59,5 @@ Preparing for **Foundations (CCAR-F)** instead? → [Foundations study guide and
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)

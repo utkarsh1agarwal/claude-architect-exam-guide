@@ -17,14 +17,52 @@
   <meta name="twitter:image" content="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/assets/social-preview.png">
   <link rel="stylesheet" href="mock-exam/interactive/styles.css">
   <script src="mock-exam/interactive/theme.js"></script>
+  <script src="mock-exam/interactive/support.js" defer></script>
   <style>
     .hero { padding: 1rem 0 0.5rem; }
     .hero h1 { font-size: 1.9rem; line-height: 1.25; }
     .badges { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0 1.25rem; }
-    .badge { font-size: 0.8rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); }
+    .badges { gap: 0.35rem; }
+    .badge { font-size: 0.74rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); }
+    .book-link { font-weight: 700; white-space: nowrap; }
+    .badge-free { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); background: color-mix(in srgb, var(--accent-soft) 12%, var(--surface)); color: var(--accent); }
+    .badge-new { border-color: color-mix(in srgb, var(--correct) 45%, var(--border)); background: color-mix(in srgb, var(--correct) 9%, var(--surface)); color: var(--correct); }
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; }
-    .card h2 { margin: 0; font-size: 1.2rem; }
+    .card h2 { margin: 0; font-size: 1.25rem; }
+    .card-head { display: flex; align-items: center; gap: 1rem; }
+    .nowrap { white-space: nowrap; }
+    .card li.li-cheat { list-style: none; margin: 0.6rem 0 0 -1.1rem; }
+    .li-cheat a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+      background: color-mix(in srgb, var(--accent-soft) 12%, var(--surface));
+      color: var(--text);
+    }
+    .li-cheat strong { color: var(--accent); }
+    .li-cheat a:hover { text-decoration: none; border-color: var(--accent); background: color-mix(in srgb, var(--accent-soft) 20%, var(--surface)); }
+    .btn-exam {
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      font-weight: 700;
+      background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+      transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn-exam span { font-size: 0.8em; margin-right: 0.15rem; }
+    .btn-exam:hover:not(:disabled) {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 30%, transparent);
+    }
+    .card-kicker { margin: 0 0 0.15rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+    .cert-badge { flex: none; display: block; width: 64px; height: 64px; transition: transform 0.15s ease; }
+    .cert-badge:hover { transform: rotate(-4deg) scale(1.05); }
+    .cert-badge img { width: 64px; height: 64px; object-fit: cover; object-position: center; display: block; filter: drop-shadow(0 6px 10px rgba(60, 40, 20, 0.18)); }
     .card ul { margin: 0.25rem 0 0.75rem; padding-left: 1.1rem; color: var(--text-muted); font-size: 0.95rem; }
     .card .actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .card .btn { text-decoration: none; display: inline-block; }
@@ -94,46 +132,104 @@
   </script>
 </head>
 <body>
+  <header class="guide-top">
+    <a class="guide-brand" href="./">Claude Certified Architect <span>Exam Guide</span></a>
+    <nav class="guide-top-links" aria-label="Site">
+      <a href="./" aria-current="page">Home</a>
+      <a href="./guide/">Study guide</a>
+      <a href="./mock-exam/interactive/">Mock exams</a>
+      <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide" target="_blank" rel="noopener">⭐ GitHub</a>
+      <!-- header:start -->
+      <a class="hdr-icon" href="https://www.linkedin.com/in/utkarsh-agarwal-ua0235/" target="_blank" rel="noopener" aria-label="Follow Utkarsh Agarwal on LinkedIn" title="Follow on LinkedIn"><svg class="li-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.6h2.6V18H7.1zM8.4 5.6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM11.3 9.6h2.5v1.2h.04c.35-.66 1.2-1.36 2.47-1.36 2.64 0 3.13 1.74 3.13 4V18h-2.6v-4.06c0-.97-.02-2.22-1.35-2.22-1.36 0-1.57 1.06-1.57 2.15V18h-2.6z"/></svg></a>
+      <a class="hdr-coffee" href="#support" data-support title="Buy me a coffee">☕<span> Buy me a coffee</span></a>
+    <!-- header:end -->
+    </nav>
+  </header>
   <main id="app">
     <section class="hero">
-      <h1>Claude Certified Architect Exam Guide<br>Foundations (CCAR-F) &amp; Professional (CCAR-P)</h1>
+      <h1>Claude Certified Architect Exam Guide<br>Foundations <span class="nowrap">(CCAR-F)</span> &amp; Professional <span class="nowrap">(CCAR-P)</span></h1>
       <p class="subtitle">
         Free study notes and timed mock exams for <strong>both</strong> Anthropic architect certifications,
         written by an architect who passed both. <strong>Updated for the CCAR-P exam guide v1.1</strong> (effective December 7, 2026).
       </p>
       <div class="badges">
-        <a class="badge" href="https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url" rel="noopener">Author: CCAR-F certified ✓ (Credly)</a>
-        <a class="badge" href="https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url" rel="noopener">Author: CCAR-P certified ✓ (Credly)</a>
-        <span class="badge">570 original questions</span>
-        <span class="badge">Free · no sign-up · open source</span>
+        <span class="badge badge-free">🎁 Free &amp; open source</span>
+        <span class="badge">📝 570 questions</span>
+        <span class="badge">⏱️ 9 mock exams</span>
+        <span class="badge">💡 Study mode</span>
+        <span class="badge">✅ Answers explained</span>
+        <span class="badge badge-new">✨ CCAR-P v1.1</span>
+        <span class="badge">📱 Mobile-friendly</span>
       </div>
+      <!-- author:start -->
+      <aside class="author-card" aria-label="About the author">
+        <a class="author-avatar" href="https://github.com/utkarsh1agarwal" target="_blank" rel="noopener" title="Utkarsh Agarwal on GitHub"><img src="https://github.com/utkarsh1agarwal.png?size=160" width="64" height="64" alt="Utkarsh Agarwal" loading="lazy" onerror="this.replaceWith(document.createTextNode('UA'))"></a>
+        <div class="author-text">
+          <p class="author-label">Author</p>
+          <p class="author-name"><span class="signature">Utkarsh Agarwal</span></p>
+          <p class="author-title">Claude Certified Architect · Foundations &amp; Professional</p>
+          <p class="author-cred">
+            <svg class="shield" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 2.5 4.5 5.5v6c0 4.6 3.1 8.6 7.5 10 4.4-1.4 7.5-5.4 7.5-10v-6z" fill="currentColor" opacity=".16"/><path d="M12 2.5 4.5 5.5v6c0 4.6 3.1 8.6 7.5 10 4.4-1.4 7.5-5.4 7.5-10v-6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m8.6 12.2 2.4 2.4 4.5-4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Verified on Credly:
+            <a href="https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url" target="_blank" rel="noopener">Foundations ↗</a> ·
+            <a href="https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url" target="_blank" rel="noopener">Professional ↗</a>
+          </p>
+        </div>
+        <div class="author-actions">
+          <p class="author-ask">If this helped you, star the repo and buy me a coffee 🙏</p>
+          <div class="author-buttons">
+            <a class="chip" href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide" target="_blank" rel="noopener">⭐ Star the repo</a>
+            <a class="chip chip-coffee" href="#support" data-support>☕ Buy me a coffee</a>
+            <a class="chip" href="https://www.linkedin.com/in/utkarsh-agarwal-ua0235/" target="_blank" rel="noopener"><svg class="li-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.6h2.6V18H7.1zM8.4 5.6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM11.3 9.6h2.5v1.2h.04c.35-.66 1.2-1.36 2.47-1.36 2.64 0 3.13 1.74 3.13 4V18h-2.6v-4.06c0-.97-.02-2.22-1.35-2.22-1.36 0-1.57 1.06-1.57 2.15V18h-2.6z"/></svg> Follow on LinkedIn</a>
+          </div>
+        </div>
+      </aside>
+    <!-- author:end -->
     </section>
 
     <div class="cards">
       <article class="card">
-        <h2>Professional — CCAR-P (v1.1)</h2>
-        <p class="muted">Design, deploy and govern production Claude systems.</p>
-        <ul>
-          <li>7 domain guides covering all 39 v1.1 skills</li>
-          <li>3 mock exams × 70 questions, weighted like the real blueprint</li>
-          <li>What changed from v1.0 → v1.1, study plan, cheat sheet</li>
-        </ul>
-        <div class="actions">
-          <a class="btn btn-primary" href="mock-exam/interactive/#professional">Start mock exam</a>
-          <a class="btn" href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide/tree/main/professional">Study guide</a>
+        <div class="card-head">
+          <a class="cert-badge" href="https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url" target="_blank" rel="noopener" title="Author's Foundations badge — verify on Credly">
+            <img src="assets/badges/ccar-f-badge.png" width="64" height="64" alt="Claude Certified Architect – Foundations badge">
+          </a>
+          <div>
+            <p class="card-kicker">Start here</p>
+            <h2>Foundations — <span class="nowrap">CCAR-F</span></h2>
+          </div>
         </div>
-      </article>
-      <article class="card">
-        <h2>Foundations — CCAR-F</h2>
         <p class="muted">Build with Claude: agents, tools, MCP, Claude Code, prompting, context.</p>
         <ul>
           <li>5 domain guides with worked examples and anti-pattern tables</li>
           <li>6 mock exams × 60 questions (medium and hard)</li>
-          <li>Scenario map, study plan, one-page cheat sheet</li>
+          <li>Scenario map and study plan</li>
+          <li class="li-cheat"><a href="guide/foundations/cheat-sheet.html"><span aria-hidden="true">⚡</span> <strong>Cheat sheet</strong> — one-page final review</a></li>
         </ul>
         <div class="actions">
-          <a class="btn btn-primary" href="mock-exam/interactive/">Start mock exam</a>
-          <a class="btn" href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide#claude-certified-architect--foundations-ccar-f">Study guide</a>
+          <a class="btn btn-primary" href="guide/foundations/about-the-exam.html">Study guide</a>
+          <a class="btn btn-exam" href="mock-exam/interactive/"><span aria-hidden="true">▶</span> Start mock exam</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <a class="cert-badge" href="https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url" target="_blank" rel="noopener" title="Author's Professional badge — verify on Credly">
+            <img src="assets/badges/ccar-p-badge.png" width="64" height="64" alt="Claude Certified Architect – Professional badge">
+          </a>
+          <div>
+            <p class="card-kicker">Updated for exam guide v1.1</p>
+            <h2>Professional — <span class="nowrap">CCAR-P</span></h2>
+          </div>
+        </div>
+        <p class="muted">Design, deploy and govern production Claude systems.</p>
+        <ul>
+          <li>7 domain guides covering all 39 v1.1 skills</li>
+          <li>3 mock exams × 70 questions, weighted like the real blueprint</li>
+          <li>What changed from v1.0 → v1.1, and a study plan</li>
+          <li class="li-cheat"><a href="guide/professional/cheat-sheet.html"><span aria-hidden="true">⚡</span> <strong>Cheat sheet</strong> — final review before exam day</a></li>
+        </ul>
+        <div class="actions">
+          <a class="btn btn-primary" href="guide/professional/about-the-exam.html">Study guide</a>
+          <a class="btn btn-exam" href="mock-exam/interactive/#professional"><span aria-hidden="true">▶</span> Start mock exam</a>
         </div>
       </article>
     </div>
@@ -145,7 +241,8 @@
         <tr><td>Focus</td><td>Building with Claude</td><td>Production architecture for enterprises</td></tr>
         <tr><td>Items / time</td><td>60 / 120 min</td><td>70 (60 scored) / 120 min</td></tr>
         <tr><td>Passing score</td><td>720 / 1000</td><td>720 / 1000</td></tr>
-        <tr><td>Fee</td><td>$125</td><td>$175</td></tr>
+        <tr><td>Fee</td><td>$125 · <a class="book-link" href="https://anthropic-partners.skilljar.com/claude-certified-architect-foundations-certification" target="_blank" rel="noopener">Book the exam ↗</a></td><td>$175 · <a class="book-link" href="https://anthropic-partners.skilljar.com/claude-certified-architect-professional-certification" target="_blank" rel="noopener">Book the exam ↗</a></td></tr>
+        <tr><td>Who can book</td><td colspan="2">Claude Partner Network members, through Anthropic Partner Academy (<a href="https://anthropic-partners.skilljar.com/page/faq-certifications" target="_blank" rel="noopener">certification FAQ ↗</a>)</td></tr>
         <tr><td>Prerequisite</td><td>None</td><td>None formally; Foundations is assumed knowledge</td></tr>
       </table>
     </div>
@@ -170,10 +267,10 @@
   </main>
 
   <footer class="site-footer">
-    Open source on GitHub:
-    <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide">utkarsh1agarwal/claude-architect-exam-guide</a>
-    — if it helps you prepare, <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide">⭐ star the repo</a> and
-    <a href="https://www.linkedin.com/in/utkarsh-agarwal-ua0235/" rel="noopener">💼 follow me on LinkedIn</a> for updates.<br>
+    <!-- support:start -->
+    Created by <strong>Utkarsh Agarwal</strong> · Claude Certified Architect – Foundations &amp; Professional certified ·
+    <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide" target="_blank" rel="noopener">⭐ Star on GitHub</a> · <a href="https://www.linkedin.com/in/utkarsh-agarwal-ua0235/" target="_blank" rel="noopener"><svg class="li-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M7.1 9.6h2.6V18H7.1zM8.4 5.6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM11.3 9.6h2.5v1.2h.04c.35-.66 1.2-1.36 2.47-1.36 2.64 0 3.13 1.74 3.13 4V18h-2.6v-4.06c0-.97-.02-2.22-1.35-2.22-1.36 0-1.57 1.06-1.57 2.15V18h-2.6z"/></svg> Follow on LinkedIn</a> · <a href="#support" data-support>☕ Buy me a coffee</a>
+    <!-- support:end --><br>
     "Claude" and "Claude Certified Architect" are trademarks of Anthropic, PBC. Unofficial study material.
   </footer>
 </body>

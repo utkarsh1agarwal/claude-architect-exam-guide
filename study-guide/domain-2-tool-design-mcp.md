@@ -18,10 +18,10 @@ Tools are how agents actually *do* things in the world. This domain is about des
 
 **Practice.** `get_customer` ("Retrieves customer information") and `lookup_order` ("Retrieves order details") are frequently confused by the agent for order-status queries. What's the most effective *first* step?
 
-A) 5–8 few-shot examples of correct routing
-B) Expand both descriptions with input formats, example queries, and explicit boundary conditions
-C) A keyword-based pre-routing layer
-D) Merge into one `lookup_entity` tool
+- A) 5–8 few-shot examples of correct routing
+- B) Expand both descriptions with input formats, example queries, and explicit boundary conditions
+- C) A keyword-based pre-routing layer
+- D) Merge into one `lookup_entity` tool
 
 **Answer: B.** Description quality is always the first, lowest-effort, highest-leverage fix — before few-shot examples, before architectural changes.
 
@@ -38,10 +38,10 @@ D) Merge into one `lookup_entity` tool
 
 **Practice.** A search subagent times out mid-query. What's the best way for it to report this to the coordinator?
 
-A) Return an empty result set marked as success
-B) Retry silently forever until it succeeds
-C) Return structured error context: failure type, what was attempted, any partial results, possible alternatives
-D) Terminate the entire multi-agent workflow immediately
+- A) Return an empty result set marked as success
+- B) Retry silently forever until it succeeds
+- C) Return structured error context: failure type, what was attempted, any partial results, possible alternatives
+- D) Terminate the entire multi-agent workflow immediately
 
 **Answer: C.** Option A masks failure as success; D over-reacts to a single, possibly recoverable failure. Structured context lets the coordinator make an informed recovery decision.
 
@@ -62,10 +62,10 @@ D) Terminate the entire multi-agent workflow immediately
 
 **Practice.** A synthesis agent needs simple fact-checks (dates, names, stats) constantly, currently routed through the coordinator → web-search agent → back, adding 40% latency. 85% of these checks are simple; 15% need deep investigation. Best fix?
 
-A) Give the synthesis agent full access to all web search tools
-B) Give the synthesis agent one scoped `verify_fact` tool for the simple 85%; keep coordinator-routed delegation for the complex 15%
-C) Batch all verification requests to send at the end
-D) Have the search agent proactively cache extra context speculatively
+- A) Give the synthesis agent full access to all web search tools
+- B) Give the synthesis agent one scoped `verify_fact` tool for the simple 85%; keep coordinator-routed delegation for the complex 15%
+- C) Batch all verification requests to send at the end
+- D) Have the search agent proactively cache extra context speculatively
 
 **Answer: B.** This applies the principle of least privilege — give the agent exactly what it needs for the common case, without over-provisioning it for everything.
 
@@ -96,10 +96,10 @@ D) Have the search agent proactively cache extra context speculatively
 
 **Practice.** Which config location is correct for a Jira MCP server your whole team should use, with a token that must never be committed to git?
 
-A) `~/.claude.json` with the token hardcoded
-B) `.mcp.json` with `${JIRA_TOKEN}` env-var expansion
-C) `CLAUDE.md` with the token in a code block
-D) A `.env` file referenced nowhere in Claude Code config
+- A) `~/.claude.json` with the token hardcoded
+- B) `.mcp.json` with `${JIRA_TOKEN}` env-var expansion
+- C) `CLAUDE.md` with the token in a code block
+- D) A `.env` file referenced nowhere in Claude Code config
 
 **Answer: B.**
 
@@ -118,10 +118,10 @@ D) A `.env` file referenced nowhere in Claude Code config
 
 **Practice.** You need to find every file matching `**/*.test.tsx` across a repo. Which tool?
 
-A) `Grep`
-B) `Glob`
-C) `Read`
-D) `Bash` with `find`
+- A) `Grep`
+- B) `Glob`
+- C) `Read`
+- D) `Bash` with `find`
 
 **Answer: B.** `Grep` is content search; `Glob` is path-pattern matching — a common exam confusion pair.
 
@@ -134,10 +134,10 @@ D) `Bash` with `find`
 
 **Practice.** A connected MCP server exposes a `search_codebase` tool that performs semantic, cross-reference-aware search — meaningfully more capable than `Grep` for the query type a developer is asking about. Logs show Claude keeps reaching for `Grep` anyway. What's the most likely cause and fix?
 
-A) MCP tools are always deprioritized versus built-ins by design and this can't be changed
-B) The MCP tool's description under-sells its capability relative to the well-known built-in; enhance the description to make the capability and output explicit
-C) The MCP server needs to be moved from project scope to user scope
-D) `Grep` needs to be removed from the agent's tool list entirely
+- A) MCP tools are always deprioritized versus built-ins by design and this can't be changed
+- B) The MCP tool's description under-sells its capability relative to the well-known built-in; enhance the description to make the capability and output explicit
+- C) The MCP server needs to be moved from project scope to user scope
+- D) `Grep` needs to be removed from the agent's tool list entirely
 
 **Answer: B.** Removing `Grep` (D) overcorrects and breaks legitimate simple-search use cases; scope (C) isn't the issue — description quality is.
 
@@ -169,14 +169,15 @@ The practical difference: if an agent has to make an exploratory tool call just 
 
 **Practice.** An MCP server for a project-tracking tool requires the agent to call `list_all_projects` before nearly every task, just to look up which project ID to use — burning an extra round trip almost every time. What's the most appropriate fix?
 
-A) Rewrite `list_all_projects`'s description to be more detailed
-B) Expose the project list as an MCP **resource** instead of a tool, since it's read-only reference data the agent needs to see, not an action it decides to take
-C) Force `tool_choice` to always call `list_all_projects` first
-D) Cache the tool's output in `CLAUDE.md`
+- A) Rewrite `list_all_projects`'s description to be more detailed
+- B) Expose the project list as an MCP **resource** instead of a tool, since it's read-only reference data the agent needs to see, not an action it decides to take
+- C) Force `tool_choice` to always call `list_all_projects` first
+- D) Cache the tool's output in `CLAUDE.md`
 
 **Answer: B.** This is a tools-vs-resources modeling problem, not a description-quality problem (2.1) or a caching problem — read-only catalogs that exist to be *discovered* belong in MCP resources, not tools.
 
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)

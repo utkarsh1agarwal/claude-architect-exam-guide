@@ -1,21 +1,49 @@
 # Claude Certified Architect Exam Guide — Foundations (CCAR-F) & Professional (CCAR-P)
 
-[![CCAR-F Certified — verify on Credly](https://img.shields.io/badge/Author-CCAR--F%20Certified%20✓-6E44FF?style=flat-square)](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url)
-[![CCAR-P Certified — verify on Credly](https://img.shields.io/badge/Author-CCAR--P%20Certified%20✓-3B1FA8?style=flat-square)](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url)
+[![CCAR-F Certified — verify on Credly](https://img.shields.io/badge/Author-CCAR--F%20Certified%20✓-B85C3E?style=flat-square)](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url)
+[![CCAR-P Certified — verify on Credly](https://img.shields.io/badge/Author-CCAR--P%20Certified%20✓-8A3F27?style=flat-square)](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url)
 ![Updated for CCAR-P v1.1](https://img.shields.io/badge/Updated%20for-CCAR--P%20v1.1%20(Dec%202026)-1a7f37?style=flat-square)
 ![Mock questions](https://img.shields.io/badge/Mock%20questions-570-informational?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)
+
+<!-- byline:start -->
+<p align="center"><b>Created by Utkarsh Agarwal</b> — certified in both Claude Certified Architect exams<br><a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide">⭐ Star the repo</a> · <a href="https://www.linkedin.com/in/utkarsh-agarwal-ua0235/">💼 Follow on LinkedIn</a> · <a href="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support">☕ Buy me a coffee</a></p>
+<!-- byline:end -->
+
+### 🌐 Website: [utkarsh1agarwal.github.io/claude-architect-exam-guide](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/)
+
+**📖 [Read the Study Guide](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/)** · **▶ [Take a Mock Exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)** · **☕ [Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)**
+
+<table>
+  <tr>
+    <td width="50%"><a href="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/"><img src="assets/site-home.png" alt="Home page: both certifications, author card and feature tags"></a><br><sub><b>Home</b> — pick Foundations or Professional, study guide or mock exam</sub></td>
+    <td width="50%"><a href="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/professional/domain-3-integration.html"><img src="assets/site-study-guide.png" alt="Web study guide: sidebar navigation, contents panel and a Practice this domain button"></a><br><sub><b>Study guide</b> — every domain as a web page, hidden answers, one-click practice</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><a href="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/#professional"><img src="assets/player-start.png" alt="Exam player: timed mock exams and practice by domain"></a><br><sub><b>Mock exams</b> — timed exams or drill one domain</sub></td>
+    <td width="50%"><a href="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/#professional"><img src="assets/player-study-mode.png" alt="Study mode: the answer and full explanation right after each question"></a><br><sub><b>Study mode</b> — the answer and explanation right after each question</sub></td>
+  </tr>
+</table>
 
 **Free study notes and timed mock exams for both Anthropic architect certifications** — written by an architect who passed **both** the Claude Certified Architect – Foundations ([verify on Credly](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url)) and the Claude Certified Architect – Professional ([verify on Credly](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url)) exams.
 
 | | **Foundations (CCAR-F)** | **Professional (CCAR-P)** |
 |---|---|---|
-| Study guide | [5 domain guides + cheat sheet](#claude-certified-architect--foundations-ccar-f) | [7 domain guides, all 39 v1.1 skills](professional/README.md) |
+| Study guide | [Read online](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/foundations/about-the-exam.html) · [5 domain guides + cheat sheet](#claude-certified-architect--foundations-ccar-f) | [Read online](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/professional/about-the-exam.html) · [7 domain guides, all 39 v1.1 skills](professional/README.md) |
 | Mock exams | 6 × 60 questions (360) | 3 × 70 questions (210) |
 | **Take a mock exam now** | **[▶ Start mock exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)** | **[▶ Start mock exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/#professional)** |
 | Exam version covered | Exam guide v1.0 | Exam guide **v1.1** (effective Dec 7, 2026) |
 
-The [Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/) runs in your browser with nothing to install and no sign-up:
+Everything runs in your browser, with nothing to install and no sign-up.
+
+**[Study guide](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/)** (web version of the notes):
+
+- **Every domain as a web page** — sidebar navigation, "On this page" contents, light/dark mode
+- **Practice questions with hidden answers** — test yourself first, then click "Show answer"
+- **"Practice this domain"** — one click opens that domain's mock-exam questions in study mode
+- **⚡ Cheat sheets** for the last-minute review
+
+**[Mock exam player](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)**:
 
 - **Timed mock exams** — countdown timer, question map, flag-for-review, autosave/resume
 - **Study mode** — the answer and full explanation right after each question
@@ -34,10 +62,10 @@ The [Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-arch
 | Focus | Building with Claude: agentic loop, tools & MCP, Claude Code, prompting, context | Designing, deploying and governing **production** Claude systems for enterprises |
 | Items / time | 60 items (4 of 6 scenarios) / 120 min | 70 items (60 scored + 10 unscored) / 120 min |
 | Passing score | 720 / 1000 (scaled) | 720 / 1000 (scaled) |
-| Fee | $125 | $175 |
+| Fee | $125 · [Book the exam ↗](https://anthropic-partners.skilljar.com/claude-certified-architect-foundations-certification) | $175 · [Book the exam ↗](https://anthropic-partners.skilljar.com/claude-certified-architect-professional-certification) |
 | Prerequisite | None | None formally — but Foundations scope is **assumed knowledge** |
-| Who can register | Claude Partner Network members, via Anthropic Partner Academy (no individual sign-up) | Same |
-| Start here | [Foundations ↓](#claude-certified-architect--foundations-ccar-f) | [professional/README.md](professional/README.md) |
+| Who can register | Claude Partner Network members, via Anthropic Partner Academy (no individual sign-up) — see the [certification FAQ](https://anthropic-partners.skilljar.com/page/faq-certifications) | Same |
+| Start here | [Read online](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/foundations/about-the-exam.html) · [Foundations ↓](#claude-certified-architect--foundations-ccar-f) | [Read online](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/professional/about-the-exam.html) · [professional/README.md](professional/README.md) |
 
 New to both? Do Foundations first. Its material is assumed knowledge for Professional, and most of it carries over.
 
@@ -46,6 +74,8 @@ New to both? Do Foundations first. Its material is assumed knowledge for Profess
 ## Claude Certified Architect – Professional (CCAR-P)
 
 **Updated for exam guide v1.1** (70 items, effective December 7, 2026). v1.1 rebalances the domains, removes named regulations (GDPR/HIPAA/FedRAMP), and adds Managed Agents, deployment surfaces, effort and context lifecycle, reliability controls, judge bias, model migration, plugins and permission modes. See [what changed](professional/study-guide/about-the-exam.md#what-changed-from-v10-to-v11).
+
+📖 **[Read the CCAR-P study guide online](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/professional/about-the-exam.html)** — or browse the Markdown below.
 
 | If you want… | Go to… |
 |---|---|
@@ -69,6 +99,8 @@ New to both? Do Foundations first. Its material is assumed knowledge for Profess
 ---
 
 ## Claude Certified Architect – Foundations (CCAR-F)
+
+📖 **[Read the CCAR-F study guide online](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/foundations/about-the-exam.html)** — or browse the Markdown below.
 
 | If you want… | Go to… |
 |---|---|
@@ -104,23 +136,37 @@ Professional adds one more: **name the binding constraint first** (latency, budg
 ```
 claude-architect-exam-guide/
 ├── README.md                ← you are here (both exams)
-├── index.html               ← GitHub Pages landing page
-├── study-guide/             ← Foundations (CCAR-F) notes
+├── index.html               ← website home page (GitHub Pages)
+├── guide/                   ← study guides as web pages (generated — don't edit by hand)
+├── study-guide/             ← Foundations (CCAR-F) notes, Markdown source
 ├── mock-exam/               ← Foundations mock exams (6 × 60)
-│   └── interactive/         ← browser exam player (both certifications)
-└── professional/            ← Professional (CCAR-P, v1.1)
-    ├── README.md
-    ├── study-guide/         ← about, study plan, 7 domains, cheat sheet, resources, FAQ
-    └── mock-exam/           ← 3 × 70 mock exams + answer keys
+│   └── interactive/         ← exam player, site styles, theme toggle, Buy me a coffee pop-up
+├── professional/            ← Professional (CCAR-P, v1.1)
+│   ├── README.md
+│   ├── study-guide/         ← about, study plan, 7 domains, cheat sheet, resources, FAQ
+│   └── mock-exam/           ← 3 × 70 mock exams + answer keys
+├── assets/                  ← screenshots, social preview, badges, fonts, UPI QR code
+└── tools/
+    ├── build-guide.mjs      ← Markdown → guide/ web pages + sitemap.xml
+    ├── update-footers.mjs   ← author byline, support links and header on every page
+    └── site.config.json     ← author name, links, avatar, UPI / coffee settings
 ```
 
 ## About the author
 
-I'm certified as both a **Claude Certified Architect – Foundations** ([Credly badge](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url)) and a **Claude Certified Architect – Professional** ([Credly badge](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url)). Connect with me on [LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/). I wrote these guides while preparing for and passing both exams. Everything is built from Anthropic's public exam guides, the official documentation (fact-checked November 2026), and hands-on work shipping Claude systems.
+I'm certified as both a **Claude Certified Architect – Foundations** ([Credly badge](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url)) and a **Claude Certified Architect – Professional** ([Credly badge](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url)). Connect with me on [LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) — and if this guide helped you pass, you can [☕ buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support). I wrote these guides while preparing for and passing both exams. Everything is built from Anthropic's public exam guides, the official documentation (fact-checked November 2026), and hands-on work shipping Claude systems.
 
 ## Contributing
 
 Corrections, new original practice questions, clearer explanations, and translations are welcome. One hard rule: **no real or leaked exam content, ever.** See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+The Markdown files are the source of truth. After editing notes, regenerate the website pages (Node.js only, no `npm install`):
+
+```bash
+node tools/build-guide.mjs      # study guide web pages + sitemap
+node tools/update-footers.mjs   # author / support links, if you changed tools/site.config.json
+python3 -m http.server 8000     # preview at http://localhost:8000
+```
 
 ## Disclaimer
 
@@ -135,4 +181,5 @@ MIT — see [LICENSE](LICENSE).
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)

@@ -55,6 +55,18 @@ isn't obvious.]
 
 Aim for questions in the "system is failing, pick the fix" shape — that's the dominant pattern in the real exam's public sample questions, and it's the most useful thing to practice.
 
+## Updating the website version of the study guide
+
+The study guides are also published as web pages under `guide/` (generated, never edited by hand). After changing any file in `study-guide/` or `professional/study-guide/`, regenerate them and commit the result:
+
+```bash
+node tools/build-guide.mjs
+```
+
+The script needs only Node.js (no `npm install`); it also refreshes `sitemap.xml`.
+
+Author name and support settings (GitHub, LinkedIn, the UPI ID/QR for the ☕ Buy me a coffee pop-up, and an optional international `coffee` link) live in `tools/site.config.json`. After changing them, run `node tools/update-footers.mjs` and `node tools/build-guide.mjs` to update every page.
+
 ## Submitting a change
 
 1. Fork the repo and create a branch: `git checkout -b fix/domain-3-hooks-typo`

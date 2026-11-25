@@ -19,10 +19,10 @@ The smallest domain by weight, but the one that threads through every scenario y
 
 **Practice.** A multi-turn support conversation about a $340 refund on order #9981 gets summarized after 15 turns. The summary says "customer requested a refund," losing the specific amount and order number, causing the agent to ask the customer to repeat themselves. Best fix?
 
-A) Never summarize; always keep full raw history
-B) Extract a persistent "case facts" block (amount, order ID, dates) carried in every prompt outside the narrative summary
-C) Ask the customer to always restate details each turn
-D) Increase the context window size
+- A) Never summarize; always keep full raw history
+- B) Extract a persistent "case facts" block (amount, order ID, dates) carried in every prompt outside the narrative summary
+- C) Ask the customer to always restate details each turn
+- D) Increase the context window size
 
 **Answer: B.**
 
@@ -48,10 +48,10 @@ D) Increase the context window size
 
 **Practice.** A pipeline extracts line-item data from a single 300-page PDF containing 150 concatenated invoices, chunking the PDF every 2,000 tokens regardless of where an invoice happens to end. Line items near chunk boundaries are frequently corrupted or duplicated. What's the fix?
 
-A) Increase the chunk size to 4,000 tokens
-B) Chunk along invoice boundaries instead of a fixed token count, so no single invoice is split across two chunks
-C) Switch to a model with a larger context window and stop chunking entirely, regardless of cost
-D) Ask the pipeline to re-run only on the corrupted chunks with the same fixed-size chunking
+- A) Increase the chunk size to 4,000 tokens
+- B) Chunk along invoice boundaries instead of a fixed token count, so no single invoice is split across two chunks
+- C) Switch to a model with a larger context window and stop chunking entirely, regardless of cost
+- D) Ask the pipeline to re-run only on the corrupted chunks with the same fixed-size chunking
 
 **Answer: B.** The corruption is a direct result of chunk boundaries being blind to document structure — fixing the chunk size (A) or re-running with the same strategy (D) doesn't address the root cause; chunking along natural record boundaries does.
 
@@ -73,10 +73,10 @@ D) Ask the pipeline to re-run only on the corrupted chunks with the same fixed-s
 
 **Practice.** First-contact resolution is at 55% against an 80% target. Logs show the agent escalates *easy* cases (standard replacements with photo evidence) while trying to autonomously resolve *hard* ones (policy exceptions). Best fix?
 
-A) Self-reported confidence score routing
-B) Explicit escalation criteria plus few-shot examples distinguishing escalate-vs-resolve cases
-C) Sentiment-based escalation
-D) A separate ML classifier trained on historical tickets
+- A) Self-reported confidence score routing
+- B) Explicit escalation criteria plus few-shot examples distinguishing escalate-vs-resolve cases
+- C) Sentiment-based escalation
+- D) A separate ML classifier trained on historical tickets
 
 **Answer: B.**
 
@@ -99,10 +99,10 @@ Same structured-error philosophy as [Domain 2](domain-2-tool-design-mcp.md#22-st
 
 **Practice.** After 2 hours of codebase exploration, Claude starts giving vague answers referencing "typical Java patterns" instead of the specific classes it identified earlier in the session. What's the most direct fix?
 
-A) Restart with no context at all
-B) Have the agent maintain a scratchpad file of key findings to reference, countering context degradation
-C) Switch models mid-session
-D) Increase `max_tokens`
+- A) Restart with no context at all
+- B) Have the agent maintain a scratchpad file of key findings to reference, countering context degradation
+- C) Switch models mid-session
+- D) Increase `max_tokens`
 
 **Answer: B.**
 
@@ -117,14 +117,15 @@ D) Increase `max_tokens`
 
 **Practice.** Two credible sources give different statistics for the same metric during a research synthesis. What should the synthesis output do?
 
-A) Silently use the more recent source
-B) Average the two values
-C) Preserve both values with source attribution, distinguishing well-established from contested findings
-D) Drop the statistic entirely to avoid inaccuracy
+- A) Silently use the more recent source
+- B) Average the two values
+- C) Preserve both values with source attribution, distinguishing well-established from contested findings
+- D) Drop the statistic entirely to avoid inaccuracy
 
 **Answer: C.**
 
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)

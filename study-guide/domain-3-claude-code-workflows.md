@@ -34,10 +34,10 @@ This loads *only* when Claude is editing a matching test file, regardless of whi
 
 **Practice.** Test files (`*.test.tsx`) are scattered across dozens of directories throughout a large monorepo, and you want consistent testing conventions applied regardless of location, without bloating the root `CLAUDE.md`. Best approach?
 
-A) Add a `CLAUDE.md` to every directory containing test files
-B) Put everything in the root `CLAUDE.md` under a "Testing" header
-C) Create a `.claude/rules/testing.md` file with `paths: ["**/*.test.tsx"]` frontmatter
-D) Create a custom skill that must be manually invoked before writing tests
+- A) Add a `CLAUDE.md` to every directory containing test files
+- B) Put everything in the root `CLAUDE.md` under a "Testing" header
+- C) Create a `.claude/rules/testing.md` file with `paths: ["**/*.test.tsx"]` frontmatter
+- D) Create a custom skill that must be manually invoked before writing tests
 
 **Answer: C.** Glob-scoped rules solve exactly the "convention tied to file type, not directory" problem; A doesn't scale, B relies on inference, D requires manual invocation instead of automatic application.
 
@@ -58,20 +58,20 @@ D) Create a custom skill that must be manually invoked before writing tests
 
 **Practice.** You want a `/review` command that runs your team's code review checklist, available to everyone who clones the repo. Where do you put it?
 
-A) `.claude/commands/` in the repo
-B) `~/.claude/commands/` on your machine
-C) Inside `CLAUDE.md`
-D) `.claude/config.json`
+- A) `.claude/commands/` in the repo
+- B) `~/.claude/commands/` on your machine
+- C) Inside `CLAUDE.md`
+- D) `.claude/config.json`
 
 **Answer: A.**
 
 
 **Practice.** You're building a "codebase exploration" skill that produces very long, noisy output as it traces dependencies, and you don't want this to clutter the main conversation context. Which frontmatter option addresses this?
 
-A) `argument-hint`
-B) `allowed-tools`
-C) `context: fork`
-D) `paths`
+- A) `argument-hint`
+- B) `allowed-tools`
+- C) `context: fork`
+- D) `paths`
 
 **Answer: C.**
 
@@ -108,10 +108,10 @@ D) `paths`
 
 **Practice.** A team wants every `Bash` command Claude Code runs in a shared repo to be blocked automatically if it targets the production database connection string, without relying on the model to police itself. Where does this belong?
 
-A) A stronger warning in `CLAUDE.md`
-B) A `PreToolUse` hook in `.claude/settings.json` matched to `Bash`, exiting non-zero to block the call
-C) A few-shot example showing a refusal
-D) An `AgentDefinition`-level system prompt clause
+- A) A stronger warning in `CLAUDE.md`
+- B) A `PreToolUse` hook in `.claude/settings.json` matched to `Bash`, exiting non-zero to block the call
+- C) A few-shot example showing a refusal
+- D) An `AgentDefinition`-level system prompt clause
 
 **Answer: B.** Same underlying principle as Domain 1's tool-interception hooks — deterministic blocking beats a prompt-level warning — but here the mechanism is Claude Code's own `settings.json` hook config, not custom Agent SDK code.
 
@@ -128,10 +128,10 @@ Also know the **Explore subagent**: used to isolate verbose discovery/exploratio
 
 **Practice.** You're assigned to split a monolith into microservices — dozens of files, undetermined service boundaries, multiple valid dependency-management approaches. What's the right approach?
 
-A) Direct execution, let structure emerge incrementally
-B) Plan mode first, to explore and design before committing to changes
-C) Direct execution with a very long, fully detailed upfront prompt
-D) Direct execution, switch to plan mode only if surprises appear
+- A) Direct execution, let structure emerge incrementally
+- B) Plan mode first, to explore and design before committing to changes
+- C) Direct execution with a very long, fully detailed upfront prompt
+- D) Direct execution, switch to plan mode only if surprises appear
 
 **Answer: B.** The complexity is already known upfront — that's precisely plan mode's use case, not something to discover reactively.
 
@@ -168,20 +168,20 @@ Concrete (produces consistent results):
 
 **Practice.** A developer asks Claude to "normalize the phone numbers in this CSV," but across three attempts, extensions and country codes are handled differently each time. Most effective fix?
 
-A) Repeat the same instruction with stronger wording
-B) Provide 2–3 concrete before/after examples covering the specific edge cases
-C) Lower `max_tokens` to force a simpler transformation
-D) Ask for five attempts and manually pick the best one
+- A) Repeat the same instruction with stronger wording
+- B) Provide 2–3 concrete before/after examples covering the specific edge cases
+- C) Lower `max_tokens` to force a simpler transformation
+- D) Ask for five attempts and manually pick the best one
 
 **Answer: B.** Ambiguity in a prose spec isn't fixed by repeating it more forcefully — concrete examples remove the ambiguity directly.
 
 
 **Practice.** Before implementing a new caching layer in an unfamiliar part of the codebase, a developer wants Claude to surface invalidation strategy and failure-mode questions *before* writing code. What technique is this, and why does it fit?
 
-A) Test-driven iteration
-B) The interview pattern — well-suited to unfamiliar domains where you may not have anticipated every consideration
-C) Prompt chaining
-D) Plan mode doesn't apply since this is a single feature, not an architecture-wide change
+- A) Test-driven iteration
+- B) The interview pattern — well-suited to unfamiliar domains where you may not have anticipated every consideration
+- C) Prompt chaining
+- D) Plan mode doesn't apply since this is a single feature, not an architecture-wide change
 
 **Answer: B.**
 
@@ -199,24 +199,25 @@ Also feed prior review findings into re-runs so Claude reports only *new/unaddre
 
 **Practice.** `claude "Review this PR"` hangs indefinitely in your CI job. What's the fix?
 
-A) `claude -p "Review this PR"`
-B) Set `CLAUDE_HEADLESS=true`
-C) Pipe `/dev/null` into stdin
-D) Add `--batch`
+- A) `claude -p "Review this PR"`
+- B) Set `CLAUDE_HEADLESS=true`
+- C) Pipe `/dev/null` into stdin
+- D) Add `--batch`
 
 **Answer: A.** (B and D are not real flags/vars — a classic exam distractor pattern: plausible-sounding but fictional options.)
 
 
 **Practice.** Your CI pipeline uses the same Claude Code session to both generate a bug fix and immediately review that fix before merge. Reviews from this setup rarely catch subtle logic issues that a human later finds. Why?
 
-A) The model's context window is too small for review tasks
-B) The same session retains its generation reasoning, making it less likely to challenge its own decisions
-C) `--output-format json` is not enabled
-D) The prompt lacks few-shot examples of good reviews
+- A) The model's context window is too small for review tasks
+- B) The same session retains its generation reasoning, making it less likely to challenge its own decisions
+- C) `--output-format json` is not enabled
+- D) The prompt lacks few-shot examples of good reviews
 
 **Answer: B.**
 
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)

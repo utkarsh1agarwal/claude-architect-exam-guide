@@ -144,19 +144,19 @@ Rule of thumb: **centralize what must not fail, delegate what teams need to adap
 
 **Q1.** Brightline's platform team distributes a `secure-ci` plugin whose `agents/deployer.md` subagent declares a `hooks:` block that blocks `terraform apply`. In a headless nightly job, the subagent ran `terraform apply` on staging. **Select TWO** changes that make the block reliable.
 
-A) Move the PreToolUse hook into the plugin's `hooks/hooks.json`.
-B) Add "Never run terraform apply" to the subagent's prompt in capital letters.
-C) Set `CLAUDE_CODE_SYNC_PLUGIN_INSTALL=1` in the nightly job so the plugin is installed before the first turn.
-D) Add the marketplace to `strictKnownMarketplaces`.
+- A) Move the PreToolUse hook into the plugin's `hooks/hooks.json`.
+- B) Add "Never run terraform apply" to the subagent's prompt in capital letters.
+- C) Set `CLAUDE_CODE_SYNC_PLUGIN_INSTALL=1` in the nightly job so the plugin is installed before the first turn.
+- D) Add the marketplace to `strictKnownMarketplaces`.
 
 **Answer: A and C.** Plugin subagents ignore `hooks` frontmatter, so the hook must live in `hooks/hooks.json` (A). In `-p` mode the plugin may still be installing on the first turn, so C closes the race. B is an instruction, not enforcement. D controls where plugins come from, not whether a hook runs.
 
 **Q2.** An enterprise wants every engineer to have the `release-kit` plugin with its migration-guard hook, while letting teams add their own skills and read-only subagents. It already sets `allowManagedHooksOnly: true`. Which configuration fits?
 
-A) Managed `enabledPlugins: {"release-kit@internal": true}` plus `extraKnownMarketplaces` for the internal marketplace.
-B) `strictPluginOnlyCustomization: true` and ask teams to request plugin changes.
-C) Project-level `.claude/settings.json` enabling the plugin in each repo.
-D) Keep the plugin optional and add a `CLAUDE.md` reminder to install it.
+- A) Managed `enabledPlugins: {"release-kit@internal": true}` plus `extraKnownMarketplaces` for the internal marketplace.
+- B) `strictPluginOnlyCustomization: true` and ask teams to request plugin changes.
+- C) Project-level `.claude/settings.json` enabling the plugin in each repo.
+- D) Keep the plugin optional and add a `CLAUDE.md` reminder to install it.
 
 **Answer: A.** Force-enabling via managed settings means users can't disable it, and hooks from force-enabled plugins still run under `allowManagedHooksOnly`. C is tempting, but a project-scope enable isn't force-enabled, so under `allowManagedHooksOnly` its hook wouldn't run, and repos can change it anyway. B over-locks against the flexibility requirement. D is an instruction.
 
@@ -301,19 +301,19 @@ options = ClaudeAgentOptions(
 
 **Q3.** A team runs Claude Code in GitHub Actions to regenerate API client code. Requirements: no human present, may edit only files under `clients/`, may run `make generate`, must never push. Which configuration best meets them?
 
-A) `--permission-mode bypassPermissions` with a CLAUDE.md note "only edit clients/ and never push".
-B) `--permission-mode dontAsk`, `--allowedTools "Read,Grep,Glob,Edit,Bash(make generate)"`, an `Edit` deny rule (or PreToolUse hook) for paths outside `clients/`, and a deny rule for `git push`.
-C) `--permission-mode default` with an ask rule on `git push`.
-D) `--permission-mode auto` so the classifier blocks risky commands.
+- A) `--permission-mode bypassPermissions` with a CLAUDE.md note "only edit clients/ and never push".
+- B) `--permission-mode dontAsk`, `--allowedTools "Read,Grep,Glob,Edit,Bash(make generate)"`, an `Edit` deny rule (or PreToolUse hook) for paths outside `clients/`, and a deny rule for `git push`.
+- C) `--permission-mode default` with an ask rule on `git push`.
+- D) `--permission-mode auto` so the classifier blocks risky commands.
 
 **Answer: B.** `dontAsk` fits an unattended run, the allowlist bounds what runs, and deny rules or a hook enforce the path and push limits. A relies on instructions in the most permissive mode. C would block waiting for approval with nobody present. D is meant for interactive sessions and replaces explicit rules with a classifier judgment.
 
 **Q4.** An Agent SDK app runs with `permission_mode="bypassPermissions"` inside a sandbox container. It defines a `report-writer` subagent with `permissionMode: plan`, intending it to be read-only. Logs show the subagent editing files. What is the correct fix?
 
-A) Change the subagent's `permissionMode` to `dontAsk`.
-B) Add "do not edit files" to the subagent's prompt.
-C) Move the check into `canUseTool`.
-D) Set the subagent's `tools` list to read-only tools (for example `Read`, `Grep`, `Glob`).
+- A) Change the subagent's `permissionMode` to `dontAsk`.
+- B) Add "do not edit files" to the subagent's prompt.
+- C) Move the check into `canUseTool`.
+- D) Set the subagent's `tools` list to read-only tools (for example `Read`, `Grep`, `Glob`).
 
 **Answer: D.** A parent in `bypassPermissions` overrides the subagent's mode, so any mode setting (A) is ignored; the `tools` list still applies. B is an instruction. C fails because bypass-approved calls never reach `canUseTool`.
 
@@ -401,19 +401,19 @@ Team policy (enforced by tooling, not just written down)
 
 **Q5.** At Tessellate, engineers start Claude Code sessions that open PRs from a shared `ai-bot` account. Branch protection requires one approval and blocks authors from approving their own PRs. An engineer approved and merged a PR their own session created; it later caused an outage. **Select TWO** controls that restore human accountability.
 
-A) Record the directing engineer as the commit/PR author so the self-approval block applies.
-B) Add a second AI reviewer that must pass before merge.
-C) Require review from CODEOWNERS for the affected paths.
-D) Run a weekly report of merges made from the `ai-bot` account.
+- A) Record the directing engineer as the commit/PR author so the self-approval block applies.
+- B) Add a second AI reviewer that must pass before merge.
+- C) Require review from CODEOWNERS for the affected paths.
+- D) Run a weekly report of merges made from the `ai-bot` account.
 
 **Answer: A and C.** A closes the self-approval loophole created by the bot identity. C ensures the path's owners — named humans — must approve. B adds AI review without accountability, and D detects after the outage.
 
 **Q6.** A team's PR was approved by a human reviewer. Claude then pushed three more commits addressing a lint failure, and the PR auto-merged. One commit removed an authorization check. What is the most targeted control?
 
-A) Require two approvals on every PR.
-B) Disable auto-merge for the whole organization.
-C) Enable "dismiss stale approvals when new commits are pushed" (and require approval of the most recent push).
-D) Add the managed Code Review check as a required status check.
+- A) Require two approvals on every PR.
+- B) Disable auto-merge for the whole organization.
+- C) Enable "dismiss stale approvals when new commits are pushed" (and require approval of the most recent push).
+- D) Add the managed Code Review check as a required status check.
 
 **Answer: C.** The approval covered code the reviewer saw, not the later commits; dismissing stale approvals forces a human to re-approve. A is an over-correction, and the second approval could still be stale. B removes a useful feature without fixing the cause. D can't do it alone, because the Code Review check never concludes as a failure by itself.
 
@@ -458,4 +458,5 @@ GitHub docs on protected branches and CODEOWNERS
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)
