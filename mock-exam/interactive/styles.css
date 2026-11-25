@@ -17,23 +17,23 @@
   --serif: "Iowan Old Style", "New York", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #1c1b19;
-    --surface: #262421;
-    --border: #3b3833;
-    --text: #efe9df;
-    --text-muted: #a8a196;
-    --accent: #e08a6a;
-    --accent-soft: #e08a6a;
-    --accent-contrast: #1c1b19;
-    --correct: #6cc08a;
-    --incorrect: #f08a7a;
-    --warning-bg: #3a2c1c;
-    --warning-border: #8c6239;
-    --dot: rgba(239, 233, 223, 0.06);
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  }
+/* Dark mode is opt-in via the theme toggle (theme.js sets data-theme on <html>). */
+:root[data-theme="dark"] {
+  --bg: #171512;
+  --surface: #221f1b;
+  --border: #39342d;
+  --text: #f3ede3;
+  --text-muted: #b5ad9f;
+  --accent: #e8926f;
+  --accent-soft: #e8926f;
+  --accent-contrast: #1b1714;
+  --correct: #7cc996;
+  --incorrect: #f2917f;
+  --warning-bg: #33281a;
+  --warning-border: #9a6c3c;
+  --dot: rgba(255, 240, 220, 0.05);
+  --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -193,10 +193,8 @@ h2 { font-size: 1.2rem; margin-top: 2rem; }
 }
 .badge-medium { background: #f6e6c8; color: #8a5a12; }
 .badge-hard { background: #f6d9cf; color: #9a3a22; }
-@media (prefers-color-scheme: dark) {
-  .badge-medium { background: #3a2e1a; color: #e6b866; }
-  .badge-hard { background: #3d231c; color: #f0a08a; }
-}
+:root[data-theme="dark"] .badge-medium { background: #3a2e1a; color: #ebbd6e; }
+:root[data-theme="dark"] .badge-hard { background: #42261d; color: #f3a58e; }
 .exam-card-coverage { color: var(--text-muted); font-size: 0.85rem; }
 
 .load-status { color: var(--text-muted); margin-top: 1rem; }
@@ -558,7 +556,7 @@ h2 { font-size: 1.2rem; margin-top: 2rem; }
 
 /* Flag for review (idea from community PR #2) */
 :root { --flag: #a0660f; }
-@media (prefers-color-scheme: dark) { :root { --flag: #e6b866; } }
+:root[data-theme="dark"] { --flag: #ebbd6e; }
 .question-actions { display: flex; align-items: center; gap: 0.75rem; }
 .flag-btn {
   font: inherit;
@@ -650,3 +648,31 @@ h2 { font-size: 1.2rem; margin-top: 2rem; }
 }
 .support-callout span { flex: 1 1 260px; color: var(--text-muted); }
 .support-callout a.btn { text-decoration: none; display: inline-block; }
+
+/* Theme toggle (bottom-right, clear of the exam top bar) */
+.theme-toggle {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 50;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.theme-toggle:hover { border-color: var(--accent); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+:root[data-theme="dark"] .question-panel,
+:root[data-theme="dark"] .palette-panel,
+:root[data-theme="dark"] .exam-card,
+:root[data-theme="dark"] .practice-panel,
+:root[data-theme="dark"] .share-panel,
+:root[data-theme="dark"] .review-item { border-color: #3d372f; }
