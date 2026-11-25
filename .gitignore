@@ -10,3 +10,6 @@ Thumbs.db
 
 # Claude Code local settings (personal, not shared with the team)
 .claude/settings.local.json
+
+# Local scratch material (never commit — may contain third-party copyrighted content)
+temp/

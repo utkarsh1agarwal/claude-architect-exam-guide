@@ -74,7 +74,35 @@ h2 { font-size: 1.2rem; margin-top: 2rem; }
   font-size: 0.9rem;
   margin: 0 0 1.5rem;
 }
+.resource-links { flex-wrap: wrap; }
 .resource-links span { color: var(--text-muted); }
+
+.track-tabs {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.track-tab {
+  font: inherit;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.track-tab:hover { color: var(--text); }
+.track-tab-active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+.track-tab-active:hover { color: var(--accent-contrast); }
+.track-code { font-weight: 400; font-size: 0.8rem; opacity: 0.85; margin-left: 0.25rem; }
+.track-blurb { color: var(--text-muted); font-size: 0.9rem; margin: 0.6rem 0 0; }
 
 .btn {
   font: inherit;
@@ -348,6 +376,7 @@ h2 { font-size: 1.2rem; margin-top: 2rem; }
   gap: 1rem;
   margin: 1.25rem 0;
 }
+.results-tables-single { grid-template-columns: 1fr; }
 .stat-table {
   width: 100%;
   border-collapse: collapse;

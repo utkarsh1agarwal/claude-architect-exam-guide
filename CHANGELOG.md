@@ -5,10 +5,15 @@ All notable changes to this repo are documented here. Format follows [Keep a Cha
 ## [Unreleased]
 
 ### Added
+- **Professional (CCAR-P) track, written for exam guide v1.1 (effective 2026-12-07)** under `professional/`: about-the-exam (format, weights, all 39 skills, v1.0 → v1.1 diff), study plan with a question-reading method, seven domain guides (one section per official skill: concept, artifact-based worked example, decision table, anti-pattern table, exam traps, practice questions, official docs), cheat sheet, resources mapped per domain, FAQ
+- Three original 70-question CCAR-P mock exams (one medium, two hard) weighted to the v1.1 blueprint, every answer explaining the key and each distractor; product facts checked against Anthropic documentation (November 2026)
+- Interactive player now supports both certifications (Foundations / Professional tabs, `#professional` deep link, per-domain names in results)
+- Root `index.html` landing page and `sitemap.xml` for GitHub Pages
 - Exam 4: a fourth 60-question mock exam covering all 6 scenarios, calibrated to a harder difficulty than Exams 1–3 (finer mechanism-level distractors, SLA/timing calculations, four select-two items) — complete answer key with domain tagging
 - Exam 5 and Exam 6: two more 60-question mock exams at the same hard-mode calibration as Exam 4, each independently verified against every other exam in the set (and against the community-provided reference question banks used to calibrate difficulty) to ensure no duplicate or near-duplicate questions
 
 ### Changed
+- README restructured to cover both certifications up front
 - Renamed the existing mock exams from letters to numbers (Exam A → 1, B → 2, C → 3) to accommodate Exams 4–6 and give the set a consistent, open-ended numbering scheme; all internal cross-links and references across the repo updated accordingly
 
 ## [1.0.0] — 2026-07-24
@@ -24,5 +29,5 @@ All notable changes to this repo are documented here. Format follows [Keep a Cha
 - FAQ page
 - Built and cross-checked against Exam Guide v1.0 (effective July 2026, exam code CCAR-F)
 
-[Unreleased]: https://github.com/YOUR_USERNAME/claude-architect-exam-guide/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/YOUR_USERNAME/claude-architect-exam-guide/releases/tag/v1.0.0
+[Unreleased]: https://github.com/utkarsh1agarwal/claude-architect-exam-guide/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/utkarsh1agarwal/claude-architect-exam-guide/releases/tag/v1.0.0

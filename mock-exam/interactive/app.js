@@ -1,19 +1,59 @@
 'use strict';
 
 // ---------------------------------------------------------------------------
-// Config — mirrors the table in the repo README. Add a line here if a new
-// mock-exam-N pair is added later; nothing else in this app needs to change.
+// Config — mirrors the tables in the repo README. Each track is one
+// certification. Add a line to a track's `exams` array if a new exam-N pair is
+// added later; nothing else in this app needs to change.
 // ---------------------------------------------------------------------------
-const EXAMS = [
-  { id: 1, difficulty: 'Medium', coverage: 'All 6 scenarios' },
-  { id: 2, difficulty: 'Medium', coverage: '4-of-6 draw (leans D1/D5)' },
-  { id: 3, difficulty: 'Medium', coverage: '4-of-6 draw (leans D3/D4)' },
-  { id: 4, difficulty: 'Hard', coverage: 'All 6 scenarios' },
-  { id: 5, difficulty: 'Hard', coverage: 'All 6 scenarios' },
-  { id: 6, difficulty: 'Hard', coverage: 'All 6 scenarios' },
-];
+const TRACKS = {
+  foundations: {
+    label: 'Foundations',
+    code: 'CCAR-F',
+    blurb: 'Claude Certified Architect – Foundations · 60 questions · 120 minutes · 4 of 6 scenarios',
+    basePath: '../',
+    groupLabel: 'Scenario',
+    exams: [
+      { id: 1, difficulty: 'Medium', coverage: 'All 6 scenarios' },
+      { id: 2, difficulty: 'Medium', coverage: '4-of-6 draw (leans D1/D5)' },
+      { id: 3, difficulty: 'Medium', coverage: '4-of-6 draw (leans D3/D4)' },
+      { id: 4, difficulty: 'Hard', coverage: 'All 6 scenarios' },
+      { id: 5, difficulty: 'Hard', coverage: 'All 6 scenarios' },
+      { id: 6, difficulty: 'Hard', coverage: 'All 6 scenarios' },
+    ],
+  },
+  professional: {
+    label: 'Professional',
+    code: 'CCAR-P',
+    blurb: 'Claude Certified Architect – Professional · exam guide v1.1 · 70 questions · 120 minutes · 7 domains',
+    basePath: '../../professional/mock-exam/',
+    groupLabel: 'Part',
+    exams: [
+      { id: 1, difficulty: 'Medium', coverage: 'v1.1 blueprint · all 7 domains' },
+      { id: 2, difficulty: 'Hard', coverage: 'v1.1 blueprint · all 7 domains' },
+      { id: 3, difficulty: 'Hard', coverage: 'v1.1 blueprint · all 7 domains' },
+    ],
+  },
+};
 
-const STORAGE_PREFIX = 'mockExamPlayer:v1:exam';
+const DOMAIN_NAMES = {
+  foundations: {
+    D1: 'Agentic Architecture & Orchestration',
+    D2: 'Tool Design & MCP Integration',
+    D3: 'Claude Code Configuration & Workflows',
+    D4: 'Prompt Engineering & Structured Output',
+    D5: 'Context Management & Reliability',
+  },
+  professional: {
+    D1: 'Solution Design and Architecture',
+    D2: 'Models, Prompting, and Context Engineering',
+    D3: 'Integration',
+    D4: 'Evaluation, Testing, and Optimization',
+    D5: 'Governance, Safety, and Risk Management',
+    D6: 'Stakeholder Communication and Lifecycle',
+    D7: 'Developer Productivity and Operational Enablement',
+  },
+};
+
 const DEFAULT_DURATION_MIN = 120;
 
 const qs = (id) => document.getElementById(id);
@@ -29,7 +69,7 @@ const SELECT_WORD_TO_COUNT = { ONE: 1, TWO: 2, THREE: 3, FOUR: 4 };
 
 function parseQuestions(md) {
   const lines = md.split(/\r?\n/);
-  const scenarioRe = /^##\s*Scenario\s+(\d+)\s*:\s*(.+)$/i;
+  const scenarioRe = /^##\s*(?:Scenario|Part)\s+(\d+)\s*:\s*(.+)$/i;
   const qStartRe = /^\*\*Q?(\d+)\.(?:\s*\(Select\s+(\w+)\))?\*\*\s?(.*)$/;
   const choiceRe = /^-\s*([A-D])\)\s*(.*)$/;
 
@@ -147,6 +187,7 @@ function renderInline(s) {
 // ---------------------------------------------------------------------------
 
 const state = {
+  track: 'foundations',
   examId: null,
   flatQuestions: [], // [{number, scenarioTitle, stem, choices, selectCount}]
   answerKey: new Map(),
@@ -159,7 +200,20 @@ const state = {
 };
 
 function storageKey(examId) {
-  return `${STORAGE_PREFIX}${examId}`;
+  // Foundations keeps its original key so in-progress attempts saved before
+  // the Professional track existed can still be resumed.
+  return state.track === 'foundations'
+    ? `mockExamPlayer:v1:exam${examId}`
+    : `mockExamPlayer:v1:${state.track}:exam${examId}`;
+}
+
+function currentTrack() {
+  return TRACKS[state.track];
+}
+
+function domainLabel(tag) {
+  const name = DOMAIN_NAMES[state.track][tag];
+  return name ? `${tag} · ${name}` : tag;
 }
 
 function saveProgress() {
@@ -210,16 +264,41 @@ function showView(id) {
 // Start screen — exam grid
 // ---------------------------------------------------------------------------
 
+function renderTrackTabs() {
+  for (const btn of document.querySelectorAll('.track-tab')) {
+    const active = btn.dataset.track === state.track;
+    btn.classList.toggle('track-tab-active', active);
+    btn.setAttribute('aria-selected', String(active));
+  }
+  qs('trackBlurb').textContent = currentTrack().blurb;
+}
+
+function selectTrack(track, { updateHash = true } = {}) {
+  if (!TRACKS[track]) return;
+  state.track = track;
+  if (updateHash) {
+    try {
+      history.replaceState(null, '', track === 'foundations' ? location.pathname : `#${track}`);
+    } catch (e) {
+      // file:// or sandboxed — hash sync is a convenience only
+    }
+  }
+  renderTrackTabs();
+  renderExamGrid();
+  qs('loadStatus').hidden = true;
+  qs('filePickerPanel').hidden = true;
+}
+
 function renderExamGrid() {
   const grid = qs('examGrid');
   grid.innerHTML = '';
-  for (const meta of EXAMS) {
+  for (const meta of currentTrack().exams) {
     const card = document.createElement('button');
     card.className = 'exam-card';
     card.type = 'button';
     card.innerHTML = `
-      <span class="exam-card-title">Exam ${meta.id}</span>
-      <span class="exam-card-badge badge-${meta.difficulty.toLowerCase()}">${meta.difficulty}</span>
+      <span class="exam-card-title">${escapeHtml(currentTrack().code)} · Exam ${meta.id}</span>
+      <span class="exam-card-badge badge-${escapeHtml(meta.difficulty.toLowerCase())}">${escapeHtml(meta.difficulty)}</span>
       <span class="exam-card-coverage">${escapeHtml(meta.coverage)}</span>
     `;
     card.addEventListener('click', () => startLoadExam(meta.id));
@@ -233,7 +312,7 @@ function startLoadExam(examId) {
   qs('loadStatus').hidden = false;
   qs('filePickerPanel').hidden = true;
 
-  const base = `../exam-${examId}`;
+  const base = `${currentTrack().basePath}exam-${examId}`;
   Promise.all([
     fetch(`${base}-questions.md`).then((r) => (r.ok ? r.text() : Promise.reject(new Error('not ok')))),
     fetch(`${base}-answers.md`).then((r) => (r.ok ? r.text() : Promise.reject(new Error('not ok')))),
@@ -251,7 +330,7 @@ function startLoadExam(examId) {
 function showFilePicker(examId) {
   qs('filePickerPanel').hidden = false;
   qs('filePickerLabel').textContent =
-    `Couldn't load Exam ${examId} automatically — this usually happens when the page ` +
+    `Couldn't load ${currentTrack().code} Exam ${examId} automatically — this usually happens when the page ` +
     `was opened directly as a file rather than served over http. Select the two files ` +
     `below from the mock-exam folder instead:`;
   qs('filePickerFilenames').textContent = `exam-${examId}-questions.md   +   exam-${examId}-answers.md`;
@@ -317,11 +396,12 @@ function onExamContentLoaded(examId, questionsMd, answersMd) {
 
 function enterReady(examId, scenarios) {
   showView('view-ready');
-  qs('readyTitle').textContent = `Exam ${examId} — ready`;
+  qs('readyTitle').textContent = `${currentTrack().code} Exam ${examId} — ready`;
 
   const total = state.flatQuestions.length;
   const scenarioList = scenarios.map((s) => `${escapeHtml(s.title)} (${s.questions.length})`).join(' · ');
-  qs('readyMeta').textContent = `${total} questions · ${scenarioList}`;
+  qs('readyMeta').textContent =
+    currentTrack().groupLabel === 'Scenario' ? `${total} questions · ${scenarioList}` : `${total} questions · ${currentTrack().blurb.split(' · ').slice(1).join(' · ')}`;
 
   qs('durationInput').value = DEFAULT_DURATION_MIN;
 
@@ -407,7 +487,8 @@ function renderQuestion() {
   const total = state.flatQuestions.length;
 
   qs('progressDisplay').textContent = `Question ${state.currentIndex + 1} of ${total}`;
-  qs('scenarioTag').textContent = q.scenarioTitle;
+  qs('scenarioTag').textContent =
+    currentTrack().groupLabel === 'Scenario' ? q.scenarioTitle : `${currentTrack().code} · Question ${q.number}`;
   qs('questionStem').innerHTML = renderInline(q.stem);
   qs('selectHint').textContent = q.selectCount > 1 ? `Select exactly ${q.selectCount}` : '';
   qs('selectHint').hidden = q.selectCount <= 1;
@@ -579,6 +660,9 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
   }
 
   const scenarioTable = qs('scenarioTable');
+  const showScenarioTable = currentTrack().groupLabel === 'Scenario';
+  scenarioTable.hidden = !showScenarioTable;
+  qs('resultsTables').classList.toggle('results-tables-single', !showScenarioTable);
   scenarioTable.innerHTML = '<tr><th>Scenario</th><th>Correct</th><th>%</th></tr>';
   for (const [title, stat] of scenarioStats) {
     const row = document.createElement('tr');
@@ -593,7 +677,7 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
   for (const [domain, stat] of sortedDomains) {
     const row = document.createElement('tr');
     const p = Math.round((stat.correct / stat.total) * 100);
-    row.innerHTML = `<td>${escapeHtml(domain)}</td><td>${stat.correct} / ${stat.total}</td><td>${p}%</td>`;
+    row.innerHTML = `<td>${escapeHtml(domainLabel(domain))}</td><td>${stat.correct} / ${stat.total}</td><td>${p}%</td>`;
     domainTable.appendChild(row);
   }
 
@@ -601,7 +685,7 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
   reviewList.innerHTML = '';
   let lastScenario = null;
   for (const item of reviewItems) {
-    if (item.q.scenarioTitle !== lastScenario) {
+    if (showScenarioTable && item.q.scenarioTitle !== lastScenario) {
       lastScenario = item.q.scenarioTitle;
       const heading = document.createElement('h3');
       heading.className = 'review-scenario-heading';
@@ -618,7 +702,7 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
     const rationale = item.key && item.key.rationale
       ? renderInline(item.key.rationale)
       : '<em>No written rationale available for this practice set — check the domain tag and the matching study-guide chapter.</em>';
-    const domainBadge = item.key ? escapeHtml(item.key.domain) : '';
+    const domainBadge = item.key ? escapeHtml(domainLabel(item.key.domain)) : '';
 
     card.innerHTML = `
       <div class="review-item-head">
@@ -654,7 +738,11 @@ function chooseAnotherExam() {
 // ---------------------------------------------------------------------------
 
 function init() {
-  renderExamGrid();
+  for (const btn of document.querySelectorAll('.track-tab')) {
+    btn.addEventListener('click', () => selectTrack(btn.dataset.track));
+  }
+  const hashTrack = location.hash.replace('#', '');
+  selectTrack(TRACKS[hashTrack] ? hashTrack : 'foundations', { updateHash: false });
 
   qs('questionsFileInput').addEventListener('change', checkFilePickerReady);
   qs('answersFileInput').addEventListener('change', checkFilePickerReady);

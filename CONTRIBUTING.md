@@ -20,7 +20,7 @@ Violating this rule gets a PR closed immediately, no exceptions, regardless of h
 
 - **Corrections** — technical inaccuracies, outdated API/CLI details, broken links
 - **Clarity improvements** — if an explanation confused you, it'll confuse others; rewrite it
-- **New original practice questions** — scenario-based, with a rationale for the correct answer and why each distractor is wrong (see existing questions in `mock-exam/` for the format)
+- **New original practice questions** — scenario-based, with a rationale for the correct answer and why each distractor is wrong (see existing questions in `mock-exam/` for Foundations and `professional/mock-exam/` for Professional)
 - **Worked examples / code snippets** — runnable Python or config examples that illustrate a concept (Agent SDK, MCP tool definitions, `.mcp.json`, `CLAUDE.md`, hooks, etc.)
 - **Anti-pattern → fix entries** — the "system is failing, what's the fix" tables are the highest-value content in this repo; more of them is always good
 - **Translations** — open an issue first so we can agree on structure (e.g., `study-guide/i18n/es/`)
@@ -36,7 +36,7 @@ Violating this rule gets a PR closed immediately, no exceptions, regardless of h
 
 ## Adding a practice question
 
-Use this template (also in `mock-exam/template.md`). The question goes in the relevant `mock-exam/exam-*-questions.md` file, under the right scenario heading; the answer goes in the matching `mock-exam/exam-*-answers.md` file, same question number:
+Use this template (also in `mock-exam/template.md`). For **Foundations**, the question goes in the relevant `mock-exam/exam-*-questions.md` file, under the right scenario heading (domain tags D1–D5). For **Professional (CCAR-P v1.1)**, it goes in `professional/mock-exam/exam-*-questions.md` under a `## Part N` heading (domain tags D1–D7, one per item); keep each stem and each answer-key entry on a single line so the interactive player can parse it. The answer goes in the matching `exam-*-answers.md` file, same question number:
 
 ```markdown
 **Q<N>.** [Scenario-grounded question stem, 2–4 sentences of context, then the actual question]
