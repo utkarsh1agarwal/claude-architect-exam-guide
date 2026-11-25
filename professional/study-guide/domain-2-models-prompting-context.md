@@ -75,19 +75,19 @@ Now suppose the 5% of balanced-tier failures and the 4% of top-tier failures are
 
 **Q2.1a.** Lakeside Insurance classifies incoming claim emails into 14 queues. It handles 1.2 million emails a month, needs p95 ≤ 1.5 s, and has a quality floor of 97% routing accuracy. Eval results: small tier 97.4% (p95 0.9 s), balanced tier 98.1% (p95 2.2 s), most capable tier 98.3% (p95 4.0 s). Which choice is correct, with the right reason?
 
-A) Balanced tier, because it has the best accuracy-to-cost ratio and gives up nothing
-B) Small tier, because it clears the 97% floor and is the only tier inside the latency SLA; it accepts ~0.7 points lower accuracy than the balanced tier
-C) Most capable tier, because misrouted claims carry regulatory risk
-D) Small tier, because routing is always a small-tier task regardless of evals
+- A) Balanced tier, because it has the best accuracy-to-cost ratio and gives up nothing
+- B) Small tier, because it clears the 97% floor and is the only tier inside the latency SLA; it accepts ~0.7 points lower accuracy than the balanced tier
+- C) Most capable tier, because misrouted claims carry regulatory risk
+- D) Small tier, because routing is always a small-tier task regardless of evals
 
 **Answer: B.** The small tier is the only one that clears both the quality floor and the 1.5 s SLA. It also states its trade-off honestly. A is the tempting choice, but the balanced tier breaks the latency constraint, and "gives up nothing" is a red flag. C uses risk as a reason to upgrade even though the top tier breaks the SLA. D reaches the right tier with an invalid rule that ignores evidence.
 
 **Q2.1b.** A contract-review assistant fails the same 31 of 500 eval cases on all three tiers. Every failing case involves a client-specific indemnity cap that is in the client's playbook, and the playbook is not sent to the model. What should the architect do first?
 
-A) Move to the most capable tier and raise effort to `max`
-B) Add more few-shot examples of correct indemnity reviews
-C) Retrieve the relevant playbook clause into context, then re-run the eval and keep the cheapest tier that passes
-D) Run each case three times and take the majority answer
+- A) Move to the most capable tier and raise effort to `max`
+- B) Add more few-shot examples of correct indemnity reviews
+- C) Retrieve the relevant playbook clause into context, then re-run the eval and keep the cheapest tier that passes
+- D) Run each case three times and take the majority answer
 
 **Answer: C.** Identical failures across tiers point to missing information, not missing capability. A is the scale-up reflex: no tier or effort level can recall a cap it was never given. B teaches format, not client-specific facts. D adds cost and still lacks the fact.
 
@@ -172,19 +172,19 @@ The revision sets the audience, fixes the order, handles the missing case, and e
 
 **Q2.2a.** After a model upgrade, a support agent calls `lookup_order` on almost every turn, including "thanks, bye!". The system prompt says: "You MUST ALWAYS call lookup_order to verify EVERY customer claim." Which revision best fixes this without losing legitimate lookups?
 
-A) "Call lookup_order only if you are more than 80% confident the customer mentioned an order."
-B) "Call lookup_order when the customer refers to a specific order or delivery, so your answer reflects current status. Greetings and general policy questions don't need it."
-C) "CRITICAL: Do NOT call lookup_order unless absolutely necessary."
-D) Remove `lookup_order` from the tool list and paste the order database into the system prompt
+- A) "Call lookup_order only if you are more than 80% confident the customer mentioned an order."
+- B) "Call lookup_order when the customer refers to a specific order or delivery, so your answer reflects current status. Greetings and general policy questions don't need it."
+- C) "CRITICAL: Do NOT call lookup_order unless absolutely necessary."
+- D) Remove `lookup_order` from the tool list and paste the order database into the system prompt
 
 **Answer: B.** The emphatic "ALWAYS … EVERY" wording is being followed literally. A plain, conditional rule with a reason restores judgment. A depends on the model's self-rated confidence, which isn't reliable evidence. C swaps one emphatic over-trigger for another and will likely suppress real lookups. D bloats context with stale data.
 
 **Q2.2b.** A procurement assistant's summaries are correct, but 18% of them list cost before risk while the rest list risk first. Reviewers also flag that summaries never say when the vendor's SOC 2 report is missing. Which revision addresses both findings with the least added constraint?
 
-A) Add a fixed section order (Risk, Cost, Timeline) and the instruction: "If no SOC 2 report is attached, say 'SOC 2 report: not provided', because procurement can't approve without it."
-B) Enforce a 150-word cap and a sentence-by-sentence template
-C) Add 20 example summaries spread across all vendor types
-D) Turn on adaptive thinking so the model reasons about section order
+- A) Add a fixed section order (Risk, Cost, Timeline) and the instruction: "If no SOC 2 report is attached, say 'SOC 2 report: not provided', because procurement can't approve without it."
+- B) Enforce a 150-word cap and a sentence-by-sentence template
+- C) Add 20 example summaries spread across all vendor types
+- D) Turn on adaptive thinking so the model reasons about section order
 
 **Answer: A.** One sentence fixes the order and one fixes the missing-data case, and the reason tells the model why it matters. B over-constrains and does nothing about SOC 2. C costs many tokens and still relies on the model inferring an unstated rule. D adds reasoning cost for what is a specification gap.
 
@@ -283,19 +283,19 @@ Finding 3 → enable adaptive thinking (or raise effort if it's already on) for 
 
 **Q2.3a.** An HR assistant writes interview feedback summaries. Facts are accurate, but hiring managers complain that length swings from two lines to a full page. Every summary starts with "Overall, the candidate…", and several mention "Python" even for non-engineering roles. The prompt includes one example summary, for a Python engineer. What's the most direct fix?
 
-A) Add a JSON schema with a `summary` string field
-B) Raise effort to `high` so the model considers each candidate more carefully
-C) Add "Do not mention Python unless relevant" to the prompt
-D) Replace the single example with four varied examples (different roles, lengths, and openings) in `<example>` tags
+- A) Add a JSON schema with a `summary` string field
+- B) Raise effort to `high` so the model considers each candidate more carefully
+- C) Add "Do not mention Python unless relevant" to the prompt
+- D) Replace the single example with four varied examples (different roles, lengths, and openings) in `<example>` tags
 
 **Answer: D.** The repeated opening and the stray "Python" are classic over-imitation of a single example. Several diverse examples show what varies and what stays fixed. C is tempting, but it patches one symptom and leaves the copied opening and length drift. A controls shape, not prose style. B adds reasoning cost for a style problem.
 
 **Q2.3b. (Select TWO.)** A claims-triage service on one of the newest top-tier models has two findings: (1) 4% of responses can't be parsed by the downstream loader, and (2) a fraud-risk field is sometimes wrong on claims where the model must combine three policy conditions. The team's current code prefills `{` and forces `tool_choice` to a `record_triage` tool, and both now return errors. Which TWO changes address the findings?
 
-A) Set `output_config.format` with the triage JSON schema, and keep loader handling for `stop_reason` values `refusal` and `max_tokens`
-B) Lower `temperature` to 0 to make the fraud field consistent
-C) Use adaptive thinking and evaluate a higher effort level on the fraud-risk route
-D) Add a second model call that repairs any malformed JSON
+- A) Set `output_config.format` with the triage JSON schema, and keep loader handling for `stop_reason` values `refusal` and `max_tokens`
+- B) Lower `temperature` to 0 to make the fraud field consistent
+- C) Use adaptive thinking and evaluate a higher effort level on the fraud-risk route
+- D) Add a second model call that repairs any malformed JSON
 
 **Answer: A and C.** A fixes finding 1 at the source and replaces the removed prefill and forced-tool pattern; the caveat about refusals and cut-offs is accurate. C targets finding 2, which is a multi-step reasoning failure. B is invalid: current API versions reject `temperature`, and it was never a correctness lever. D is tempting for finding 1, but it adds a second call and its latency instead of preventing malformed output at the source, and it does nothing for finding 2.
 
@@ -376,19 +376,19 @@ Not on the list: "cache the 64K of tool results". Cheaper, but the window stays 
 
 **Q2.4a.** A code-review agent hits the context limit on large pull requests. Usage shows 70% of input tokens are full test-log outputs from earlier tool calls that the agent read once. The prompt prefix is already cached with a high hit rate. What most directly fixes the limit without losing needed information?
 
-A) Add a second cache breakpoint after the test logs
-B) Switch to a 1-hour cache TTL
-C) Enable context editing to clear old tool results (keeping recent ones), and have the test tool return failures only
-D) Move to a model with a larger context window
+- A) Add a second cache breakpoint after the test logs
+- B) Switch to a 1-hour cache TTL
+- C) Enable context editing to clear old tool results (keeping recent ones), and have the test tool return failures only
+- D) Move to a model with a larger context window
 
 **Answer: C.** The window is full of stale, single-use tool output. Clearing it (and returning less in the first place) frees space without dropping anything the agent still needs. A and B are the trap: caching changes price, not occupancy, and nothing is expiring anyway. D postpones the problem and adds context-rot risk.
 
 **Q2.4b.** A tax-guidance chatbot sends a 90,000-token static rules corpus on every request, about 400,000 requests a day, with interactive users. Answers are good. Finance wants input costs down without losing accuracy. What's the best first move?
 
-A) Mark the end of the static corpus with `cache_control` so repeat requests read it from cache
-B) Send all requests through the Batch API
-C) Retrieve only the top-3 rule chunks per question
-D) Switch to the smallest tier
+- A) Mark the end of the static corpus with `cache_control` so repeat requests read it from cache
+- B) Send all requests through the Batch API
+- C) Retrieve only the top-3 rule chunks per question
+- D) Switch to the smallest tier
 
 **Answer: A.** A large, identical prefix repeated at high volume is the textbook caching case. Reads cost a small fraction of base input, and quality doesn't change. B breaks the interactive constraint. C may cut tokens but risks the accuracy that is already good, so it would need evals first. D changes quality without evidence it still passes.
 
@@ -496,19 +496,19 @@ With steady traffic the entry stays warm (each read refreshes the 5-minute TTL).
 
 **Q2.5a.** A legal research tool sends the same 40,000-token case-law digest to the model. Every weekday at 09:00, 300 analysts' dashboards fire identical requests within two seconds. The usage report shows about 300 cache writes and almost no reads in that window, then a normal hit rate for the rest of the day. What's the most direct fix?
 
-A) Switch to a 1-hour TTL
-B) Send one warm-up request (for example with `max_tokens: 0`), wait for it to start responding, then release the 09:00 burst
-C) Add a second breakpoint halfway through the digest
-D) Move the digest into a Skill
+- A) Switch to a 1-hour TTL
+- B) Send one warm-up request (for example with `max_tokens: 0`), wait for it to start responding, then release the 09:00 burst
+- C) Add a second breakpoint halfway through the digest
+- D) Move the digest into a Skill
 
 **Answer: B.** An entry becomes readable only after the first response starts, so simultaneous identical requests all write. Warming first turns 299 writes into reads. A is the tempting answer, but nothing is expiring: the misses happen within two seconds. C still has 300 concurrent writers. D doesn't fit content every request needs.
 
 **Q2.5b.** A data-quality agent validates uploaded CSVs. On every request, the model writes out the same ~250-line Python validation routine and then runs it through code execution, which adds about 3,500 output tokens per call. The team proposes putting the routine in the cached system prompt. What should the architect recommend instead?
 
-A) The cached system prompt, since cache reads are cheap
-B) Lower effort so the routine is written more tersely
-C) Package the routine as a Skill with a bundled script that is executed, so only its output enters context
-D) Use structured outputs so the routine always has the same shape
+- A) The cached system prompt, since cache reads are cheap
+- B) Lower effort so the routine is written more tersely
+- C) Package the routine as a Skill with a bundled script that is executed, so only its output enters context
+- D) Use structured outputs so the routine always has the same shape
 
 **Answer: C.** The cost is in *output* tokens: the model regenerates the code to run it. A cached prompt (A) makes the *input* copy cheap, but the model would still write the code out. A bundled script runs without its source entering context. On the API this needs the code execution tool and the `container` parameter. B and D don't remove the regeneration.
 
@@ -598,19 +598,19 @@ Why not "a better compaction prompt"? Summaries are lossy, and repeated ones los
 
 **Q2.6a.** A compliance-monitoring agent runs 8-hour sessions. Midway through, operators confirm a list of 12 exempt account IDs. By hour 7, after several compactions, the agent flags two exempt accounts. The context is otherwise healthy. Which change most directly fixes this?
 
-A) Add "Preserve all account IDs exactly" to the compaction instructions
-B) Disable compaction and move to a larger context window
-C) Raise effort to `max` for the rest of the session
-D) Have the agent write the confirmed exempt IDs to the memory tool when confirmed, and check that file before flagging
+- A) Add "Preserve all account IDs exactly" to the compaction instructions
+- B) Disable compaction and move to a larger context window
+- C) Raise effort to `max` for the rest of the session
+- D) Have the agent write the confirmed exempt IDs to the memory tool when confirmed, and check that file before flagging
 
 **Answer: D.** Exact facts that must survive a long session belong in durable storage outside the window, not in a lossy summary that gets re-summarized. A is the tempting fix, but every compaction pass is another chance to drop or change an ID. C adds reasoning but not the missing information. B trades the problem for context rot and an eventual overflow.
 
 **Q2.6b.** A coding agent's p95 turn latency is 38 s against a 20 s target. Evals: effort `high` scores 91%, `medium` scores 90.5%, `low` scores 82%. The quality floor is 90%. Turn latency at `medium` is 17 s. The agent's prompt is cached, and the team proposes switching effort between `medium` and `high` on each turn based on a keyword heuristic. What should the architect recommend?
 
-A) Set request-level effort to `medium` for the session and keep it stable. It meets both the floor and the latency target, and a stable setting keeps the cache intact.
-B) Use the keyword heuristic to alternate effort each turn for the best of both
-C) Use `low` effort, since latency is the binding constraint
-D) Move to the most capable tier at `high` effort
+- A) Set request-level effort to `medium` for the session and keep it stable. It meets both the floor and the latency target, and a stable setting keeps the cache intact.
+- B) Use the keyword heuristic to alternate effort each turn for the best of both
+- C) Use `low` effort, since latency is the binding constraint
+- D) Move to the most capable tier at `high` effort
 
 **Answer: A.** `medium` clears the 90% floor and the 20 s target, and keeping one request-level value avoids cache invalidation. The trade-off is half a point of accuracy versus `high`. B is the tempting choice, but changing request-level effort mid-conversation invalidates cached message blocks, and the heuristic is untested. If per-turn variation is truly needed, the per-message effort option preserves the cache. C breaks the quality floor. D is the scale-up reflex and likely slower.
 
@@ -653,4 +653,5 @@ D) Move to the most capable tier at `high` effort
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)

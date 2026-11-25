@@ -11,11 +11,19 @@ All notable changes to this repo are documented here. Format follows [Keep a Cha
 - Root `index.html` landing page and `sitemap.xml` for GitHub Pages
 - Player: **study mode** (instant answer + rationale), **practice by domain** across all exams in a track, **flag for review** (saved with progress), review filters (all / incorrect / flagged), *Show all options* on review cards, and a **shareable score card** (download, LinkedIn, X, native share). Flagging and full-option review were inspired by community PRs #2 and #3 from Thomas Westhead
 - Social preview image (`assets/social-preview.png`) used for Open Graph / Twitter cards
+- **Study guide on the website** (`guide/`): every Foundations and Professional study-guide page as a themed web page with a sidebar, "On this page" contents, hidden-answer practice questions ("Show answer"), a "Practice this domain" button that opens the player straight into a study-mode set, prev/next navigation and per-page SEO metadata; generated from the Markdown by `node tools/build-guide.mjs` (sitemap now lists all 26 pages)
+- Player deep links: `#<track>/practice/<D#>` starts a domain practice set directly
+- ☕ Buy me a coffee pop-up (`mock-exam/interactive/support.js`): UPI QR code, an "Open in UPI app" deep link for phones and a copy-UPI-ID button; opened from Buy me a coffee buttons on the landing page, player and guide, or via `…/#support` (linked from every Markdown footer). International options can be added later via `coffee` in the config
+- Author credit on every page: an author card on the landing page, bylines on the player, README and every guide page, and an author + support footer (GitHub star, LinkedIn, ☕ Buy me a coffee) on all 44 Markdown pages — all driven by `tools/site.config.json` via `node tools/update-footers.mjs`
 - README note that registration requires Claude Partner Network membership (suggested in community PR #1)
 - Exam 4: a fourth 60-question mock exam covering all 6 scenarios, calibrated to a harder difficulty than Exams 1–3 (finer mechanism-level distractors, SLA/timing calculations, four select-two items) — complete answer key with domain tagging
 - Exam 5 and Exam 6: two more 60-question mock exams at the same hard-mode calibration as Exam 4, each independently verified against every other exam in the set (and against the community-provided reference question banks used to calibrate difficulty) to ensure no duplicate or near-duplicate questions
 
+### Fixed
+- Six broken section links in Foundations `scenarios.md` (anchors for headings containing `&`)
+
 ### Changed
+- Practice-question options in the domain notes are now Markdown list items, so they render one per line on GitHub and the website
 - README restructured to cover both certifications up front
 - Renamed the existing mock exams from letters to numbers (Exam A → 1, B → 2, C → 3) to accommodate Exams 4–6 and give the set a consistent, open-ended numbering scheme; all internal cross-links and references across the repo updated accordingly
 

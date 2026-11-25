@@ -90,19 +90,19 @@ Note that two clauses were fixed by **changing the architecture** (§2.1, §2.2)
 
 **Q1.** Kestrel Insurance's draft SLA says: "Every inbound claim email receives an AI triage decision within 15 minutes." The proposed design submits all emails to Message Batches every hour to save 50% on cost. About 8% of emails are flagged "urgent" by a rules engine before any model call. What should the architect recommend?
 
-A) Keep the hourly batch and change the SLA to "within 24 hours" for all emails.
-B) Send urgent-flagged emails to synchronous calls with the 15-minute target; keep the rest on Batch with a longer, stated target.
-C) Submit batches every 5 minutes so results arrive sooner.
-D) Move all emails to synchronous calls with the fastest model tier.
+- A) Keep the hourly batch and change the SLA to "within 24 hours" for all emails.
+- B) Send urgent-flagged emails to synchronous calls with the 15-minute target; keep the rest on Batch with a longer, stated target.
+- C) Submit batches every 5 minutes so results arrive sooner.
+- D) Move all emails to synchronous calls with the fastest model tier.
 
 **Answer: B.** The binding constraint applies only to a known subset, so split by urgency: synchronous for the 8% that need minutes, Batch for the rest. C is the tempting distractor, but smaller, more frequent batches still carry no latency guarantee. A abandons a requirement that is achievable, and D gives up the Batch saving on the 92% that don't need it.
 
 **Q2.** A draft SLA for a multinational retailer reads: "Customer chat transcripts are processed only in Japan." The design uses a global cross-region inference profile on a partner cloud. **Select TWO** actions that resolve this.
 
-A) Switch to a Japan geography or regional inference endpoint.
-B) Enable zero data retention so transcripts aren't stored.
-C) Record the higher per-token price and possible capacity limits of the regional endpoint in the ADR and cost model.
-D) Mask customer names before sending transcripts to the global endpoint.
+- A) Switch to a Japan geography or regional inference endpoint.
+- B) Enable zero data retention so transcripts aren't stored.
+- C) Record the higher per-token price and possible capacity limits of the regional endpoint in the ADR and cost model.
+- D) Mask customer names before sending transcripts to the global endpoint.
 
 **Answer: A and C.** A changes where inference runs, which is the actual promise. C makes the cost of that change explicit, so stakeholders sign off on it knowingly. B controls retention, not location. D leaves the rest of the transcript leaving Japan.
 
@@ -206,19 +206,19 @@ The revision moves the guarantee from **instruction** to **enforcement** (the nu
 
 **Q3.** A draft ADR for an HR policy assistant says: "Hallucinated policy citations are eliminated. After adding a 'cite only from retrieved text' instruction, we re-ran the 40 failing questions and none hallucinated." The CHRO's constraint is that employees may act on answers about leave entitlements. Which revision best addresses the gap?
 
-A) Keep the claim but add "Verified by a 40-case regression test."
-B) Switch to the most capable model tier and state that it will not hallucinate.
-C) Re-run the 40 cases five times and use majority vote to support the claim.
-D) Replace the claim with the measured citation-error rate on the full eval set (with trials per case), state the residual rate, mark leave-entitlement answers as advisory until HR confirms, and log issued answers.
+- A) Keep the claim but add "Verified by a 40-case regression test."
+- B) Switch to the most capable model tier and state that it will not hallucinate.
+- C) Re-run the 40 cases five times and use majority vote to support the claim.
+- D) Replace the claim with the measured citation-error rate on the full eval set (with trials per case), state the residual rate, mark leave-entitlement answers as advisory until HR confirms, and log issued answers.
 
 **Answer: D.** It replaces a certainty claim with measured evidence, names the residual risk, and limits reliance where the CHRO's constraint bites. A and C still rest on the same 40 previously failing cases and keep the over-claim. B is the scale-up reflex plus a new unprovable guarantee.
 
 **Q4.** An ADR chooses a Haiku-class model for invoice-field extraction to meet a CFO's cost ceiling. The draft lists only the chosen option and says "Accuracy is equivalent to larger models." Eval data: 96.8% field accuracy for the Haiku-class model versus 98.9% for a Sonnet-class model on 2,000 invoices, at one-fifth of the cost. Which revision is best?
 
-A) Keep the wording; the cost ceiling justifies the choice.
-B) State both measured accuracies and costs, record the 2.1-point gap as the accepted trade-off, route low-confidence fields (by a code check, such as totals that don't add up) to human review, and set a revisit trigger if accuracy drops below 96%.
-C) Replace "equivalent" with "nearly equivalent" and add the Sonnet-class model as a footnote.
-D) Commit to switching to the next model release, which is expected to close the gap.
+- A) Keep the wording; the cost ceiling justifies the choice.
+- B) State both measured accuracies and costs, record the 2.1-point gap as the accepted trade-off, route low-confidence fields (by a code check, such as totals that don't add up) to human review, and set a revisit trigger if accuracy drops below 96%.
+- C) Replace "equivalent" with "nearly equivalent" and add the Sonnet-class model as a footnote.
+- D) Commit to switching to the next model release, which is expected to close the gap.
 
 **Answer: B.** It records the real alternative, the measured gap, the control that catches residual errors, and when to reopen the decision. C softens the wording but still hides the number the CFO needs to accept the trade-off. D writes an unverified forecast into the record, and A keeps a false claim.
 
@@ -304,19 +304,19 @@ If the stem asks for the **single most blocking** gap, pick the one that causes 
 
 **Q5.** A handoff package for a procurement agent on Claude Managed Agents lists: dashboards, a restart runbook, the agent config (built-in toolset `always_allow`, MCP toolset `always_ask`) and a custom tool `issue_purchase_order` that the app executes. Three weeks after handoff, the agent issued an unapproved $40,000 order. Ops says "the permission policy should have caught it." **Select TWO** items the handoff should have included.
 
-A) A statement that permission policies don't apply to custom tools, plus the location and owner of the app-side approval check for `issue_purchase_order`.
-B) A larger dashboard showing purchase-order volume by hour.
-C) Switching the MCP toolset to `always_allow` to reduce approval fatigue.
-D) A runbook for disabling `issue_purchase_order` and rolling back to the previous agent version.
+- A) A statement that permission policies don't apply to custom tools, plus the location and owner of the app-side approval check for `issue_purchase_order`.
+- B) A larger dashboard showing purchase-order volume by hour.
+- C) Switching the MCP toolset to `always_allow` to reduce approval fatigue.
+- D) A runbook for disabling `issue_purchase_order` and rolling back to the previous agent version.
 
 **Answer: A and D.** A closes the false assumption (the platform never gated custom tools) and names who owns the real control. D gives Ops a way to stop and roll back. B detects after the fact, and C loosens a different control.
 
 **Q6.** An internal research agent's sessions show `idle` in the Managed Agents console, and the dashboard counts every idle session as "completed". Users complain that some reports never arrive. What should the handoff documentation add?
 
-A) A higher session budget so sessions never stop early.
-B) A retry that resends the original task when a session goes idle.
-C) A mapping of idle stop reasons (`end_turn`, `requires_action`, `budget_reached`) to actions, with an owner and SLA for sessions waiting on `requires_action` and a scheduled check for stale idle sessions.
-D) An instruction in the system prompt to always finish reports.
+- A) A higher session budget so sessions never stop early.
+- B) A retry that resends the original task when a session goes idle.
+- C) A mapping of idle stop reasons (`end_turn`, `requires_action`, `budget_reached`) to actions, with an owner and SLA for sessions waiting on `requires_action` and a scheduled check for stale idle sessions.
+- D) An instruction in the system prompt to always finish reports.
 
 **Answer: C.** Idle is not complete; the stop reason says why it stopped, and `requires_action` sessions need a person. A addresses only `budget_reached` and drops cost control. B could duplicate work or side effects, and D doesn't touch the missing operational process.
 
@@ -357,4 +357,5 @@ D) An instruction in the system prompt to always finish reports.
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)

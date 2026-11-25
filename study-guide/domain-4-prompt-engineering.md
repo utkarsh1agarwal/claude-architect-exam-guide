@@ -43,20 +43,20 @@ Comparing `calculated_total` against `stated_total` lets you flag semantic misma
 
 **Practice.** An invoice-extraction pipeline using `tool_use` with a strict JSON schema never produces malformed JSON, but occasionally produces line items that don't sum to the stated total. What does this tell you, and what's the fix?
 
-A) The schema is broken; add stricter `required` fields
-B) This is a semantic error, not a syntax error — add a `calculated_total` field to compare against `stated_total` and flag discrepancies
-C) Switch from `tool_use` to plain JSON text output
-D) Lower `max_tokens` to force conciseness
+- A) The schema is broken; add stricter `required` fields
+- B) This is a semantic error, not a syntax error — add a `calculated_total` field to compare against `stated_total` and flag discrepancies
+- C) Switch from `tool_use` to plain JSON text output
+- D) Lower `max_tokens` to force conciseness
 
 **Answer: B.**
 
 
 **Practice.** You have three different extraction schemas (invoice, receipt, contract) and don't know in advance which document type you'll receive. You want to guarantee some structured extraction happens, but let the model choose the right schema. Which `tool_choice` setting?
 
-A) `"auto"`
-B) `"any"`
-C) `{"type": "tool", "name": "extract_invoice"}`
-D) Omit `tool_choice` entirely
+- A) `"auto"`
+- B) `"any"`
+- C) `{"type": "tool", "name": "extract_invoice"}`
+- D) Omit `tool_choice` entirely
 
 **Answer: B.** `"any"` guarantees a tool call happens (so you always get structured output) while still letting the model pick which of the three schemas fits.
 
@@ -69,10 +69,10 @@ D) Omit `tool_choice` entirely
 
 **Practice.** Two tools have nearly identical one-line descriptions, and the agent frequently picks the wrong one for ambiguous requests. You've already rewritten the descriptions (see [Domain 2](domain-2-tool-design-mcp.md#21-tool-description-quality-is-the-1-selection-lever)), but selection is still inconsistent in genuinely ambiguous edge cases. Next step?
 
-A) Add 2–4 few-shot examples showing correct selection with reasoning for edge cases
-B) Force `tool_choice` to always pick one specific tool
-C) Merge both tools into one mega-tool
-D) Increase `max_tokens`
+- A) Add 2–4 few-shot examples showing correct selection with reasoning for edge cases
+- B) Force `tool_choice` to always pick one specific tool
+- C) Merge both tools into one mega-tool
+- D) Increase `max_tokens`
 
 **Answer: A.** Description quality is always the first lever; few-shot is the next one once descriptions alone aren't enough for genuinely ambiguous edge cases.
 
@@ -85,10 +85,10 @@ If one category of finding has a very high false-positive rate, it's reasonable 
 
 **Practice.** Developers report 40% of automated code-review findings are false positives, concentrated in one category ("style consistency"). The prompt already says "only flag high-confidence issues." Best next step?
 
-A) Add "be even more conservative" to the prompt
-B) Define explicit categorical criteria for that finding type, and consider temporarily disabling the category while iterating
-C) Lower the model's temperature
-D) Remove the category permanently
+- A) Add "be even more conservative" to the prompt
+- B) Define explicit categorical criteria for that finding type, and consider temporarily disabling the category while iterating
+- C) Lower the model's temperature
+- D) Remove the category permanently
 
 **Answer: B.**
 
@@ -120,20 +120,20 @@ D) Remove the category permanently
 
 **Practice.** An extraction fails schema validation because a required field, `vendor_tax_id`, is missing. You confirm the source invoice never contained a tax ID anywhere on the document. What should you do?
 
-A) Retry with the same prompt — missing-field errors are usually retry-fixable
-B) Recognize the retry will not help since the information is genuinely absent from the source; make the field nullable instead
-C) Fabricate a placeholder value so validation passes
-D) Increase `max_tokens` and retry
+- A) Retry with the same prompt — missing-field errors are usually retry-fixable
+- B) Recognize the retry will not help since the information is genuinely absent from the source; make the field nullable instead
+- C) Fabricate a placeholder value so validation passes
+- D) Increase `max_tokens` and retry
 
 **Answer: B.** Retries fix *format* problems, not the source document not containing the data.
 
 
 **Practice.** A retry loop needs to correct a case where a nested line-items array was incorrectly flattened into a single string on the first attempt. What should the follow-up prompt contain?
 
-A) Only a repeated instruction to "format correctly this time"
-B) The original document, the failed extraction, and the specific validation error describing the flattening problem
-C) A different, unrelated example document
-D) Nothing — `tool_use` with a schema should never produce this kind of error
+- A) Only a repeated instruction to "format correctly this time"
+- B) The original document, the failed extraction, and the specific validation error describing the flattening problem
+- C) A different, unrelated example document
+- D) Nothing — `tool_use` with a schema should never produce this kind of error
 
 **Answer: B.**
 
@@ -151,10 +151,10 @@ D) Nothing — `tool_use` with a schema should never produce this kind of error
 
 **Practice.** Your manager wants to move both (a) a blocking pre-merge security check and (b) an overnight technical-debt report to the Message Batches API for the 50% cost savings. What's the correct call?
 
-A) Batch both
-B) Batch the overnight report only; keep the pre-merge check on synchronous real-time calls
-C) Keep both synchronous to avoid `custom_id` correlation complexity
-D) Batch both with a real-time fallback if the batch takes too long
+- A) Batch both
+- B) Batch the overnight report only; keep the pre-merge check on synchronous real-time calls
+- C) Keep both synchronous to avoid `custom_id` correlation complexity
+- D) Batch both with a real-time fallback if the batch takes too long
 
 **Answer: B.**
 
@@ -167,14 +167,15 @@ For large multi-file changes, split reviews into **per-file local passes** plus 
 
 **Practice.** A team has Claude Code generate a bug fix and, in the same session, immediately asks it to review that same fix before merging. The reviews consistently miss subtle logic issues that a second human reviewer catches. A teammate suggests adding "be extra critical of your own work" to the review prompt. Will that fix it?
 
-A) Yes — an explicit self-critical instruction is enough to overcome the same-session bias
-B) No — the session still retains its generation reasoning regardless of prompt wording; use an independent review instance instead
-C) Yes, but only if combined with a lower temperature
-D) No — this can only be fixed by switching to a larger model
+- A) Yes — an explicit self-critical instruction is enough to overcome the same-session bias
+- B) No — the session still retains its generation reasoning regardless of prompt wording; use an independent review instance instead
+- C) Yes, but only if combined with a lower temperature
+- D) No — this can only be fixed by switching to a larger model
 
 **Answer: B.** This is the same finding as [Domain 3 → CI/CD Integration](domain-3-claude-code-workflows.md#36-cicd-integration): the bias comes from the session retaining its own prior reasoning, not from insufficiently forceful wording — an instruction can't undo context the model already has. A fresh, independent instance with no generation history is the reliable fix.
 
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)

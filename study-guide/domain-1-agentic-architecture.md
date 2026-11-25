@@ -51,10 +51,10 @@ while True:
 
 **Practice.** An engineer implements loop termination by checking whether the assistant's response text contains the words "Done" or "Completed." QA finds the agent sometimes stops mid-task because it used the word "completed" while describing a *future* step. What's the fix?
 
-A) Add more stop-phrases to the checklist
-B) Check `stop_reason` for `"end_turn"` instead of parsing text
-C) Lower temperature to reduce phrasing variance
-D) Add a retry if the task looks incomplete
+- A) Add more stop-phrases to the checklist
+- B) Check `stop_reason` for `"end_turn"` instead of parsing text
+- C) Lower temperature to reduce phrasing variance
+- D) Add a retry if the task looks incomplete
 
 **Answer: B.** Parsing natural language for control flow is inherently unreliable. `stop_reason` is the deterministic, API-level signal designed for exactly this.
 
@@ -91,20 +91,20 @@ Task(synthesis_agent, "combine") -> wait -> result
 
 **Practice.** A research pipeline's final report is coherent but only covers 25% of the requested topic's breadth. Each subagent completed its assigned task successfully with no errors. Where do you look first?
 
-A) The synthesis agent's writing quality
-B) The web search agent's query relevance
-C) The coordinator's task decomposition logs
-D) The document analysis agent's summarization accuracy
+- A) The synthesis agent's writing quality
+- B) The web search agent's query relevance
+- C) The coordinator's task decomposition logs
+- D) The document analysis agent's summarization accuracy
 
 **Answer: C.** When every subagent succeeded at its *assigned* task but overall coverage is narrow, the defect is upstream — in what the coordinator decided to assign, not in how well any single agent executed.
 
 
 **Practice.** Which statement about subagent context is correct?
 
-A) Subagents automatically receive the full coordinator conversation history
-B) Subagents share a common memory pool keyed by session ID
-C) Subagents require explicit context passed in their invocation prompt
-D) Subagents inherit context only if `context: inherit` is set in `AgentDefinition`
+- A) Subagents automatically receive the full coordinator conversation history
+- B) Subagents share a common memory pool keyed by session ID
+- C) Subagents require explicit context passed in their invocation prompt
+- D) Subagents inherit context only if `context: inherit` is set in `AgentDefinition`
 
 **Answer: C.**
 
@@ -131,10 +131,10 @@ def pre_tool_hook(tool_name, tool_input):
 
 **Practice.** A support agent occasionally processes refunds before verifying the customer's identity, despite the system prompt explicitly stating "always verify identity first." What is the most reliable fix?
 
-A) Rewrite the system prompt with stronger, more emphatic language
-B) Add a programmatic prerequisite hook that blocks `process_refund` until `get_customer` has returned a verified ID
-C) Add 10 few-shot examples showing correct ordering
-D) Reduce temperature to make behavior more consistent
+- A) Rewrite the system prompt with stronger, more emphatic language
+- B) Add a programmatic prerequisite hook that blocks `process_refund` until `get_customer` has returned a verified ID
+- C) Add 10 few-shot examples showing correct ordering
+- D) Reduce temperature to make behavior more consistent
 
 **Answer: B.** Ordering guarantees for high-stakes operations need enforcement, not persuasion — this is the single most-repeated lesson across the entire exam.
 
@@ -159,10 +159,10 @@ A structured handoff must include, at minimum:
 
 **Practice.** A case is escalated to a human agent with no access to the prior conversation. The escalation payload contains only the customer's final message ("this is ridiculous, just fix it") and a system-generated ticket number. What's missing, and why does it matter?
 
-A) A sentiment label, so the human knows the customer is upset
-B) A structured summary with customer details, root cause analysis, and a recommended action — without it, the human must re-investigate from scratch
-C) The full unedited transcript, so the human can read every turn
-D) A retry count, so the human knows how many times the agent attempted resolution
+- A) A sentiment label, so the human knows the customer is upset
+- B) A structured summary with customer details, root cause analysis, and a recommended action — without it, the human must re-investigate from scratch
+- C) The full unedited transcript, so the human can read every turn
+- D) A retry count, so the human knows how many times the agent attempted resolution
 
 **Answer: B.** The human has no transcript access, so a bare final message and ticket number provide no usable context. Option C reintroduces the token-bloat / lost-in-the-middle problem instead of solving the actual gap.
 
@@ -176,10 +176,10 @@ D) A retry count, so the human knows how many times the agent attempted resoluti
 
 **Practice.** You're automating review of PRs that touch 10–20 files. A single-pass review over all files produces contradictory findings (the same pattern flagged in one file, approved in another). Best fix?
 
-A) Use a larger context-window model
-B) Split into per-file local-analysis passes plus a separate cross-file integration pass
-C) Require three independent full-PR passes and keep majority-vote findings
-D) Ask developers to manually split PRs into fewer than 4 files
+- A) Use a larger context-window model
+- B) Split into per-file local-analysis passes plus a separate cross-file integration pass
+- C) Require three independent full-PR passes and keep majority-vote findings
+- D) Ask developers to manually split PRs into fewer than 4 files
 
 **Answer: B.** This is attention dilution — the fix is architectural decomposition of the review itself, not a bigger model or brute-force voting.
 
@@ -196,14 +196,15 @@ D) Ask developers to manually split PRs into fewer than 4 files
 
 **Practice.** A developer resumes a coding session two days later, after teammates modified several files the agent had already analyzed. The agent's suggestions reference outdated function signatures. What should have been done differently?
 
-A) Used `fork_session` instead of `--resume`
-B) Informed the resumed session about the specific file changes for targeted re-analysis
-C) Started a completely new session with no context at all
-D) Increased the context window size
+- A) Used `fork_session` instead of `--resume`
+- B) Informed the resumed session about the specific file changes for targeted re-analysis
+- C) Started a completely new session with no context at all
+- D) Increased the context window size
 
 **Answer: B.**
 
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)

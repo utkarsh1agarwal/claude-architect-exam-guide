@@ -15,7 +15,7 @@ The exam draws **4 of these 6 scenarios at random** for any given sitting. Every
 
 You're building a resolution agent for returns, billing disputes, and account issues, backed by MCP tools (`get_customer`, `lookup_order`, `process_refund`, `escalate_to_human`), targeting 80%+ first-contact resolution.
 
-**What it really tests:** hooks and prerequisite enforcement ([Domain 1](domain-1-agentic-architecture.md#14-hooks-posttooluse-and-tool-interception)), tool description quality for near-duplicate tools ([Domain 2](domain-2-tool-design-mcp.md#21-tool-description-quality-is-the-1-selection-lever)), and escalation calibration ([Domain 5](domain-5-context-reliability.md#escalation-ambiguity-resolution)). This is the scenario where "structural fix beats prompt fix" shows up most literally — refund-before-verification bugs are the exam's signature example.
+**What it really tests:** hooks and prerequisite enforcement ([Domain 1](domain-1-agentic-architecture.md#14-hooks-posttooluse-and-tool-interception)), tool description quality for near-duplicate tools ([Domain 2](domain-2-tool-design-mcp.md#21-tool-description-quality-is-the-1-selection-lever)), and escalation calibration ([Domain 5](domain-5-context-reliability.md#escalation--ambiguity-resolution)). This is the scenario where "structural fix beats prompt fix" shows up most literally — refund-before-verification bugs are the exam's signature example.
 
 ## 2. Code Generation with Claude Code
 
@@ -27,25 +27,25 @@ Using Claude Code for generation, refactoring, debugging, and docs, with custom 
 
 A coordinator delegates to specialized subagents (search, document analysis, synthesis, report generation) to produce comprehensive, cited reports.
 
-**What it really tests:** coordinator task decomposition and parallel spawning ([Domain 1](domain-1-agentic-architecture.md#1213-coordinatorsubagent-hub-and-spoke-pattern)), scoped cross-role tools ([Domain 2](domain-2-tool-design-mcp.md#23-tool-distribution-tool_choice-across-agents)), and provenance/conflict-handling in synthesis ([Domain 5](domain-5-context-reliability.md#human-review-confidence-calibration-provenance)). The classic trap here: a report with narrow coverage despite every subagent "succeeding" — the bug is almost always upstream in the coordinator's decomposition.
+**What it really tests:** coordinator task decomposition and parallel spawning ([Domain 1](domain-1-agentic-architecture.md#1213-coordinatorsubagent-hub-and-spoke-pattern)), scoped cross-role tools ([Domain 2](domain-2-tool-design-mcp.md#23-tool-distribution--tool_choice-across-agents)), and provenance/conflict-handling in synthesis ([Domain 5](domain-5-context-reliability.md#human-review-confidence-calibration--provenance)). The classic trap here: a report with narrow coverage despite every subagent "succeeding" — the bug is almost always upstream in the coordinator's decomposition.
 
 ## 4. Developer Productivity with Claude
 
 An agent that helps engineers explore unfamiliar codebases, understand legacy systems, and automate repetitive tasks, using built-in tools (`Read`, `Write`, `Bash`, `Grep`, `Glob`) plus MCP servers.
 
-**What it really tests:** built-in tool selection (`Grep` vs. `Glob`), MCP-vs-built-in description competition ([Domain 2](domain-2-tool-design-mcp.md#26-mcp-tool-descriptions-vs-built-in-tool-preference)), and context management during long exploration sessions ([Domain 5](domain-5-context-reliability.md#large-codebase-exploration-crash-recovery)).
+**What it really tests:** built-in tool selection (`Grep` vs. `Glob`), MCP-vs-built-in description competition ([Domain 2](domain-2-tool-design-mcp.md#26-mcp-tool-descriptions-vs-built-in-tool-preference)), and context management during long exploration sessions ([Domain 5](domain-5-context-reliability.md#large-codebase-exploration--crash-recovery)).
 
 ## 5. Claude Code for Continuous Integration
 
 Automated code reviews, test generation, and PR feedback wired into CI/CD, designed to minimize false positives.
 
-**What it really tests:** the `-p`/`--print` flag and JSON output flags ([Domain 3](domain-3-claude-code-workflows.md#36-cicd-integration)), explicit-criteria false-positive reduction, and independent-instance review architecture ([Domain 4](domain-4-prompt-engineering.md#reducing-false-positives-explicit-criteria-vague-instructions)).
+**What it really tests:** the `-p`/`--print` flag and JSON output flags ([Domain 3](domain-3-claude-code-workflows.md#36-cicd-integration)), explicit-criteria false-positive reduction, and independent-instance review architecture ([Domain 4](domain-4-prompt-engineering.md#reducing-false-positives-explicit-criteria--vague-instructions)).
 
 ## 6. Structured Data Extraction
 
 Extracting information from unstructured documents, validating against JSON schemas, handling edge cases gracefully.
 
-**What it really tests:** `tool_use` + JSON schema design, nullable fields to prevent fabrication, validation-retry loops, and knowing when retry won't help ([Domain 4](domain-4-prompt-engineering.md#validation-retry-feedback-loops-for-extraction-quality)), plus confidence-based human review routing ([Domain 5](domain-5-context-reliability.md#human-review-confidence-calibration-provenance)).
+**What it really tests:** `tool_use` + JSON schema design, nullable fields to prevent fabrication, validation-retry loops, and knowing when retry won't help ([Domain 4](domain-4-prompt-engineering.md#validation-retry--feedback-loops-for-extraction-quality)), plus confidence-based human review routing ([Domain 5](domain-5-context-reliability.md#human-review-confidence-calibration--provenance)).
 
 ## How to use this page
 
@@ -54,4 +54,5 @@ Before the exam, pick any scenario above and try to predict, from memory, which 
 <!-- support-footer -->
 ---
 
-> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
+> Created by **Utkarsh Agarwal** — certified Claude Certified Architect (Foundations & Professional).
+> Found this useful? [⭐ Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) · [💼 Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) · [☕ Buy me a coffee](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/#support)
