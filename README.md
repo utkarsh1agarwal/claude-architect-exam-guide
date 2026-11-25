@@ -15,7 +15,13 @@
 | **Take a mock exam now** | **[▶ Start a CCAR-F exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)** | **[▶ Start a CCAR-P exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/#professional)** |
 | Exam version covered | Exam guide v1.0 | Exam guide **v1.1** (effective Dec 7, 2026) |
 
-The [Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/) runs in your browser with nothing to install and no sign-up. It has a countdown timer, a question map, instant scoring per domain, and an explanation for every answer.
+The [Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/) runs in your browser with nothing to install and no sign-up:
+
+- **Timed mock exams** — countdown timer, question map, flag-for-review, autosave/resume
+- **Study mode** — the answer and full explanation right after each question
+- **Practice by domain** — drill one domain with questions drawn from every mock exam
+- **Results** — per-domain scores, review filters (all / incorrect / flagged), every option explained
+- **Shareable score card** — download or post your result to LinkedIn / X
 
 > Every question here is **original**. This repo contains no leaked or reproduced exam content — see [CONTRIBUTING.md](CONTRIBUTING.md#the-one-hard-rule). If it helps you prepare, a ⭐ helps other candidates find it.
 
@@ -30,6 +36,7 @@ The [Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-arch
 | Passing score | 720 / 1000 (scaled) | 720 / 1000 (scaled) |
 | Fee | $125 | $175 |
 | Prerequisite | None | None formally — but Foundations scope is **assumed knowledge** |
+| Who can register | Claude Partner Network members, via Anthropic Partner Academy (no individual sign-up) | Same |
 | Start here | [Foundations ↓](#claude-certified-architect--foundations-ccar-f) | [professional/README.md](professional/README.md) |
 
 New to both? Do Foundations first. Its material is assumed knowledge for Professional, and most of it carries over.
