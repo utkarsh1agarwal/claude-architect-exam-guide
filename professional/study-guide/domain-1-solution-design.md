@@ -638,3 +638,8 @@ If Kite's tools later had to reach a private network, the answer would become a 
 ---
 
 [← About the exam](about-the-exam.md) · [Domain 2 →](domain-2-models-prompting-context.md)
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

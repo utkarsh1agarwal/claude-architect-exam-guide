@@ -140,3 +140,7 @@ Domain tags: **D1** Agentic Architecture · **D2** Tool Design & MCP · **D3** C
 
 Count your correct answers out of 60, and check per-scenario breakdowns to see if a specific area needs more review — see the [scoring guide](exam-1-questions.md#scoring-guide) and go back to the relevant [domain page](../study-guide/) for anything you missed.
 
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

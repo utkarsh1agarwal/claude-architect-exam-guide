@@ -94,3 +94,7 @@ Per the official guide's appendix, these are **explicitly not tested**:
 
 If a study resource spends a lot of time on these, that's time you probably don't need to spend.
 
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

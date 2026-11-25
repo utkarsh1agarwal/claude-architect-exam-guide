@@ -160,3 +160,8 @@ One page (well, a long one). Read it the night before, or in the last hour befor
 - [ ] Cross out "bigger model" when evidence points to retrieval, prompt, or config.
 - [ ] ~1:40 per item; flag anything over 2 minutes.
 - [ ] Photo ID matching registration; clear desk if online.
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

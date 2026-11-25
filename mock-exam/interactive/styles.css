@@ -634,3 +634,19 @@ h2 { font-size: 1.2rem; margin-top: 2rem; }
 .btn-primary:hover:not(:disabled) { filter: brightness(1.06); }
 .scenario-tag { color: var(--accent); }
 .choice-row:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+
+/* Support callout on the results screen */
+.support-callout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.25rem;
+  padding: 0.9rem 1rem;
+  border: 1px dashed color-mix(in srgb, var(--accent) 45%, var(--border));
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface));
+  font-size: 0.92rem;
+}
+.support-callout span { flex: 1 1 260px; color: var(--text-muted); }
+.support-callout a.btn { text-decoration: none; display: inline-block; }

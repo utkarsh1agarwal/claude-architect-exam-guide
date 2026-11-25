@@ -149,3 +149,8 @@ Domain tags: **D1** Agentic Architecture · **D2** Tool Design & MCP · **D3** C
 ## Score yourself
 
 Count your correct answers out of 60, and check per-scenario breakdowns against your weakest domain(s) — see the [scoring guide](exam-4-questions.md#scoring-guide) and go back to the relevant [domain page](../study-guide/) for anything you missed. Remember: this set is calibrated harder than the real CCAR-F exam on purpose, so treat a lower raw score here as a normal, expected diagnostic — not a signal you're behind where Exam 1/2/3 already showed you to be.
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

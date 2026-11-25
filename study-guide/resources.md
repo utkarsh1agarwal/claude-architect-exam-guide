@@ -46,3 +46,7 @@ The exam's questions are shaped like "here's what production logs show, what's t
 - [Cheat Sheet](cheat-sheet.md) — one-page final skim
 - [Mock Exams](../mock-exam/exam-1-questions.md) — six 60-question sets ([1](../mock-exam/exam-1-questions.md), [2](../mock-exam/exam-2-questions.md), [3](../mock-exam/exam-3-questions.md), and hard-mode [4](../mock-exam/exam-4-questions.md), [5](../mock-exam/exam-5-questions.md), [6](../mock-exam/exam-6-questions.md)), timed, full answer keys — or take any of them via the [Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)
 
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

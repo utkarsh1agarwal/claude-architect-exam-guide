@@ -515,3 +515,7 @@ The real exam reports a scaled score (pass = 720 on a 100–1,000 scale), and on
 - C) Process perishable manifests with real-time calls and the rest through Batches, and rewrite the clause with a commitment per class.
 - D) Move every manifest to real-time calls so that the 5-minute promise holds for all cargo, and request a budget increase to cover the change.
 
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

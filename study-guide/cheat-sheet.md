@@ -55,3 +55,7 @@ Second: **the root cause is usually upstream of where the symptom appears** (e.g
 - 24-hour cancellation/reschedule window before forfeiting the fee
 - NDA acceptance required before the exam starts — don't ask for or share real exam content afterward, from this guide or anyone else's
 
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

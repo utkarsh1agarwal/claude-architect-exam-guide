@@ -194,3 +194,8 @@ Domain tags: **D1** Solution Design and Architecture · **D2** Models, Prompting
 Twin pairs (same surface, one evidence detail flips the key): Q7/Q39 (ZDR vs private network), Q9/Q47 (irreversible vs reversible-with-review-window), Q10/Q37 (gold passage ranked just below the cut-off vs never retrieved), Q16/Q42 (verbosity vs position bias), Q32/Q67 (brittle grader vs real regression).
 
 Arithmetic items: Q2, Q4, Q5, Q9, Q10, Q14, Q19, Q22, Q23, Q30, Q41, Q44, Q47, Q48, Q59, Q60, Q63.
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

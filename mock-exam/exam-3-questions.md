@@ -401,3 +401,8 @@ Simulated passing score: **48/60 (≈720 scaled)** — matches the real exam's s
 
 
 *End of Exam 3. Check your answers against the [Answer Key](exam-3-answers.md).*
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

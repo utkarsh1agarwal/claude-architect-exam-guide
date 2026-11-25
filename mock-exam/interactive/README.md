@@ -44,3 +44,8 @@ manually (it tells you which filenames to pick) and it works the same way from t
   files use `## Part N: …` (the real CCAR-P exam isn't grouped by scenario), and results are
   broken down by domain.
 - To add an exam later, add one line to that track's `exams` array in `TRACKS` at the top of `app.js`.
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

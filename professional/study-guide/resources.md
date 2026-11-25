@@ -76,3 +76,8 @@ The v1.1 guide recommends delivering at least one end-to-end production solution
 4. A 30-case eval with a code grader and an LLM judge; run 3 trials per case (D4)
 5. A PreToolUse hook that blocks the side-effecting tool above a threshold (D5, D7)
 6. A one-page ADR for one decision you made, with residual risk (D6)
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

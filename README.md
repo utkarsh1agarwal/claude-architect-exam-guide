@@ -116,7 +116,7 @@ claude-architect-exam-guide/
 
 ## About the author
 
-I'm certified as both a **Claude Certified Architect – Foundations** ([Credly badge](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url)) and a **Claude Certified Architect – Professional** ([Credly badge](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url)). I wrote these guides while preparing for and passing both exams. Everything is built from Anthropic's public exam guides, the official documentation (fact-checked November 2026), and hands-on work shipping Claude systems.
+I'm certified as both a **Claude Certified Architect – Foundations** ([Credly badge](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url)) and a **Claude Certified Architect – Professional** ([Credly badge](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url)). Connect with me on [LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/). I wrote these guides while preparing for and passing both exams. Everything is built from Anthropic's public exam guides, the official documentation (fact-checked November 2026), and hands-on work shipping Claude systems.
 
 ## Contributing
 
@@ -131,3 +131,8 @@ Unofficial. The author is certified; this guide isn't. Not affiliated with or re
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

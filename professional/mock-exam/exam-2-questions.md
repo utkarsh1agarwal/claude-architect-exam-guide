@@ -514,3 +514,8 @@ The real exam reports a scaled score (pass = 720 on 100–1,000) and only 60 of 
 - B) Record the directing engineer as PR author so the self-approval rule applies, and dismiss stale approvals on new commits.
 - C) Require two human approvals on every PR, so a second reviewer is always present even when the directing engineer approves.
 - D) Run a monthly audit of bot-authored PRs against the agent's session logs, and report any self-approved merges to the team lead.
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

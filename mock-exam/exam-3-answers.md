@@ -156,3 +156,8 @@ Based on this pair of mocks, make sure your prep guide has explicit answers read
 
 1. **Iterative refinement (3.5):** input/output examples > repeated prose; test-driven iteration (share failures, not just tests); the "interview pattern" for unfamiliar domains; single message for *interacting* issues vs. sequential for *independent* ones.
 2. **Validation-retry loops (4.4):** always include the original doc + failed output + specific error in the retry prompt; know the difference between a fixable structural error (retry helps) and genuinely absent source information (retry won't help, field should be nullable); `detected_pattern` fields for tracking dismissal patterns over time.
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
