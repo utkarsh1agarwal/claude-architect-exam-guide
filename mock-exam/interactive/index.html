@@ -10,8 +10,13 @@
   <meta property="og:title" content="Claude Certified Architect Mock Exams – CCAR-F &amp; CCAR-P">
   <meta property="og:description" content="Free timed practice exams for both Claude Certified Architect certifications, written by an architect certified in both. Original questions, full explanations, per-domain scoring.">
   <meta property="og:url" content="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/assets/social-preview.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://utkarsh1agarwal.github.io/claude-architect-exam-guide/assets/social-preview.png">
   <link rel="stylesheet" href="styles.css">
+  <script src="theme.js"></script>
 </head>
 <body>
 
@@ -28,8 +33,9 @@
       <p class="subtitle">
         Free practice exams for <strong>both</strong> Claude Certified Architect certifications —
         Foundations (CCAR-F) and Professional (CCAR-P, exam guide v1.1) — written by an author
-        certified in both. Pick a certification, then an exam. Each one is timed — at the end
-        you'll get your score along with the correct answer and explanation for every question.
+        certified in both. Take a <strong>timed mock exam</strong> like the real thing, or drill one
+        domain in <strong>study mode</strong> with the answer and explanation after every question —
+        then share your score card.
         Runs entirely in your browser; nothing is uploaded anywhere. No sign-up required,
         completely free — if you find it useful, consider giving the
         <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide" target="_blank" rel="noopener">repo</a>
@@ -49,7 +55,25 @@
       </div>
       <p id="trackBlurb" class="track-blurb"></p>
 
+      <h2 class="section-heading">Full mock exams <span class="section-sub">timed, like the real exam</span></h2>
       <div id="examGrid" class="exam-grid"></div>
+
+      <h2 class="section-heading">Practice by domain <span class="section-sub">study mode — instant feedback after every question</span></h2>
+      <div class="practice-panel">
+        <div id="domainChips" class="domain-chips" role="group" aria-label="Domain"></div>
+        <div class="practice-row">
+          <label class="practice-count">Questions
+            <select id="practiceCount">
+              <option value="10">10</option>
+              <option value="20" selected>20</option>
+              <option value="40">40</option>
+              <option value="all">All</option>
+            </select>
+          </label>
+          <button type="button" id="startPracticeBtn" class="btn btn-primary">Start practice</button>
+        </div>
+        <p class="practice-hint">Questions are drawn at random from every mock exam for this certification.</p>
+      </div>
 
       <p id="loadStatus" class="load-status" hidden></p>
 
@@ -80,13 +104,16 @@
         </div>
       </div>
 
+      <p class="mode-explainer"><strong>Timed exam</strong> simulates the real thing — results at the end. <strong>Study mode</strong> has no timer and shows the answer and explanation after each question.</p>
+
       <label class="duration-row">
         Timer (minutes)
         <input type="number" id="durationInput" min="1" value="120">
       </label>
 
       <div class="ready-actions">
-        <button type="button" id="startFreshBtn" class="btn btn-primary">Start exam</button>
+        <button type="button" id="startFreshBtn" class="btn btn-primary">Start timed exam</button>
+        <button type="button" id="startStudyBtn" class="btn">Start in study mode</button>
         <button type="button" id="backToGridBtn" class="btn btn-ghost">Choose another exam</button>
       </div>
     </section>
@@ -97,13 +124,18 @@
           <div class="question-panel">
             <div class="scenario-row">
               <span id="scenarioTag" class="scenario-tag"></span>
-              <span id="selectHint" class="select-hint" hidden></span>
+              <div class="question-actions">
+                <span id="selectHint" class="select-hint" hidden></span>
+                <button type="button" id="flagBtn" class="flag-btn" aria-pressed="false">⚑ Flag for review</button>
+              </div>
             </div>
             <p id="questionStem" class="question-stem"></p>
             <div id="choicesList" class="choices-list"></div>
+            <div id="studyFeedback" class="study-feedback" hidden></div>
           </div>
           <div class="exam-nav">
             <button type="button" id="prevBtn" class="btn btn-ghost">&larr; Previous</button>
+            <button type="button" id="checkBtn" class="btn btn-primary" hidden>Check answer</button>
             <button type="button" id="nextBtn" class="btn btn-ghost">Next &rarr;</button>
           </div>
         </div>
@@ -115,7 +147,9 @@
             </div>
             <div id="paletteGrid" class="palette-grid"></div>
             <div class="palette-legend">
-              <span><i class="legend-swatch legend-answered"></i> Answered</span>
+              <span id="legendAnswered"><i class="legend-swatch legend-answered"></i> Answered</span>
+              <span id="legendWrong" hidden><i class="legend-swatch legend-wrong"></i> Wrong</span>
+              <span><i class="legend-swatch legend-flagged"></i> Flagged</span>
               <span><i class="legend-swatch legend-current"></i> Current</span>
               <span><i class="legend-swatch"></i> Unanswered</span>
             </div>
@@ -125,8 +159,24 @@
     </section>
 
     <section id="view-results" class="view" hidden>
-      <h1>Results</h1>
+      <h1 id="resultsTitle">Results</h1>
       <div id="scoreSummary" class="score-summary"></div>
+
+      <div id="sharePanel" class="share-panel">
+        <div class="share-copy">
+          <h2>Share your result</h2>
+          <p>Post your score card — it helps other candidates find these free practice exams.</p>
+          <div class="share-actions">
+            <button type="button" id="shareNativeBtn" class="btn btn-primary" hidden>Share…</button>
+            <button type="button" id="downloadCardBtn" class="btn">Download image</button>
+            <a id="shareLinkedInBtn" class="btn" target="_blank" rel="noopener">LinkedIn</a>
+            <a id="shareXBtn" class="btn" target="_blank" rel="noopener">X / Twitter</a>
+            <button type="button" id="copyShareBtn" class="btn">Copy text</button>
+          </div>
+          <p id="shareStatus" class="share-status" aria-live="polite"></p>
+        </div>
+        <img id="scoreCardImg" class="score-card-img" alt="Score card image">
+      </div>
       <p id="warningBanner" class="warning-banner" hidden></p>
 
       <div id="resultsTables" class="results-tables">
@@ -134,12 +184,26 @@
         <table id="domainTable" class="stat-table"></table>
       </div>
 
+      <div class="support-callout">
+        <span>Did these questions help? Support the project so more candidates can find it:</span>
+        <a class="btn" href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide" target="_blank" rel="noopener">⭐ Star on GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/utkarsh-agarwal-ua0235/" target="_blank" rel="noopener">💼 Follow on LinkedIn</a>
+      </div>
+
       <div class="results-actions">
         <button type="button" id="retakeBtn" class="btn btn-primary">Retake this exam</button>
         <button type="button" id="chooseAnotherBtn" class="btn btn-ghost">Choose another exam</button>
       </div>
 
-      <h2>Review</h2>
+      <div class="review-header">
+        <h2>Review</h2>
+        <div class="review-filters" role="group" aria-label="Filter review">
+          <button type="button" class="review-filter review-filter-active" data-filter="all">All <span id="countAll"></span></button>
+          <button type="button" class="review-filter" data-filter="incorrect">Incorrect <span id="countIncorrect"></span></button>
+          <button type="button" class="review-filter" data-filter="flagged">Flagged <span id="countFlagged"></span></button>
+        </div>
+      </div>
+      <p id="reviewEmpty" class="review-empty" hidden></p>
       <div id="reviewList" class="review-list"></div>
     </section>
 
@@ -148,7 +212,9 @@
   <footer class="site-footer">
     These mock exams are part of the open-source
     <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide" target="_blank" rel="noopener">utkarsh1agarwal/claude-architect-exam-guide</a>
-    study guide on GitHub — free CCAF prep material, contributions welcome.
+    study guide on GitHub — free CCAR-F and CCAR-P prep material, contributions welcome.<br>
+    Found it useful? <a href="https://github.com/utkarsh1agarwal/claude-architect-exam-guide" target="_blank" rel="noopener">⭐ Star the repo</a> ·
+    <a href="https://www.linkedin.com/in/utkarsh-agarwal-ua0235/" target="_blank" rel="noopener">💼 Follow me on LinkedIn</a>
   </footer>
 
   <script src="app.js"></script>

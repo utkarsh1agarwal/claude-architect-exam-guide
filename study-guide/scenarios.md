@@ -51,3 +51,7 @@ Extracting information from unstructured documents, validating against JSON sche
 
 Before the exam, pick any scenario above and try to predict, from memory, which 3–5 concepts it's most likely to test — then check yourself against the domain links. If you can do this cold for all 6, you're in good shape regardless of which 4 you actually draw.
 
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

@@ -514,3 +514,8 @@ The real exam is scaled from 100 to 1,000 with a pass mark of 720, and only 60 o
 - B) Proposal 2, because executive visibility drives adoption and a dashboard carries no latency risk for customers.
 - C) Proposals 1 and 3 together, since splitting capacity across both captures more savings with no real trade-off.
 - D) Proposal 1, because it cuts total handle time by about 10.5% within the 4-second limit, which Proposal 3 breaks.
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

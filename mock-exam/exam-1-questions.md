@@ -472,3 +472,7 @@ The real exam's cut score is a scaled 720/1000, set through a formal standard-se
 
 *End of Exam 1. Check your answers against the [Answer Key](exam-1-answers.md).*
 
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

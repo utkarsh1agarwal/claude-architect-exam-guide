@@ -149,3 +149,8 @@ Domain tags: **D1** Agentic Architecture · **D2** Tool Design & MCP · **D3** C
 ## Score yourself
 
 Count your correct answers out of 60, and check per-scenario breakdowns against your weakest domain(s) — see the [scoring guide](exam-5-questions.md#scoring-guide) and go back to the relevant [domain page](../study-guide/) for anything you missed. This set draws on a different, larger source pool than Exam 4, so a gap between how you scored on the two is a useful signal about which specific mechanisms still need review — not just "the exam was harder or easier this time."
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

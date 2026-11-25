@@ -53,3 +53,8 @@ Every exam covers all 39 skills, weighted like the real blueprint (D1 13 · D2 9
 Preparing for **Foundations (CCAR-F)** instead? → [Foundations study guide and 6 mock exams](../README.md#claude-certified-architect--foundations-ccar-f)
 
 *Unofficial. Not affiliated with or reviewed by Anthropic. "Claude" and "Claude Certified Architect" are trademarks of Anthropic, PBC.*
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

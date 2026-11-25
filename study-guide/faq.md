@@ -24,3 +24,7 @@ Through the Anthropic Partner Academy and Pearson VUE — see [About the Exam �
 **What if I fail?**
 Retake waiting periods increase with each attempt: 14 days after the first, 30 after the second, 90 after the third, up to 4 attempts within a rolling 12 months. Use your score report's per-domain breakdown to target your re-study — it won't determine your pass/fail result, but it tells you exactly where to focus.
 
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

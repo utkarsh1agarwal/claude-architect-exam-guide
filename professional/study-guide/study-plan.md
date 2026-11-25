@@ -91,3 +91,8 @@ Mock scores are a gut check, not a prediction — the real exam is scaled (720/1
 - **Build something.** The guide recommends delivering at least one end-to-end production solution. The exam rewards judgment you get from seeing real usage reports, traces, and eval results.
 - **Practice reading other people's artifacts** — configs, traces, ADRs, eval tables. That's literally how v1.1 items are written.
 - **Re-answer, don't re-read.** After each mock, cover the rationale and answer missed items again a day later.
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

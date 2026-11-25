@@ -904,3 +904,8 @@ D) Request a higher rate limit from Anthropic.
 ---
 
 [← Domain 2](domain-2-models-prompting-context.md) · [Domain 4 →](domain-4-evaluation-testing.md)
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

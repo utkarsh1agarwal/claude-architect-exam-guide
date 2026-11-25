@@ -110,3 +110,8 @@ CCAR-P is **criterion-referenced**: you're measured against a fixed standard, no
 - Official guide (v1.1, Dec 7, 2026): [Claude Certified Architect – Professional Exam Guide (PDF)](https://cc.sj-cdn.net/instructor/6nizmqk8tpzpfjvt6qmmav7rh/public/1794946420/Claude_Certified_Architect_-_Professional_Exam_Guide_Updated_Dec_7.pdf)
 - [Anthropic Partner Academy — certification FAQ](https://anthropic-partners.skilljar.com/page/faq-certifications)
 - [Official CCAR-P prep course (partner login)](https://anthropic-partners.skilljar.com/path/claude-certified-architect-professional)
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

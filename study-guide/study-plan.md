@@ -66,3 +66,8 @@ This track carries real risk if you haven't built anything hands-on with Claude 
 - Confirm exam-day logistics at least 48 hours ahead — see [About the Exam](about-the-exam.md#exam-day-rules-worth-knowing-in-advance).
 
 [Interactive Mock Exam Player]: https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

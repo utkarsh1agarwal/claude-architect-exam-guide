@@ -184,19 +184,34 @@ function renderInline(s) {
 
 // ---------------------------------------------------------------------------
 // State
+//
+// Every question carries its own answer key (`q.key`) and a unique id
+// (`q.uid`). In a full mock exam the uid is the question number as a string,
+// which keeps answers saved before this refactor resumable. In domain
+// practice, questions come from several exams, so the uid is "<exam>-<number>".
 // ---------------------------------------------------------------------------
+
+const SITE_URL = 'https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/';
 
 const state = {
   track: 'foundations',
   examId: null,
-  flatQuestions: [], // [{number, scenarioTitle, stem, choices, selectCount}]
-  answerKey: new Map(),
-  answers: {}, // questionNumber -> string[] of selected letters
+  session: 'mock', // 'mock' (one full exam) | 'practice' (domain drill)
+  mode: 'exam', // 'exam' (timed, graded at the end) | 'study' (instant feedback)
+  practiceDomain: null,
+  practiceCount: '20',
+  flatQuestions: [], // [{uid, number, examId, key, stem, choices, selectCount, scenarioTitle}]
+  answers: {}, // uid -> string[] of selected letters
+  checked: {}, // uid -> true once revealed in study mode
+  flagged: {}, // uid -> true when the candidate flags a question for review
+  reviewFilter: 'all',
   currentIndex: 0,
   timerSecondsRemaining: 0,
   timerHandle: null,
   durationMinutes: DEFAULT_DURATION_MIN,
   pendingLoadExamId: null,
+  lastResult: null,
+  poolCache: {}, // track -> flat questions from every exam
 };
 
 function storageKey(examId) {
@@ -216,10 +231,19 @@ function domainLabel(tag) {
   return name ? `${tag} · ${name}` : tag;
 }
 
+function domainsOf(key) {
+  return key ? key.domain.split(/[,/]/).map((d) => d.trim()).filter(Boolean) : [];
+}
+
+function isAutosaved() {
+  return state.session === 'mock' && state.mode === 'exam';
+}
+
 function saveProgress() {
-  if (state.examId == null) return;
+  if (state.examId == null || !isAutosaved()) return;
   const payload = {
     answers: state.answers,
+    flagged: state.flagged,
     currentIndex: state.currentIndex,
     timerSecondsRemaining: state.timerSecondsRemaining,
     durationMinutes: state.durationMinutes,
@@ -249,6 +273,15 @@ function clearSavedProgress(examId) {
   }
 }
 
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 // ---------------------------------------------------------------------------
 // View switching
 // ---------------------------------------------------------------------------
@@ -258,10 +291,11 @@ function showView(id) {
     el.hidden = el.id !== id;
   }
   qs('examTopbar').hidden = id !== 'view-exam';
+  window.scrollTo(0, 0);
 }
 
 // ---------------------------------------------------------------------------
-// Start screen — exam grid
+// Start screen — tracks, exam grid, domain practice
 // ---------------------------------------------------------------------------
 
 function renderTrackTabs() {
@@ -276,6 +310,7 @@ function renderTrackTabs() {
 function selectTrack(track, { updateHash = true } = {}) {
   if (!TRACKS[track]) return;
   state.track = track;
+  state.practiceDomain = null;
   if (updateHash) {
     try {
       history.replaceState(null, '', track === 'foundations' ? location.pathname : `#${track}`);
@@ -285,6 +320,7 @@ function selectTrack(track, { updateHash = true } = {}) {
   }
   renderTrackTabs();
   renderExamGrid();
+  renderDomainChips();
   qs('loadStatus').hidden = true;
   qs('filePickerPanel').hidden = true;
 }
@@ -306,17 +342,67 @@ function renderExamGrid() {
   }
 }
 
+function renderDomainChips() {
+  const wrap = qs('domainChips');
+  wrap.innerHTML = '';
+  const entries = [['ALL', 'All domains (mixed)'], ...Object.entries(DOMAIN_NAMES[state.track])];
+  for (const [tag, name] of entries) {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'domain-chip';
+    chip.dataset.domain = tag;
+    chip.setAttribute('aria-pressed', 'false');
+    chip.innerHTML = tag === 'ALL' ? escapeHtml(name) : `<strong>${tag}</strong> ${escapeHtml(name)}`;
+    chip.addEventListener('click', () => {
+      state.practiceDomain = tag;
+      for (const c of wrap.querySelectorAll('.domain-chip')) {
+        const on = c.dataset.domain === tag;
+        c.classList.toggle('domain-chip-active', on);
+        c.setAttribute('aria-pressed', String(on));
+      }
+      qs('startPracticeBtn').disabled = false;
+    });
+    wrap.appendChild(chip);
+  }
+  qs('startPracticeBtn').disabled = true;
+}
+
+function fetchText(url) {
+  return fetch(url).then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`))));
+}
+
+function fetchExamFiles(examId) {
+  const base = `${currentTrack().basePath}exam-${examId}`;
+  return Promise.all([fetchText(`${base}-questions.md`), fetchText(`${base}-answers.md`)]);
+}
+
+function buildFlatQuestions(examId, questionsMd, answersMd, { uidPrefix = '' } = {}) {
+  const scenarios = parseQuestions(questionsMd);
+  const answerKey = parseAnswers(answersMd);
+  const flat = [];
+  for (const scenario of scenarios) {
+    for (const q of scenario.questions) {
+      flat.push({
+        ...q,
+        examId,
+        uid: `${uidPrefix}${q.number}`,
+        key: answerKey.get(q.number) || null,
+        scenarioTitle: scenario.title,
+        scenarioId: scenario.id,
+      });
+    }
+  }
+  flat.sort((a, b) => a.number - b.number);
+  return { scenarios, flat };
+}
+
 function startLoadExam(examId) {
   state.pendingLoadExamId = examId;
   qs('loadStatus').textContent = `Loading Exam ${examId}…`;
   qs('loadStatus').hidden = false;
   qs('filePickerPanel').hidden = true;
 
-  const base = `${currentTrack().basePath}exam-${examId}`;
-  Promise.all([
-    fetch(`${base}-questions.md`).then((r) => (r.ok ? r.text() : Promise.reject(new Error('not ok')))),
-    fetch(`${base}-answers.md`).then((r) => (r.ok ? r.text() : Promise.reject(new Error('not ok')))),
-  ])
+  fetchExamFiles(examId)
     .then(([qMd, aMd]) => {
       qs('loadStatus').hidden = true;
       onExamContentLoaded(examId, qMd, aMd);
@@ -364,30 +450,61 @@ async function loadFromFilePicker() {
 }
 
 function onExamContentLoaded(examId, questionsMd, answersMd) {
-  const scenarios = parseQuestions(questionsMd);
-  const answerKey = parseAnswers(answersMd);
+  const { scenarios, flat } = buildFlatQuestions(examId, questionsMd, answersMd);
 
-  const flatQuestions = [];
-  for (const scenario of scenarios) {
-    for (const q of scenario.questions) {
-      flatQuestions.push({ ...q, scenarioTitle: scenario.title, scenarioId: scenario.id });
-    }
-  }
-  flatQuestions.sort((a, b) => a.number - b.number);
-
-  if (flatQuestions.length === 0) {
+  if (flat.length === 0) {
     qs('loadStatus').hidden = false;
     qs('loadStatus').textContent =
-      `Parsed Exam ${examId} but found 0 questions — the file format may have changed. ` +
-      `Check the console for the raw content.`;
+      `Parsed Exam ${examId} but found 0 questions — the file format may have changed.`;
     return;
   }
 
+  state.session = 'mock';
   state.examId = examId;
-  state.flatQuestions = flatQuestions;
-  state.answerKey = answerKey;
-
+  state.flatQuestions = flat;
   enterReady(examId, scenarios);
+}
+
+// --- Domain practice --------------------------------------------------------
+
+function loadTrackPool() {
+  if (state.poolCache[state.track]) return Promise.resolve(state.poolCache[state.track]);
+  const exams = currentTrack().exams;
+  return Promise.all(exams.map((m) => fetchExamFiles(m.id))).then((files) => {
+    const pool = [];
+    files.forEach(([qMd, aMd], i) => {
+      const examId = exams[i].id;
+      pool.push(...buildFlatQuestions(examId, qMd, aMd, { uidPrefix: `${examId}-` }).flat.filter((q) => q.key));
+    });
+    state.poolCache[state.track] = pool;
+    return pool;
+  });
+}
+
+function startPractice() {
+  const domain = state.practiceDomain;
+  if (!domain) return;
+  state.practiceCount = qs('practiceCount').value;
+  qs('loadStatus').textContent = 'Building your practice set…';
+  qs('loadStatus').hidden = false;
+
+  loadTrackPool()
+    .then((pool) => {
+      const matching = domain === 'ALL' ? pool : pool.filter((q) => domainsOf(q.key).includes(domain));
+      if (matching.length === 0) throw new Error('no questions');
+      const n = state.practiceCount === 'all' ? matching.length : Math.min(Number(state.practiceCount), matching.length);
+      qs('loadStatus').hidden = true;
+      state.session = 'practice';
+      state.examId = null;
+      state.flatQuestions = shuffle(matching).slice(0, n);
+      beginSession('study');
+    })
+    .catch(() => {
+      qs('loadStatus').hidden = false;
+      qs('loadStatus').textContent =
+        'Practice by domain needs the page to be served over http (it works on the website, or run ' +
+        '`python3 -m http.server` from the repo root). Full exams still work via the file picker.';
+    });
 }
 
 // ---------------------------------------------------------------------------
@@ -399,9 +516,11 @@ function enterReady(examId, scenarios) {
   qs('readyTitle').textContent = `${currentTrack().code} Exam ${examId} — ready`;
 
   const total = state.flatQuestions.length;
-  const scenarioList = scenarios.map((s) => `${escapeHtml(s.title)} (${s.questions.length})`).join(' · ');
+  const scenarioList = scenarios.map((s) => `${s.title} (${s.questions.length})`).join(' · ');
   qs('readyMeta').textContent =
-    currentTrack().groupLabel === 'Scenario' ? `${total} questions · ${scenarioList}` : `${total} questions · ${currentTrack().blurb.split(' · ').slice(1).join(' · ')}`;
+    currentTrack().groupLabel === 'Scenario'
+      ? `${total} questions · ${scenarioList}`
+      : `${total} questions · ${currentTrack().blurb.split(' · ').slice(1).join(' · ')}`;
 
   qs('durationInput').value = DEFAULT_DURATION_MIN;
 
@@ -409,12 +528,13 @@ function enterReady(examId, scenarios) {
   const resumeBox = qs('resumeBox');
   if (saved && saved.total === total) {
     const answeredCount = Object.keys(saved.answers || {}).length;
+    const flaggedCount = Object.keys(saved.flagged || {}).length;
     const mm = Math.floor(saved.timerSecondsRemaining / 60);
     const ss = String(saved.timerSecondsRemaining % 60).padStart(2, '0');
     resumeBox.hidden = false;
     qs('resumeInfo').textContent =
       `In-progress attempt found — question ${saved.currentIndex + 1} of ${total}, ` +
-      `${answeredCount} answered, ${mm}:${ss} left on the clock.`;
+      `${answeredCount} answered${flaggedCount ? `, ${flaggedCount} flagged` : ''}, ${mm}:${ss} left on the clock.`;
     resumeBox.dataset.saved = JSON.stringify(saved);
   } else {
     resumeBox.hidden = true;
@@ -422,21 +542,29 @@ function enterReady(examId, scenarios) {
   }
 }
 
-function startFresh() {
+function beginSession(mode) {
+  state.mode = mode;
   state.answers = {};
+  state.checked = {};
+  state.flagged = {};
   state.currentIndex = 0;
-  const minutes = Math.max(1, Number(qs('durationInput').value) || DEFAULT_DURATION_MIN);
-  state.durationMinutes = minutes;
-  state.timerSecondsRemaining = minutes * 60;
-  clearSavedProgress(state.examId);
+  if (mode === 'exam') {
+    const minutes = Math.max(1, Number(qs('durationInput').value) || DEFAULT_DURATION_MIN);
+    state.durationMinutes = minutes;
+    state.timerSecondsRemaining = minutes * 60;
+    if (state.session === 'mock') clearSavedProgress(state.examId);
+  }
   enterExam();
 }
 
 function resumeSaved() {
   const raw = qs('resumeBox').dataset.saved;
-  if (!raw) return startFresh();
+  if (!raw) return beginSession('exam');
   const saved = JSON.parse(raw);
+  state.mode = 'exam';
   state.answers = saved.answers || {};
+  state.flagged = saved.flagged || {};
+  state.checked = {};
   state.currentIndex = saved.currentIndex || 0;
   state.durationMinutes = saved.durationMinutes || DEFAULT_DURATION_MIN;
   state.timerSecondsRemaining = saved.timerSecondsRemaining;
@@ -449,17 +577,25 @@ function discardSaved() {
 }
 
 // ---------------------------------------------------------------------------
-// Exam view
+// Exam / study view
 // ---------------------------------------------------------------------------
 
 function enterExam() {
   showView('view-exam');
-  startTimer();
+  clearInterval(state.timerHandle);
+  const study = state.mode === 'study';
+  qs('submitBtn').textContent = study ? 'Finish' : 'Submit exam';
+  qs('legendAnswered').lastChild.textContent = study ? ' Correct' : ' Answered';
+  qs('legendWrong').hidden = !study;
+  if (study) {
+    updateStudyScore();
+  } else {
+    startTimer();
+  }
   renderQuestion();
 }
 
 function startTimer() {
-  clearInterval(state.timerHandle);
   updateTimerDisplay();
   state.timerHandle = setInterval(() => {
     state.timerSecondsRemaining -= 1;
@@ -482,20 +618,48 @@ function updateTimerDisplay() {
   el.classList.toggle('timer-critical', secs <= 60);
 }
 
+function isCorrectAnswer(q, letters) {
+  if (!q.key) return null;
+  const a = (letters || []).slice().sort();
+  const b = q.key.letters.slice().sort();
+  return a.length === b.length && a.every((l, i) => l === b[i]);
+}
+
+function updateStudyScore() {
+  const checkedQs = state.flatQuestions.filter((q) => state.checked[q.uid]);
+  const right = checkedQs.filter((q) => isCorrectAnswer(q, state.answers[q.uid])).length;
+  const el = qs('timerDisplay');
+  el.classList.remove('timer-low', 'timer-critical');
+  el.textContent = `Study mode · ${right} / ${checkedQs.length} correct`;
+}
+
+function questionLabel(q) {
+  if (state.session === 'practice') return `${currentTrack().code} · Exam ${q.examId} · Q${q.number}`;
+  return currentTrack().groupLabel === 'Scenario' ? q.scenarioTitle : `${currentTrack().code} · Question ${q.number}`;
+}
+
 function renderQuestion() {
   const q = state.flatQuestions[state.currentIndex];
   const total = state.flatQuestions.length;
+  const study = state.mode === 'study';
+  const revealed = study && state.checked[q.uid];
 
   qs('progressDisplay').textContent = `Question ${state.currentIndex + 1} of ${total}`;
-  qs('scenarioTag').textContent =
-    currentTrack().groupLabel === 'Scenario' ? q.scenarioTitle : `${currentTrack().code} · Question ${q.number}`;
+  qs('scenarioTag').textContent = questionLabel(q);
   qs('questionStem').innerHTML = renderInline(q.stem);
   qs('selectHint').textContent = q.selectCount > 1 ? `Select exactly ${q.selectCount}` : '';
   qs('selectHint').hidden = q.selectCount <= 1;
 
+  const flagged = Boolean(state.flagged[q.uid]);
+  const flagBtn = qs('flagBtn');
+  flagBtn.textContent = flagged ? '⚑ Flagged' : '⚑ Flag for review';
+  flagBtn.classList.toggle('flag-btn-active', flagged);
+  flagBtn.setAttribute('aria-pressed', String(flagged));
+
   const list = qs('choicesList');
   list.innerHTML = '';
-  const selected = new Set(state.answers[q.number] || []);
+  const selected = new Set(state.answers[q.uid] || []);
+  const correct = new Set(q.key ? q.key.letters : []);
   const isMulti = q.selectCount > 1;
 
   for (const letter of ['A', 'B', 'C', 'D']) {
@@ -507,10 +671,15 @@ function renderQuestion() {
     input.name = 'choice';
     input.value = letter;
     input.checked = selected.has(letter);
-    if (isMulti && !input.checked && selected.size >= q.selectCount) {
+    if (revealed || (isMulti && !input.checked && selected.size >= q.selectCount)) {
       input.disabled = true;
     }
     input.addEventListener('change', () => onChoiceChange(q, letter, isMulti));
+
+    if (revealed) {
+      if (correct.has(letter)) label.classList.add('choice-correct');
+      else if (selected.has(letter)) label.classList.add('choice-wrong');
+    }
 
     const letterSpan = document.createElement('span');
     letterSpan.className = 'choice-letter';
@@ -524,6 +693,28 @@ function renderQuestion() {
     list.appendChild(label);
   }
 
+  // Study-mode feedback
+  const fb = qs('studyFeedback');
+  const checkBtn = qs('checkBtn');
+  checkBtn.hidden = !study || revealed;
+  checkBtn.disabled = selected.size !== q.selectCount;
+  if (revealed) {
+    const ok = isCorrectAnswer(q, state.answers[q.uid]);
+    fb.hidden = false;
+    fb.className = `study-feedback ${ok ? 'study-feedback-correct' : 'study-feedback-wrong'}`;
+    fb.innerHTML = `
+      <div class="study-feedback-head">
+        <strong>${ok ? '✓ Correct' : '✗ Not quite'}</strong>
+        <span>Answer: <strong>${escapeHtml(q.key ? q.key.letters.join(', ') : 'n/a')}</strong></span>
+        ${q.key ? `<span class="review-domain">${escapeHtml(domainLabel(q.key.domain))}</span>` : ''}
+      </div>
+      <div class="study-feedback-body">${q.key && q.key.rationale ? renderInline(q.key.rationale) : ''}</div>
+    `;
+  } else {
+    fb.hidden = true;
+    fb.innerHTML = '';
+  }
+
   qs('prevBtn').disabled = state.currentIndex === 0;
   qs('nextBtn').disabled = state.currentIndex === total - 1;
 
@@ -531,7 +722,8 @@ function renderQuestion() {
 }
 
 function onChoiceChange(q, letter, isMulti) {
-  const current = new Set(state.answers[q.number] || []);
+  if (state.mode === 'study' && state.checked[q.uid]) return;
+  const current = new Set(state.answers[q.uid] || []);
   if (isMulti) {
     if (current.has(letter)) current.delete(letter);
     else current.add(letter);
@@ -539,9 +731,27 @@ function onChoiceChange(q, letter, isMulti) {
     current.clear();
     current.add(letter);
   }
-  state.answers[q.number] = Array.from(current);
+  state.answers[q.uid] = Array.from(current);
   saveProgress();
   renderQuestion();
+}
+
+function toggleFlag() {
+  const q = state.flatQuestions[state.currentIndex];
+  if (!q) return;
+  if (state.flagged[q.uid]) delete state.flagged[q.uid];
+  else state.flagged[q.uid] = true;
+  saveProgress();
+  renderQuestion();
+}
+
+function checkAnswer() {
+  const q = state.flatQuestions[state.currentIndex];
+  if ((state.answers[q.uid] || []).length !== q.selectCount) return;
+  state.checked[q.uid] = true;
+  updateStudyScore();
+  renderQuestion();
+  qs('studyFeedback').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function goPrev() {
@@ -573,13 +783,21 @@ function jumpTo(index) {
 function renderPaletteGrid() {
   const grid = qs('paletteGrid');
   grid.innerHTML = '';
+  const study = state.mode === 'study';
   state.flatQuestions.forEach((q, i) => {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.textContent = String(i + 1);
     btn.className = 'palette-btn';
     if (i === state.currentIndex) btn.classList.add('palette-current');
-    if ((state.answers[q.number] || []).length > 0) btn.classList.add('palette-answered');
+    if (state.flagged[q.uid]) btn.classList.add('palette-flagged');
+    if (study) {
+      if (state.checked[q.uid]) {
+        btn.classList.add(isCorrectAnswer(q, state.answers[q.uid]) ? 'palette-answered' : 'palette-wrong');
+      }
+    } else if ((state.answers[q.uid] || []).length > 0) {
+      btn.classList.add('palette-answered');
+    }
     btn.addEventListener('click', () => jumpTo(i));
     grid.appendChild(btn);
   });
@@ -590,39 +808,44 @@ function renderPaletteGrid() {
 // ---------------------------------------------------------------------------
 
 function submitExam(auto) {
+  const study = state.mode === 'study';
   if (!auto) {
-    const answeredCount = Object.keys(state.answers).filter((k) => state.answers[k].length > 0).length;
-    const unanswered = state.flatQuestions.length - answeredCount;
-    if (unanswered > 0) {
-      const ok = confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`);
-      if (!ok) return;
+    if (study) {
+      const checkedCount = Object.keys(state.checked).length;
+      if (checkedCount === 0) {
+        alert('Check at least one answer before finishing.');
+        return;
+      }
+      const left = state.flatQuestions.length - checkedCount;
+      if (left > 0 && !confirm(`${left} question(s) not checked yet. Finish and score only the ${checkedCount} you checked?`)) return;
+    } else {
+      const answeredCount = Object.keys(state.answers).filter((k) => state.answers[k].length > 0).length;
+      const unanswered = state.flatQuestions.length - answeredCount;
+      if (unanswered > 0 && !confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) return;
     }
   }
 
   clearInterval(state.timerHandle);
-  clearSavedProgress(state.examId);
+  if (state.session === 'mock' && !study) clearSavedProgress(state.examId);
 
-  const scenarioStats = new Map(); // title -> {correct, total}
-  const domainStats = new Map(); // domain -> {correct, total}
+  // In study mode only the questions the candidate actually checked are scored.
+  const graded = study ? state.flatQuestions.filter((q) => state.checked[q.uid]) : state.flatQuestions;
+
+  const scenarioStats = new Map();
+  const domainStats = new Map();
   const reviewItems = [];
   let correctCount = 0;
   let gradedCount = 0;
   let ungradedCount = 0;
 
-  for (const q of state.flatQuestions) {
-    const key = state.answerKey.get(q.number);
-    const userLetters = (state.answers[q.number] || []).slice().sort();
-
-    if (!key) {
+  for (const q of graded) {
+    const userLetters = (state.answers[q.uid] || []).slice().sort();
+    if (!q.key) {
       ungradedCount += 1;
       reviewItems.push({ q, userLetters, key: null, isCorrect: null });
       continue;
     }
-
-    const correctLetters = key.letters.slice().sort();
-    const isCorrect =
-      userLetters.length === correctLetters.length && userLetters.every((l, i) => l === correctLetters[i]);
-
+    const isCorrect = isCorrectAnswer(q, userLetters);
     gradedCount += 1;
     if (isCorrect) correctCount += 1;
 
@@ -631,23 +854,32 @@ function submitExam(auto) {
     sStat.total += 1;
     if (isCorrect) sStat.correct += 1;
 
-    for (const d of key.domain.split(/[,/]/).map((s) => s.trim()).filter(Boolean)) {
+    for (const d of domainsOf(q.key)) {
       if (!domainStats.has(d)) domainStats.set(d, { correct: 0, total: 0 });
       const dStat = domainStats.get(d);
       dStat.total += 1;
       if (isCorrect) dStat.correct += 1;
     }
-
-    reviewItems.push({ q, userLetters, key, isCorrect });
+    reviewItems.push({ q, userLetters, key: q.key, isCorrect });
   }
 
   renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats, domainStats, reviewItems });
+}
+
+function sessionTitle() {
+  const t = currentTrack();
+  if (state.session === 'practice') {
+    const d = state.practiceDomain;
+    return d === 'ALL' ? `${t.code} Practice · mixed domains` : `${t.code} Practice · ${d} ${DOMAIN_NAMES[state.track][d]}`;
+  }
+  return `${t.code} Mock Exam ${state.examId}${state.mode === 'study' ? ' (study mode)' : ''}`;
 }
 
 function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats, domainStats, reviewItems }) {
   showView('view-results');
 
   const pct = gradedCount > 0 ? Math.round((correctCount / gradedCount) * 100) : 0;
+  qs('resultsTitle').textContent = `Results — ${sessionTitle()}`;
   qs('scoreSummary').innerHTML = `
     <div class="score-big">${correctCount} / ${gradedCount}</div>
     <div class="score-pct">${pct}%</div>
@@ -660,7 +892,7 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
   }
 
   const scenarioTable = qs('scenarioTable');
-  const showScenarioTable = currentTrack().groupLabel === 'Scenario';
+  const showScenarioTable = currentTrack().groupLabel === 'Scenario' && state.session === 'mock';
   scenarioTable.hidden = !showScenarioTable;
   qs('resultsTables').classList.toggle('results-tables-single', !showScenarioTable);
   scenarioTable.innerHTML = '<tr><th>Scenario</th><th>Correct</th><th>%</th></tr>';
@@ -681,10 +913,40 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
     domainTable.appendChild(row);
   }
 
+  qs('retakeBtn').textContent = state.session === 'practice' ? 'New practice set' : 'Retake this exam';
+
+  state.lastResult = { correctCount, gradedCount, pct, title: sessionTitle(), domains: sortedDomains };
+  renderShareCard();
+
+  state.reviewItems = reviewItems;
+  state.reviewShowScenarios = showScenarioTable;
+  qs('countAll').textContent = `(${reviewItems.length})`;
+  qs('countIncorrect').textContent = `(${reviewItems.filter((it) => it.isCorrect === false).length})`;
+  qs('countFlagged').textContent = `(${reviewItems.filter((it) => state.flagged[it.q.uid]).length})`;
+  setReviewFilter(reviewItems.some((it) => state.flagged[it.q.uid]) ? 'flagged' : 'all');
+}
+
+function setReviewFilter(filter) {
+  state.reviewFilter = filter;
+  for (const b of document.querySelectorAll('.review-filter')) {
+    b.classList.toggle('review-filter-active', b.dataset.filter === filter);
+  }
+  renderReviewList();
+}
+
+function renderReviewList() {
+  const filter = state.reviewFilter;
+  const items = state.reviewItems.filter((it) =>
+    filter === 'incorrect' ? it.isCorrect === false : filter === 'flagged' ? state.flagged[it.q.uid] : true);
+  const showScenarioTable = state.reviewShowScenarios && filter === 'all';
+  const empty = qs('reviewEmpty');
+  empty.hidden = items.length > 0;
+  empty.textContent = filter === 'flagged' ? 'You didn\'t flag any questions.' : 'Nothing incorrect — nice work.';
+
   const reviewList = qs('reviewList');
   reviewList.innerHTML = '';
   let lastScenario = null;
-  for (const item of reviewItems) {
+  for (const item of items) {
     if (showScenarioTable && item.q.scenarioTitle !== lastScenario) {
       lastScenario = item.q.scenarioTitle;
       const heading = document.createElement('h3');
@@ -701,13 +963,15 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
     const correctText = item.key ? item.key.letters.join(', ') : 'n/a';
     const rationale = item.key && item.key.rationale
       ? renderInline(item.key.rationale)
-      : '<em>No written rationale available for this practice set — check the domain tag and the matching study-guide chapter.</em>';
+      : '<em>No written rationale available for this question.</em>';
     const domainBadge = item.key ? escapeHtml(domainLabel(item.key.domain)) : '';
+    const qLabel = state.session === 'practice' ? `Exam ${item.q.examId} · Q${item.q.number}` : `Q${item.q.number}`;
 
     card.innerHTML = `
       <div class="review-item-head">
-        <span class="review-q-number">Q${item.q.number}</span>
+        <span class="review-q-number">${qLabel}</span>
         <span class="review-badge">${item.isCorrect === null ? 'UNGRADED' : item.isCorrect ? 'Correct' : 'Incorrect'}</span>
+        ${state.flagged[item.q.uid] ? '<span class="review-flag">⚑ Flagged</span>' : ''}
         ${domainBadge ? `<span class="review-domain">${domainBadge}</span>` : ''}
       </div>
       <div class="review-stem">${renderInline(item.q.stem)}</div>
@@ -715,19 +979,243 @@ function renderResults({ correctCount, gradedCount, ungradedCount, scenarioStats
         <span>Your answer: <strong>${escapeHtml(userText)}</strong></span>
         <span>Correct answer: <strong>${escapeHtml(correctText)}</strong></span>
       </div>
+      <details class="review-options">
+        <summary>Show all options</summary>
+        <ul>${reviewOptionsHtml(item)}</ul>
+      </details>
       <div class="review-rationale">${rationale}</div>
     `;
     reviewList.appendChild(card);
   }
 }
 
+function reviewOptionsHtml(item) {
+  const mine = new Set(item.userLetters);
+  const right = new Set(item.key ? item.key.letters : []);
+  return ['A', 'B', 'C', 'D'].map((l) => {
+    const cls = right.has(l) ? 'opt-correct' : mine.has(l) ? 'opt-wrong' : '';
+    const tags = [mine.has(l) ? 'your answer' : '', right.has(l) ? 'correct' : ''].filter(Boolean).join(' · ');
+    return `<li class="${cls}"><span class="choice-letter">${l}</span><span>${renderInline(item.q.choices[l])}</span>` +
+      `${tags ? `<span class="opt-tag">${tags}</span>` : ''}</li>`;
+  }).join('');
+}
+
+// ---------------------------------------------------------------------------
+// Shareable score card (drawn on a canvas, 1200×630 — the size LinkedIn and X
+// use for link previews)
+// ---------------------------------------------------------------------------
+
+function shareUrl() {
+  return state.track === 'foundations' ? SITE_URL : `${SITE_URL}#${state.track}`;
+}
+
+function shareText() {
+  const r = state.lastResult;
+  const t = currentTrack();
+  return `I scored ${r.pct}% (${r.correctCount}/${r.gradedCount}) on ${r.title} — free Claude Certified Architect ` +
+    `${t.label} (${t.code}) practice exams:`;
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function drawScoreCard() {
+  const r = state.lastResult;
+  const t = currentTrack();
+  const W = 1200;
+  const H = 630;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  const font = (w, s) => `${w} ${s}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`;
+
+  const serif = (w, sz) => `${w} ${sz}px "Iowan Old Style", "New York", Palatino, Georgia, serif`;
+  const CREAM = '#f5efe4';
+  const CLAY = '#d97757';
+  const CLAY_DK = '#b85c3e';
+  const INK = '#1f1e1c';
+  const MUTED = '#6b665d';
+
+  // Cream "exam paper" with dots and a warm glow (matches the social preview)
+  ctx.fillStyle = CREAM;
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = 'rgba(31,30,28,0.10)';
+  for (let x = 13; x < W; x += 26) for (let y = 13; y < H; y += 26) ctx.fillRect(x, y, 2, 2);
+  const glow = ctx.createRadialGradient(W - 140, 40, 10, W - 140, 40, 460);
+  glow.addColorStop(0, 'rgba(217,119,87,0.28)');
+  glow.addColorStop(1, 'rgba(217,119,87,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0, 0, W, H);
+
+  // Kicker pill
+  const kicker = `CLAUDE CERTIFIED ARCHITECT · ${t.label.toUpperCase()} (${t.code})`;
+  ctx.font = font('700', 20);
+  const kw = ctx.measureText(kicker).width + 44;
+  roundRect(ctx, 60, 52, kw, 40, 20);
+  ctx.fillStyle = 'rgba(217,119,87,0.13)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(217,119,87,0.40)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.fillStyle = CLAY;
+  ctx.beginPath();
+  ctx.arc(80, 72, 5, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = CLAY_DK;
+  ctx.fillText(kicker, 94, 79);
+
+  // Title: shrink to fit the left column (domain panel starts at x=620), then ellipsize
+  let subtitle = r.title.replace(`${t.code} `, '');
+  subtitle = subtitle.charAt(0).toUpperCase() + subtitle.slice(1);
+  const maxW = 530;
+  let size = 44;
+  ctx.font = serif('700', size);
+  while (ctx.measureText(subtitle).width > maxW && size > 30) {
+    size -= 2;
+    ctx.font = serif('700', size);
+  }
+  while (ctx.measureText(subtitle).width > maxW && subtitle.length > 4) {
+    subtitle = `${subtitle.slice(0, -2).trimEnd()}…`;
+  }
+  ctx.fillStyle = INK;
+  ctx.fillText(subtitle, 60, 152);
+
+  // Big score
+  ctx.fillStyle = CLAY_DK;
+  ctx.font = serif('700', 150);
+  ctx.fillText(`${r.pct}%`, 54, 320);
+  ctx.fillStyle = MUTED;
+  ctx.font = font('600', 32);
+  ctx.fillText(`${r.correctCount} of ${r.gradedCount} correct`, 62, 372);
+
+  // Domain panel (right) — a white "exam card"
+  const domains = r.domains.slice(0, 7);
+  const px = 620;
+  const py = 120;
+  const pw = 520;
+  const rowH = domains.length > 5 ? 44 : 54;
+  const ph = Math.max(150, 70 + domains.length * rowH);
+  ctx.save();
+  ctx.shadowColor = 'rgba(60,40,20,0.16)';
+  ctx.shadowBlur = 30;
+  ctx.shadowOffsetY = 14;
+  roundRect(ctx, px, py, pw, ph, 20);
+  ctx.fillStyle = '#fffdf9';
+  ctx.fill();
+  ctx.restore();
+  ctx.strokeStyle = '#e3d8c5';
+  ctx.lineWidth = 1.5;
+  roundRect(ctx, px, py, pw, ph, 20);
+  ctx.stroke();
+  ctx.fillStyle = CLAY_DK;
+  ctx.font = font('700', 17);
+  ctx.fillText('SCORE BY DOMAIN', px + 28, py + 40);
+
+  let y = py + 66;
+  ctx.font = font('700', 21);
+  for (const [tag, stat] of domains) {
+    const p = stat.total ? stat.correct / stat.total : 0;
+    ctx.fillStyle = INK;
+    ctx.fillText(tag, px + 28, y + 17);
+    const bx = px + 88;
+    const bw = pw - 88 - 96;
+    roundRect(ctx, bx, y, bw, 20, 10);
+    ctx.fillStyle = '#ece3d3';
+    ctx.fill();
+    roundRect(ctx, bx, y, Math.max(20, bw * p), 20, 10);
+    ctx.fillStyle = p >= 0.75 ? '#4f8a5b' : p >= 0.6 ? '#d9a441' : CLAY;
+    ctx.fill();
+    ctx.fillStyle = INK;
+    ctx.fillText(`${Math.round(p * 100)}%`, px + pw - 78, y + 17);
+    y += rowH;
+  }
+
+  // Footer band
+  ctx.fillStyle = 'rgba(31,30,28,0.06)';
+  ctx.fillRect(0, H - 104, W, 104);
+  ctx.fillStyle = INK;
+  ctx.font = serif('700', 32);
+  ctx.fillText('Free CCAR-F & CCAR-P practice exams', 60, H - 58);
+  ctx.fillStyle = MUTED;
+  ctx.font = font('600', 23);
+  ctx.fillText('utkarsh1agarwal.github.io/claude-architect-exam-guide', 60, H - 24);
+
+  return canvas;
+}
+
+function renderShareCard() {
+  const canvas = drawScoreCard();
+  state.cardCanvas = canvas;
+  qs('scoreCardImg').src = canvas.toDataURL('image/png');
+  qs('shareStatus').textContent = '';
+  const url = encodeURIComponent(shareUrl());
+  const text = encodeURIComponent(shareText());
+  qs('shareLinkedInBtn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+  qs('shareXBtn').href = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+  qs('shareNativeBtn').hidden = !(navigator.share && navigator.canShare);
+}
+
+function cardBlob() {
+  return new Promise((resolve) => state.cardCanvas.toBlob(resolve, 'image/png'));
+}
+
+function cardFilename() {
+  return `${currentTrack().code.toLowerCase()}-score-${state.lastResult.pct}.png`;
+}
+
+async function downloadCard() {
+  const blob = await cardBlob();
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = cardFilename();
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  qs('shareStatus').textContent = 'Image downloaded — attach it to your post.';
+}
+
+async function shareNative() {
+  try {
+    const file = new File([await cardBlob()], cardFilename(), { type: 'image/png' });
+    const data = { text: shareText(), url: shareUrl() };
+    if (navigator.canShare({ files: [file] })) data.files = [file];
+    await navigator.share(data);
+  } catch (e) {
+    // user cancelled or sharing unavailable — nothing to do
+  }
+}
+
+async function copyShareText() {
+  const text = `${shareText()} ${shareUrl()}`;
+  try {
+    await navigator.clipboard.writeText(text);
+    qs('shareStatus').textContent = 'Copied! Paste it into your post (and attach the image).';
+  } catch (e) {
+    qs('shareStatus').textContent = text;
+  }
+}
+
 function retakeExam() {
-  const examId = state.examId;
-  clearSavedProgress(examId);
-  startLoadExam(examId);
+  if (state.session === 'practice') {
+    showView('view-start');
+    startPractice();
+    return;
+  }
+  clearSavedProgress(state.examId);
+  startLoadExam(state.examId);
 }
 
 function chooseAnotherExam() {
+  clearInterval(state.timerHandle);
   showView('view-start');
   qs('loadStatus').hidden = true;
   qs('filePickerPanel').hidden = true;
@@ -747,18 +1235,28 @@ function init() {
   qs('questionsFileInput').addEventListener('change', checkFilePickerReady);
   qs('answersFileInput').addEventListener('change', checkFilePickerReady);
   qs('loadFilesBtn').addEventListener('click', loadFromFilePicker);
+  qs('startPracticeBtn').addEventListener('click', startPractice);
 
-  qs('startFreshBtn').addEventListener('click', startFresh);
+  qs('startFreshBtn').addEventListener('click', () => beginSession('exam'));
+  qs('startStudyBtn').addEventListener('click', () => beginSession('study'));
   qs('resumeBtn').addEventListener('click', resumeSaved);
   qs('discardResumeBtn').addEventListener('click', discardSaved);
   qs('backToGridBtn').addEventListener('click', chooseAnotherExam);
 
   qs('prevBtn').addEventListener('click', goPrev);
   qs('nextBtn').addEventListener('click', goNext);
+  qs('checkBtn').addEventListener('click', checkAnswer);
+  qs('flagBtn').addEventListener('click', toggleFlag);
+  for (const b of document.querySelectorAll('.review-filter')) {
+    b.addEventListener('click', () => setReviewFilter(b.dataset.filter));
+  }
   qs('submitBtn').addEventListener('click', () => submitExam(false));
 
   qs('retakeBtn').addEventListener('click', retakeExam);
   qs('chooseAnotherBtn').addEventListener('click', chooseAnotherExam);
+  qs('downloadCardBtn').addEventListener('click', downloadCard);
+  qs('shareNativeBtn').addEventListener('click', shareNative);
+  qs('copyShareBtn').addEventListener('click', copyShareText);
 
   window.addEventListener('beforeunload', saveProgress);
 
@@ -766,6 +1264,7 @@ function init() {
     if (qs('view-exam').hidden) return;
     if (e.key === 'ArrowLeft') goPrev();
     if (e.key === 'ArrowRight') goNext();
+    if (e.key === 'Enter' && state.mode === 'study' && !qs('checkBtn').hidden && !qs('checkBtn').disabled) checkAnswer();
   });
 }
 

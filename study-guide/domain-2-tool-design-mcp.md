@@ -176,3 +176,7 @@ D) Cache the tool's output in `CLAUDE.md`
 
 **Answer: B.** This is a tools-vs-resources modeling problem, not a description-quality problem (2.1) or a caching problem — read-only catalogs that exist to be *discovered* belong in MCP resources, not tools.
 
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

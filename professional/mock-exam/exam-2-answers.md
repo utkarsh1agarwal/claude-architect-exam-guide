@@ -191,3 +191,8 @@ Domain tags: **D1** Solution Design and Architecture · **D2** Models, Prompting
 | D7.3 Accountability for AI-generated code | 70 |
 
 **Arithmetic items:** 2, 3, 7, 12, 13, 15, 29, 41, 43, 45, 51, 62, 63, 66, 69. **Twin pairs (one detail flips the key):** 1/27 (no inbound vs ZDR), 23/36 (corpus size), 9/33 (verbosity vs self-preference).
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

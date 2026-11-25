@@ -191,3 +191,8 @@ Domain tags: **D1** Solution Design and Architecture · **D2** Models, Prompting
 | D7.3 Accountability for AI-Generated Code | 48 |
 
 Twin pairs in this exam (same surface, one fact flips the key): Q10/Q50 (corpus that fits in context vs one that does not) and Q18/Q51 (location obligation vs retention obligation).
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

@@ -12,10 +12,16 @@
 |---|---|---|
 | Study guide | [5 domain guides + cheat sheet](#claude-certified-architect--foundations-ccar-f) | [7 domain guides, all 39 v1.1 skills](professional/README.md) |
 | Mock exams | 6 × 60 questions (360) | 3 × 70 questions (210) |
-| **Take a mock exam now** | **[▶ Start a CCAR-F exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)** | **[▶ Start a CCAR-P exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/#professional)** |
+| **Take a mock exam now** | **[▶ Start mock exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)** | **[▶ Start mock exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/#professional)** |
 | Exam version covered | Exam guide v1.0 | Exam guide **v1.1** (effective Dec 7, 2026) |
 
-The [Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/) runs in your browser with nothing to install and no sign-up. It has a countdown timer, a question map, instant scoring per domain, and an explanation for every answer.
+The [Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/) runs in your browser with nothing to install and no sign-up:
+
+- **Timed mock exams** — countdown timer, question map, flag-for-review, autosave/resume
+- **Study mode** — the answer and full explanation right after each question
+- **Practice by domain** — drill one domain with questions drawn from every mock exam
+- **Results** — per-domain scores, review filters (all / incorrect / flagged), every option explained
+- **Shareable score card** — download or post your result to LinkedIn / X
 
 > Every question here is **original**. This repo contains no leaked or reproduced exam content — see [CONTRIBUTING.md](CONTRIBUTING.md#the-one-hard-rule). If it helps you prepare, a ⭐ helps other candidates find it.
 
@@ -30,6 +36,7 @@ The [Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-arch
 | Passing score | 720 / 1000 (scaled) | 720 / 1000 (scaled) |
 | Fee | $125 | $175 |
 | Prerequisite | None | None formally — but Foundations scope is **assumed knowledge** |
+| Who can register | Claude Partner Network members, via Anthropic Partner Academy (no individual sign-up) | Same |
 | Start here | [Foundations ↓](#claude-certified-architect--foundations-ccar-f) | [professional/README.md](professional/README.md) |
 
 New to both? Do Foundations first. Its material is assumed knowledge for Professional, and most of it carries over.
@@ -109,7 +116,7 @@ claude-architect-exam-guide/
 
 ## About the author
 
-I'm certified as both a **Claude Certified Architect – Foundations** ([Credly badge](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url)) and a **Claude Certified Architect – Professional** ([Credly badge](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url)). I wrote these guides while preparing for and passing both exams. Everything is built from Anthropic's public exam guides, the official documentation (fact-checked November 2026), and hands-on work shipping Claude systems.
+I'm certified as both a **Claude Certified Architect – Foundations** ([Credly badge](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url)) and a **Claude Certified Architect – Professional** ([Credly badge](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url)). Connect with me on [LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/). I wrote these guides while preparing for and passing both exams. Everything is built from Anthropic's public exam guides, the official documentation (fact-checked November 2026), and hands-on work shipping Claude systems.
 
 ## Contributing
 
@@ -124,3 +131,8 @@ Unofficial. The author is certified; this guide isn't. Not affiliated with or re
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.

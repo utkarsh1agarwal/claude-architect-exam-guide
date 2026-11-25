@@ -174,3 +174,7 @@ D) No — this can only be fixed by switching to a larger model
 
 **Answer: B.** This is the same finding as [Domain 3 → CI/CD Integration](domain-3-claude-code-workflows.md#36-cicd-integration): the bias comes from the session retaining its own prior reasoning, not from insufficiently forceful wording — an instruction can't undo context the model already has. A fresh, independent instance with no generation history is the reliable fix.
 
+<!-- support-footer -->
+---
+
+> ⭐ **Found this useful?** [Star the repo on GitHub](https://github.com/utkarsh1agarwal/claude-architect-exam-guide) so other candidates can find it · 💼 [Follow me on LinkedIn](https://www.linkedin.com/in/utkarsh-agarwal-ua0235/) for updates and new mock exams.
