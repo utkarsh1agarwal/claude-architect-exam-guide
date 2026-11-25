@@ -1,0 +1,21 @@
+# CODEOWNERS — GitHub automatically requests a review from these owners on
+# every pull request that touches the matching paths. Later rules win.
+# Docs: https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything in the repository
+*                         @utkarsh1agarwal
+
+# Exam content — every question and answer must stay original (see CONTRIBUTING.md)
+/mock-exam/               @utkarsh1agarwal
+/professional/            @utkarsh1agarwal
+/study-guide/             @utkarsh1agarwal
+
+# Website: exam player, study guide pages, landing page and build tools
+/mock-exam/interactive/   @utkarsh1agarwal
+/guide/                   @utkarsh1agarwal
+/index.html               @utkarsh1agarwal
+/tools/                   @utkarsh1agarwal
+/assets/                  @utkarsh1agarwal
+
+# Repository settings and ownership rules
+/.github/                 @utkarsh1agarwal
