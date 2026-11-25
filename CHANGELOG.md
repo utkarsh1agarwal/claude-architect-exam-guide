@@ -9,6 +9,9 @@ All notable changes to this repo are documented here. Format follows [Keep a Cha
 - Three original 70-question CCAR-P mock exams (one medium, two hard) weighted to the v1.1 blueprint, every answer explaining the key and each distractor; product facts checked against Anthropic documentation (November 2026)
 - Interactive player now supports both certifications (Foundations / Professional tabs, `#professional` deep link, per-domain names in results)
 - Root `index.html` landing page and `sitemap.xml` for GitHub Pages
+- Player: **study mode** (instant answer + rationale), **practice by domain** across all exams in a track, **flag for review** (saved with progress), review filters (all / incorrect / flagged), *Show all options* on review cards, and a **shareable score card** (download, LinkedIn, X, native share). Flagging and full-option review were inspired by community PRs #2 and #3 from Thomas Westhead
+- Social preview image (`assets/social-preview.png`) used for Open Graph / Twitter cards
+- README note that registration requires Claude Partner Network membership (suggested in community PR #1)
 - Exam 4: a fourth 60-question mock exam covering all 6 scenarios, calibrated to a harder difficulty than Exams 1–3 (finer mechanism-level distractors, SLA/timing calculations, four select-two items) — complete answer key with domain tagging
 - Exam 5 and Exam 6: two more 60-question mock exams at the same hard-mode calibration as Exam 4, each independently verified against every other exam in the set (and against the community-provided reference question banks used to calibrate difficulty) to ensure no duplicate or near-duplicate questions
 
