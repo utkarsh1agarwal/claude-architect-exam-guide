@@ -25,6 +25,15 @@ Browsers block a page opened via `file://` from fetching local files, so the app
 detects that and falls back to a small file picker — select the two exam files
 manually (it tells you which filenames to pick) and it works the same way from there.
 
+## Features
+
+- **Two certifications** — Foundations / Professional tabs; `#professional` deep-links to CCAR-P.
+- **Timed mock exam** — countdown, question map, **flag for review**, autosave and resume (answers and flags).
+- **Study mode** — no timer; pick an answer, press *Check answer* (or Enter) to see the key and the full rationale.
+- **Practice by domain** — choose a domain and a set size; questions are drawn at random from every exam in the track (needs the page served over http).
+- **Results** — score, per-domain table (plus per-scenario for Foundations), review filters *All / Incorrect / Flagged*, and *Show all options* on every review card.
+- **Shareable score card** — a 1200×630 PNG drawn client-side, with Download, native Share, LinkedIn, X and Copy-text buttons. Nothing is uploaded.
+
 ## Notes
 
 - Progress autosaves to `localStorage` per exam, so a reload mid-attempt offers to resume.
