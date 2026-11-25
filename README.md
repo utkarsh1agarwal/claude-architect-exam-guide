@@ -12,7 +12,7 @@
 |---|---|---|
 | Study guide | [5 domain guides + cheat sheet](#claude-certified-architect--foundations-ccar-f) | [7 domain guides, all 39 v1.1 skills](professional/README.md) |
 | Mock exams | 6 × 60 questions (360) | 3 × 70 questions (210) |
-| **Take a mock exam now** | **[▶ Start a CCAR-F exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)** | **[▶ Start a CCAR-P exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/#professional)** |
+| **Take a mock exam now** | **[▶ Start mock exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)** | **[▶ Start mock exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/#professional)** |
 | Exam version covered | Exam guide v1.0 | Exam guide **v1.1** (effective Dec 7, 2026) |
 
 The [Interactive Mock Exam Player](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/) runs in your browser with nothing to install and no sign-up:
