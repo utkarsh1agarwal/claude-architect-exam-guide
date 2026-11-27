@@ -4,7 +4,7 @@
 
 These are the authoritative sources. When anything in this guide conflicts with them, trust the official source.
 
-- **Official CCAR-F Exam Guide** (v1.0, effective July 2026) — the primary source for this entire repo. Read it in full before scheduling; it's the only document that's authoritative on policy, scoring, and blueprint changes. Available via the Anthropic Partner Academy certification page.
+- **Official CCAR-F Exam Guide** (v1.1, effective November 2026; same blueprint as v1.0) — the primary source for this entire repo. Read it in full before scheduling; it's the only document that's authoritative on policy, scoring, and blueprint changes. Available via the Anthropic Partner Academy certification page.
 - **Claude Agent SDK docs** — agent definitions, agentic loops, hooks, subagent spawning
 - **Claude Code docs** (`code.claude.com/docs`) — `CLAUDE.md`, slash commands, skills, plan mode, CLI flags
 - **Model Context Protocol (MCP) spec** — tool/resource design, server configuration

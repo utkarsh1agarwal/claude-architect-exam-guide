@@ -16,6 +16,7 @@ Second: **the root cause is usually upstream of where the symptom appears** (e.g
 | Refund/order-before-verify ordering bug | Programmatic prerequisite hook, not stronger prompt wording |
 | Data format inconsistency across tools | `PostToolUse` hook for normalization |
 | Business rule violation risk (e.g., >$500 refund) | Pre-call tool interception hook |
+| Claude Code `PreToolUse` hook must block a command | Exit code **2** (or JSON `permissionDecision: "deny"`) — other non-zero codes don't block |
 | Subagent "missing" info the coordinator has | Context isn't inherited — pass it explicitly in the prompt |
 | Research covers too narrow a slice despite all subagents succeeding | Coordinator's task decomposition, not subagent execution |
 | Resuming a session after code changed | Explicitly tell it what changed; don't assume it re-explores |
@@ -29,7 +30,8 @@ Second: **the root cause is usually upstream of where the symptom appears** (e.g
 | JSON never malformed but values don't add up | Semantic error ≠ syntax error; add a calculated-vs-stated comparison field |
 | Model fabricates a value that isn't in the source | Field should be nullable/optional, not required |
 | Ambiguous tool selection between 2 similar tools | Fix descriptions FIRST, few-shot SECOND |
-| Generic tool error hides useful info | Structured error: `errorCategory`, `isRetryable`, description |
+| Generic tool error hides useful info | `isError: true` (the MCP flag) + your own structured fields: `errorCategory`, `isRetryable`, description |
+| Access failure vs. no results found | Different signals: an error the coordinator can act on vs. a valid empty result |
 | Agent has 15+ tools and misuses some | Scope tools per agent role |
 | High-frequency simple cross-role need | One scoped tool for the 80% case; keep coordinator routing for the rare complex case |
 | `Grep` vs. `Glob` | `Grep` = content search; `Glob` = path/filename pattern |
@@ -52,7 +54,8 @@ Second: **the root cause is usually upstream of where the symptom appears** (e.g
 
 - Government-issued photo ID matching registration name exactly
 - Clear workspace if online-proctored (no phone, notes, or secondary monitor)
-- 24-hour cancellation/reschedule window before forfeiting the fee
+- Fix your registration name before scheduling (self-service change allowed once)
+- Cancel/reschedule: online (OnVUE) up to 1 hour before, test center up to 48 hours before — later forfeits the fee
 - NDA acceptance required before the exam starts — don't ask for or share real exam content afterward, from this guide or anyone else's
 
 <!-- support-footer -->
