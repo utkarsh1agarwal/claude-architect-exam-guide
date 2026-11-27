@@ -2,7 +2,7 @@
 
 [![CCAR-F Certified — verify on Credly](https://img.shields.io/badge/Author-CCAR--F%20Certified%20✓-B85C3E?style=flat-square)](https://www.credly.com/badges/bb47f185-1f01-4c2f-adbb-c5401f3c8ce4/public_url)
 [![CCAR-P Certified — verify on Credly](https://img.shields.io/badge/Author-CCAR--P%20Certified%20✓-8A3F27?style=flat-square)](https://www.credly.com/badges/612c2efc-0487-49f5-ab45-3991e8bf2cdc/public_url)
-![Updated for CCAR-P v1.1](https://img.shields.io/badge/Updated%20for-CCAR--P%20v1.1%20(Dec%202026)-1a7f37?style=flat-square)
+![Latest exam guides: CCAR-F v1.1 and CCAR-P v1.1](https://img.shields.io/badge/Latest%20exam%20guides-CCAR--F%20v1.1%20%C2%B7%20CCAR--P%20v1.1-1a7f37?style=flat-square)
 ![Mock questions](https://img.shields.io/badge/Mock%20questions-570-informational?style=flat-square)
 ![License: MIT](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)
 
@@ -32,7 +32,7 @@
 | Study guide | [Read online](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/foundations/about-the-exam.html) · [5 domain guides + cheat sheet](#claude-certified-architect--foundations-ccar-f) | [Read online](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/professional/about-the-exam.html) · [7 domain guides, all 39 v1.1 skills](professional/README.md) |
 | Mock exams | 6 × 60 questions (360) | 3 × 70 questions (210) |
 | **Take a mock exam now** | **[▶ Start mock exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/)** | **[▶ Start mock exam](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/mock-exam/interactive/#professional)** |
-| Exam version covered | Exam guide v1.0 | Exam guide **v1.1** (effective Dec 7, 2026) |
+| Exam version covered | Exam guide **v1.1** (effective Nov 2026; same blueprint as v1.0) | Exam guide **v1.1** (effective Dec 7, 2026) |
 
 Everything runs in your browser, with nothing to install and no sign-up.
 
@@ -99,6 +99,8 @@ New to both? Do Foundations first. Its material is assumed knowledge for Profess
 ---
 
 ## Claude Certified Architect – Foundations (CCAR-F)
+
+**Updated for the latest exam guide v1.1** (November 2026). v1.1 keeps the v1.0 blueprint — same domains, weights, scenarios and task statements — and updates registration, ID and support policies. Every task statement has its own section with worked examples and practice questions.
 
 📖 **[Read the CCAR-F study guide online](https://utkarsh1agarwal.github.io/claude-architect-exam-guide/guide/foundations/about-the-exam.html)** — or browse the Markdown below.
 

@@ -1,6 +1,6 @@
 # About the Exam
 
-Everything on this page is drawn directly from Anthropic's official CCAR-F Exam Guide (v1.0, effective July 2026). This page summarizes it for quick reference — the official guide remains the authoritative source, especially for policies that could change.
+Everything on this page is drawn directly from Anthropic's official CCAR-F Exam Guide (v1.1, effective November 2026). This page summarizes it for quick reference — the official guide remains the authoritative source, especially for policies that could change.
 
 ## Who it's for
 
@@ -57,20 +57,36 @@ Each exam draws **4 of these 6** scenarios at random; every question in the exam
 
 CCAR-F is **criterion-referenced**: you're measured against a fixed performance standard set by subject matter experts, not ranked against other candidates. The cut score (720) was set through a formal standard-setting study. Your score report shows percent-correct by domain, but your pass/fail result is based on your **total scaled score**, not per-domain performance.
 
-## Registration and retakes
+> **What changed in v1.1?** Only registration, identification and support details (sections 11–16 of the official guide). The blueprint — domains, weights, scenarios, task statements, sample questions — is identical to v1.0, so everything else in this guide still applies.
 
-- Registration and scheduling go through **Anthropic Partner Academy** and **Pearson VUE**.
-- You can cancel or reschedule up to **24 hours** before your appointment; changes inside that window forfeit the fee.
-- If you don't pass, retake waiting periods increase with each attempt: **14 days** after the 1st fail, **30 days** after the 2nd, **90 days** after the 3rd.
-- Maximum **4 attempts** within a rolling 12-month period. The fee applies to each attempt.
-- No-shows and late arrivals forfeit the fee and require re-registration.
+## Registration and scheduling
+
+1. Open your certification page on the **Anthropic Partner Academy**, review the exam details, and download the exam guide, the Certification Terms and Conditions and the Certification Exam Policy.
+2. Click **Register**, confirm your exam and exam profile, then **Continue to Pearson**.
+3. At **Pearson VUE**, choose online proctoring (OnVUE) or a test center, pick a date and time, and check out. The price shown includes any partner discount.
+4. Already registered? Use **Go to my Pearson account** to schedule, take the exam, or see results and receipts.
+
+## Cancelling, rescheduling and retakes
+
+- **Cancel or reschedule:** OnVUE (online) exams up to **1 hour** before the appointment; test-center exams up to **48 hours** before. Later changes forfeit the fee.
+- Rescheduling keeps your price, including any discount. Cancelling triggers an automatic refund of what you paid at Pearson checkout (7–10 business days).
+- **Retakes:** waiting periods grow with each fail — **14 days** after the 1st, **30 days** after the 2nd, **90 days** after the 3rd.
+- Maximum **4 attempts per exam** in a rolling 12 months; failing one exam doesn't stop you registering for a different one. The fee applies to each attempt.
+- No-shows and late arrivals forfeit the fee and must re-register.
 
 ## Exam-day rules worth knowing in advance
 
 - Bring a **valid, unexpired, government-issued photo ID** that matches your registration name exactly.
+- **Fix your name before you schedule**, in your exam profile on Partner Academy. You can change it yourself **once** — it locks when you confirm the profile. Online-exam updates sync almost instantly; for a test center, update at least **24 hours** ahead (it syncs once a day).
 - If online-proctored: stay in webcam view the whole session, clear workspace, no phone/notes/secondary monitor.
 - You'll accept a confidentiality/NDA agreement before starting — this is also why no legitimate study resource (including this one) should ever contain real exam content.
-- Accommodations must be requested and **approved by Pearson VUE before scheduling**.
+- Accommodations must be requested and **approved by Pearson VUE before scheduling** — don't book until approved.
+
+## Support and appeals
+
+- **certifications-support@anthropic.com** — sign-in problems, reaching Pearson, an exam missing from your Pearson account, a missing partner discount, profile details you can't change, or a refund that hasn't arrived after 10 business days.
+- **Pearson VUE support** (pearsonvue.com/us/en/anthropic.html) — exam-day problems, checkout, scheduling, cancelling, accommodations and results.
+- **Appeals:** within **14 days** of a decision, or of your exam date for a concern about your result, through Pearson VUE support. Standard-setting outcomes and individual exam items can't be appealed.
 
 ## Recertification
 

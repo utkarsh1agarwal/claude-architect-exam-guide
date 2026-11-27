@@ -9,7 +9,7 @@ const TRACKS = {
   foundations: {
     label: 'Foundations',
     code: 'CCAR-F',
-    blurb: 'Claude Certified Architect – Foundations · 60 questions · 120 minutes · 4 of 6 scenarios',
+    blurb: 'Claude Certified Architect – Foundations · exam guide v1.1 · 60 questions · 120 minutes · 4 of 6 scenarios',
     basePath: '../',
     groupLabel: 'Scenario',
     exams: [

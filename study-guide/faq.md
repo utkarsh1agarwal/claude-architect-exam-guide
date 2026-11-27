@@ -19,7 +19,7 @@ Check [CHANGELOG.md](../CHANGELOG.md) for the last update date and which Exam Gu
 Yes. Corrections, clarity improvements, and new original practice questions are welcome from anyone — you don't need to have already passed. See [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 **Where do I actually register for the exam?**
-Through the Anthropic Partner Academy and Pearson VUE — see [About the Exam → Registration and retakes](about-the-exam.md#registration-and-retakes).
+Through the Anthropic Partner Academy and Pearson VUE — see [About the Exam → Registration and scheduling](about-the-exam.md#registration-and-scheduling).
 
 **What if I fail?**
 Retake waiting periods increase with each attempt: 14 days after the first, 30 after the second, 90 after the third, up to 4 attempts within a rolling 12 months. Use your score report's per-domain breakdown to target your re-study — it won't determine your pass/fail result, but it tells you exactly where to focus.

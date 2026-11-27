@@ -52,7 +52,8 @@ Second: **the root cause is usually upstream of where the symptom appears** (e.g
 
 - Government-issued photo ID matching registration name exactly
 - Clear workspace if online-proctored (no phone, notes, or secondary monitor)
-- 24-hour cancellation/reschedule window before forfeiting the fee
+- Fix your registration name before scheduling (self-service change allowed once)
+- Cancel/reschedule: online (OnVUE) up to 1 hour before, test center up to 48 hours before — later forfeits the fee
 - NDA acceptance required before the exam starts — don't ask for or share real exam content afterward, from this guide or anyone else's
 
 <!-- support-footer -->

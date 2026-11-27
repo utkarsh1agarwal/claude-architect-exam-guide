@@ -29,7 +29,7 @@ const TRACKS = {
   foundations: {
     label: 'Foundations',
     code: 'CCAR-F',
-    long: 'Claude Certified Architect – Foundations (CCAR-F)',
+    long: 'Claude Certified Architect – Foundations (CCAR-F, exam guide v1.1)',
     srcDir: 'study-guide',
     playerHash: '',
     pages: [
@@ -310,7 +310,7 @@ writeFileSync(join(ROOT, 'guide', 'index.html'), `<!doctype html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Study Guide — Claude Certified Architect Foundations (CCAR-F) &amp; Professional (CCAR-P)</title>
-  <meta name="description" content="Free study guide for the Claude Certified Architect exams: every CCAR-F domain and all 39 CCAR-P v1.1 skills, with worked examples, decision tables, practice questions and cheat sheets.">
+  <meta name="description" content="Free study guide for the Claude Certified Architect exams: every CCAR-F v1.1 task statement and all 39 CCAR-P v1.1 skills — up to date with the latest exam guides — with worked examples, decision tables, practice questions and cheat sheets.">
   <link rel="canonical" href="${SITE}guide/">
   <meta property="og:title" content="Claude Certified Architect Study Guide — CCAR-F &amp; CCAR-P">
   <meta property="og:image" content="${OG_IMAGE}">
@@ -332,7 +332,7 @@ writeFileSync(join(ROOT, 'guide', 'index.html'), `<!doctype html>
   </header>
   <main id="app">
     <h1>Study guide</h1>
-    <p class="subtitle">Read the notes for either certification right here. Every domain page has worked examples, decision tables and practice questions with hidden answers, plus a one-click link to practise that domain in the exam player.</p>
+    <p class="subtitle">Up to date with the latest official exam guides: <strong>CCAR-F v1.1</strong> and <strong>CCAR-P v1.1</strong>. Read the notes for either certification right here. Every domain page has worked examples, decision tables and practice questions with hidden answers, plus a one-click link to practise that domain in the exam player.</p>
     <div class="guide-index-grid">${card('foundations')}${card('professional')}</div>
   </main>
   <footer class="site-footer">

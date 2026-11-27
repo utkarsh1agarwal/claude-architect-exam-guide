@@ -4,6 +4,9 @@ All notable changes to this repo are documented here. Format follows [Keep a Cha
 
 ## [Unreleased]
 
+### Changed
+- Foundations guide updated for the **CCAR-F exam guide v1.1** (November 2026). The blueprint is unchanged; registration, cancellation (OnVUE 1 hour / test center 48 hours), name-correction, support and appeals details now match v1.1. Added a note that newer Claude Code calls the Task tool **Agent**.
+
 ### Added
 - **Professional (CCAR-P) track, written for exam guide v1.1 (effective 2026-12-07)** under `professional/`: about-the-exam (format, weights, all 39 skills, v1.0 → v1.1 diff), study plan with a question-reading method, seven domain guides (one section per official skill: concept, artifact-based worked example, decision table, anti-pattern table, exam traps, practice questions, official docs), cheat sheet, resources mapped per domain, FAQ
 - Three original 70-question CCAR-P mock exams (one medium, two hard) weighted to the v1.1 blueprint, every answer explaining the key and each distractor; product facts checked against Anthropic documentation (November 2026)
